@@ -1,7 +1,7 @@
 .gradle/
 .idea/
 .svn/
-gradle
+#gradle
 build
 *.iml
 gradlew
