@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.gang.app"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        //添加如下配置 开启annotation processor
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", 'x86'
+        }
+
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true    // Enable RS support
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//    signingConfigs {
+//        configs {
+//            keyAlias 'gang'
+//            keyPassword 'gang'
+//            storeFile file('../gang.jks')
+//            storePassword 'gang'
+//        }
+//    }
+
+    buildTypes {
+        release {
+            // 不显示Log, 在java代码中的调用方式为：BuildConfig.LOG_DEBUG
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            zipAlignEnabled true
+            minifyEnabled false
+            shrinkResources false
+//            signingConfig signingConfigs.configs
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //zipAlign 优化
+            zipAlignEnabled true
+            // 开启代码混淆
+            minifyEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+//            signingConfig signingConfigs.configs
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "HFZX_${variant.versionName}_${releaseTime()}.apk"
+//${variant.versionCode}_
+        }
+    }
+
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // 导航栏
+    implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
+
+    implementation project(path: ':base')
+}

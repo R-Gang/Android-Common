@@ -1,0 +1,2 @@
+rootProject.name = 'Android-Common'
+include ':app', ':base'

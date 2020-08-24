@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.LuckSiege.PictureSelector:ucrop:v2.2.3@aar">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ae98a5f06b8b84e39625cdf43beab341/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ae98a5f06b8b84e39625cdf43beab341/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ae98a5f06b8b84e39625cdf43beab341/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.github.LuckSiege.PictureSelector/ucrop/v2.2.3/9e71bfa656c2064c6ee99c3201fe7bf84074c791/ucrop-v2.2.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

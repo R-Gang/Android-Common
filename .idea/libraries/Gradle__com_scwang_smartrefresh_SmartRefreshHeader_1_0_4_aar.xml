@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.scwang.smartrefresh:SmartRefreshHeader:1.0.4@aar">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/a56259b46061ecdb765ea555fb81a5dd/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/a56259b46061ecdb765ea555fb81a5dd/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/a56259b46061ecdb765ea555fb81a5dd/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.scwang.smartrefresh/SmartRefreshHeader/1.0.4/2251c34e8cb84bbc0020bf390010d0616e4baf26/SmartRefreshHeader-1.0.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.scwang.smartrefresh/SmartRefreshHeader/1.0.4/55c98c15ffbdb7dbcfd614dbda546702a1b3c4e7/SmartRefreshHeader-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

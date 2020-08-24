@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: pub.devrel:easypermissions:1.2.0@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/d3708435e023c12176be45cc1fff9a8f/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/d3708435e023c12176be45cc1fff9a8f/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/pub.devrel/easypermissions/1.2.0/1a469e5abe7fa2e2515499c5a3a95cd90530011d/easypermissions-1.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/pub.devrel/easypermissions/1.2.0/fd18a5f9b8f2ed0c7c7812837fab442e4330bafa/easypermissions-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

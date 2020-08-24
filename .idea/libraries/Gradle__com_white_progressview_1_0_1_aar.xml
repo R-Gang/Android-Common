@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.white:progressview:1.0.1@aar">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/56064ca42b80108ca1b055f3153ec959/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/56064ca42b80108ca1b055f3153ec959/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/56064ca42b80108ca1b055f3153ec959/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.white/progressview/1.0.1/b46f1e8119455b06081cae0a078adbcbb4f43ecc/progressview-1.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.white/progressview/1.0.1/54f3d6122dc1e44da5e332108e420d31dc3ea4ed/progressview-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

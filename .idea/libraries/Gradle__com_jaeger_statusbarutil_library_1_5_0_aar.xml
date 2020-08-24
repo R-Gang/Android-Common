@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.jaeger.statusbarutil:library:1.5.0@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/dee973e9f798c792cb8056a74d25b56b/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/dee973e9f798c792cb8056a74d25b56b/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.jaeger.statusbarutil/library/1.5.0/cadba65ae8006762109b3d6908d1f3245487ffc7/library-1.5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.jaeger.statusbarutil/library/1.5.0/f0f9436802db6f8ba5465f4c45ac3ba9fa1003e4/library-1.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.lzy.net:okhttputils:1.8.1@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ba3373f30047979d9d4aebe4cd9e00ea/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ba3373f30047979d9d4aebe4cd9e00ea/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.lzy.net/okhttputils/1.8.1/cb089eb67962f018bc5264b83492be90ecaaf7eb/okhttputils-1.8.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

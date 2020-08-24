@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: __local_aars__:./base/libs/tbs_sdk_v4.3.0.39.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/base/libs/tbs_sdk_v4.3.0.39.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

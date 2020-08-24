@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Gang</string>
+
+    <string name="network_load_error">网络不太顺畅</string>
+    <string name="refresh_try">重新加载</string>
+    <string name="no_content">暂无内容</string>
+    <string name="loading">正在加载中…</string>
+    <string name="rationale_call_phone">这个应用程序需要访问你的电话。</string>
+    <string name="rationale_file">这个应用程序需要访问你读取权限，这样你就可以查看文件了。</string>
+
+</resources>

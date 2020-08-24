@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/transparent20</item>
+        <item name="colorAccent">@color/col_02</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!--toolbar标题栏样式-->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!-- actionMenuTextColor is the color of the text of action (menu) items  -->
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <!-- Tints the input fields like checkboxes and text fields -->
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!--加载框-->
+    <declare-styleable name="LoadingFrameView">
+        <attr name="fv_emptyIcon" format="reference" />
+        <attr name="fv_emptyInfo" format="string" />
+        <attr name="fv_noIcon" format="reference" />
+        <attr name="fv_noInfo" format="string" />
+        <attr name="fv_repeatIcon" format="reference" />
+        <attr name="fv_repeatInfo" format="string" />
+        <attr name="fv_repeatBt" format="string" />
+    </declare-styleable>
+
+</resources>
