@@ -1,5 +1,7 @@
 package com.gang.library.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -15,15 +17,22 @@ import kotlinx.android.synthetic.main.base_title_bar.*
  */
 class WebViewActivity : BaseActivity() {
 
-    var tvTitle: TextView? = tv_title
+
+    var tvTitle: TextView = tv_title
     var wbXy: WebView = wb_xy
+
+    private var mUrl: String? = ""
+    private var mTitleName: String? = ""
 
     override val layoutId: Int
         get() = R.layout.activity_webview
 
     override fun initView(savedInstanceState: Bundle?) {
-        tvTitle?.text = "关于"
-//        setUrl(Constant.PRIVACY)
+        fileUrlByIntent
+    }
+
+    override fun initData() {
+
     }
 
     private fun setUrl(url: String) { //声明WebSettings子类
@@ -43,7 +52,7 @@ class WebViewActivity : BaseActivity() {
         webSettings.loadsImagesAutomatically = true //支持自动加载图片
         webSettings.defaultTextEncodingName = "utf-8" //设置编码格式
         //步骤3. 复写shouldOverrideUrlLoading()方法，使得打开网页时不调用系统浏览器， 而是在本WebView中显示
-        wb_xy!!.webViewClient = object : WebViewClient() {
+        wbXy.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 url: String
@@ -52,9 +61,37 @@ class WebViewActivity : BaseActivity() {
                 return true
             }
         }
-        wb_xy!!.loadUrl(url)
+        wbXy.loadUrl(url)
     }
 
-    override fun initData() {}
+    /**
+     * 获取传过来的网络url和标题
+     */
+    private val fileUrlByIntent: Unit
+        private get() {
+            val intent = intent
+            mUrl = intent.getStringExtra("Url")
+            mTitleName = intent.getStringExtra("titleName")
+            tvTitle.text = mTitleName
+        }
 
+    companion object {
+        /**
+         * 跳转页面
+         *
+         * @param context
+         * @param Url  网络url
+         * @param titleName 标题
+         */
+        fun actionStart(
+            context: Context,
+            mUrl: String?,
+            mTitleName: String?
+        ) {
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra("Url", mUrl)
+            intent.putExtra("titleName", mTitleName)
+            context.startActivity(intent)
+        }
+    }
 }
