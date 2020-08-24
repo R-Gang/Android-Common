@@ -29,7 +29,7 @@ class HomeFragment : BaseFragment() {
         homeMenu.add(HomeIcon(2, R.mipmap.cate3, "产品中心"))
         homeMenu.add(HomeIcon(3, R.mipmap.cate4, "营销网络"))
         LayoutManager.instance?.init(activity)?.initRecyclerGrid(recyclerView, 4)
-        HomeMenuAdapter(homeMenu, mActivity, R.layout.item_home_menu)
+        recyclerView.adapter = HomeMenuAdapter(homeMenu, mActivity, R.layout.item_home_menu)
     }
 
 }

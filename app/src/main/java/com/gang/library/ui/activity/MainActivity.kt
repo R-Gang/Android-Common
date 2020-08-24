@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
@@ -12,12 +13,11 @@ import androidx.fragment.app.FragmentTransaction
 import com.gang.app.R
 import com.gang.library.common.AppManager
 import com.gang.library.common.user.UserManager
-import com.gang.library.ui.fragment.HomeFragment
 import com.gang.library.common.utils.NotifiUtil
+import com.gang.library.ui.fragment.HomeFragment
 import com.gang.library.ui.fragment.MyFragment
 import com.gang.library.ui.interfaces.Setter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.base_title_bar.*
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : BaseActivity(), View.OnClickListener {
@@ -37,8 +37,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         radioButtons.add(ll_home_btn)
         radioButtons.add(ll_my_btn)
 
-        rl_back_button.visibility = View.GONE
-        tv_title.text = resources.getString(R.string.app_name)
+        // 目前kotlin-android-extensions暂时还不支持跨模块
+        findViewById<RelativeLayout>(R.id.rl_back_button).visibility = View.GONE
+        findViewById<TextView>(R.id.tv_title).text = resources.getString(R.string.app_name)
     }
 
     override fun initData() {
