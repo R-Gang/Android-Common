@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 //支持maven插件，并填入自己的github的用户名
 apply plugin: 'com.github.dcendents.android-maven'
-group = 'R-Gang'
+group = 'com.github.R-Gang'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
