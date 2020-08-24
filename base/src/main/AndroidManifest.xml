@@ -19,12 +19,7 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <application
-        android:name="com.gang.library.BaseApplication"
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+    <application>
         <!--查看附件-->
         <activity
             android:name="com.gang.library.ui.activity.FileDisplayActivity"
