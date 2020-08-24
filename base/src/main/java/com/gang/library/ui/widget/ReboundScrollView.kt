@@ -1,4 +1,4 @@
-package com.gang.library.common.view
+package com.gang.library.ui.widget
 
 import android.content.Context
 import android.graphics.Rect

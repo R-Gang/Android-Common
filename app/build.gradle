@@ -80,9 +80,6 @@ static def releaseTime() {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     // 导航栏
     implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
 

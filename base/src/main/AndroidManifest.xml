@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.gang.library">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 闪光灯权限 -->
@@ -20,13 +19,7 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <application
-        android:name="com.gang.library.BaseApplication"
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="LockedOrientationActivity">
+    <application>
         <!--查看附件-->
         <activity
             android:name="com.gang.library.ui.activity.FileDisplayActivity"
@@ -36,17 +29,6 @@
             android:name="com.gang.library.ui.activity.WebViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.gang.library.ui.activity.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

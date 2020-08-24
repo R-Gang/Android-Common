@@ -9,7 +9,7 @@ import com.apkfuns.logutils.LogUtils
 import com.tencent.smtt.sdk.QbSdk
 
 
-class BaseApplication : Application() {
+open class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

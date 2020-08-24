@@ -28,7 +28,7 @@ class VPAdapter(
     // 刷新fragment
     fun setFragments(
         fm: FragmentManager,
-        fragments: ArrayList<Fragment>,
+        fragments: ArrayList<Fragment>?,
         mTitleList: ArrayList<String>
     ) {
         if (fragments != null) {
@@ -39,7 +39,9 @@ class VPAdapter(
             ft.commitAllowingStateLoss()
             fm.executePendingTransactions()
         }
-        fragmentList = fragments
+        if (fragments != null) {
+            fragmentList = fragments
+        }
         this.mTitleList = mTitleList
         notifyDataSetChanged()
     }

@@ -1,4 +1,4 @@
-package com.gang.library.common.view
+package com.gang.library.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import androidx.viewpager.widget.ViewPager
+import kotlin.math.abs
 
 /**
  * 禁止左右滑动,解决ScrollView嵌套ViewPager不显示和出现空白部分
@@ -62,14 +63,12 @@ class NoScrollViewPager : ViewPager {
         var dealtY = 0
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
-                dealtX = 0
-                dealtY = 0
                 // 保证子View能够接收到Action_move事件
                 parent.requestDisallowInterceptTouchEvent(true)
             }
             MotionEvent.ACTION_MOVE -> {
-                dealtX += Math.abs(x - lastX)
-                dealtY += Math.abs(y - lastY)
+                dealtX += abs(x - lastX)
+                dealtY += abs(y - lastY)
                 Log.i(NoScrollViewPager::class.java.name, "dealtX:=$dealtX")
                 Log.i(NoScrollViewPager::class.java.name, "dealtY:=$dealtY")
                 // 这里是否拦截的判断依据是左右滑动，读者可根据自己的逻辑进行是否拦截
@@ -99,7 +98,6 @@ class NoScrollViewPager : ViewPager {
         LinkedHashMap()
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var heightMeasureSpec = heightMeasureSpec
         if (mChildrenViews.size > current) {
             val child = mChildrenViews[current]
             child!!.measure(
@@ -108,15 +106,14 @@ class NoScrollViewPager : ViewPager {
             )
             heights = child.measuredHeight
         }
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(heights, MeasureSpec.EXACTLY)
+        var heightMeasureSpec: Int = MeasureSpec.makeMeasureSpec(heights, MeasureSpec.EXACTLY)
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
     fun resetHeight(current: Int) {
         this.current = current
         if (mChildrenViews.size > current) {
-            var layoutParams =
-                layoutParams as ViewGroup.LayoutParams
+            var layoutParams = layoutParams
             if (layoutParams == null) {
                 layoutParams =
                     LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heights)

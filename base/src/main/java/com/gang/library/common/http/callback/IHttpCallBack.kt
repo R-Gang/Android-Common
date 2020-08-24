@@ -18,3 +18,19 @@ open interface IHttpCallBack<T> {
     fun onFail(statusCode: Int, errorMsg: String?)
     fun onError(throwable: Throwable?)
 }
+
+class IHttpManager<T> : IHttpCallBack<T> {
+
+    override fun onSuccess(data: T) {
+
+    }
+
+    override fun onFail(statusCode: Int, errorMsg: String?) {
+
+    }
+
+    override fun onError(throwable: Throwable?) {
+
+    }
+
+}

@@ -15,7 +15,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class RefreshLayout(private val refreshLayout: SmartRefreshLayout) : RefreshCallBack {
+class RefreshLayout(private val refreshLayout: SmartRefreshLayout) : SmartRefresh() {
 
     override fun finishSuccessRefresh() {
         refreshLayout.finishRefresh()

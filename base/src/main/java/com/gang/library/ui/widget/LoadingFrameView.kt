@@ -1,4 +1,4 @@
-package com.gang.library.common.view
+package com.gang.library.ui.widget
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -295,7 +295,9 @@ class LoadingFrameView @JvmOverloads constructor(
      * @param animate
      */
     fun delayShowContainer(animate: Boolean) {
-        setContainerShown(animate, DELAY_MILLIS)
+        setContainerShown(animate,
+            DELAY_MILLIS
+        )
     }
 
     fun isStatus(status: Int): Boolean {

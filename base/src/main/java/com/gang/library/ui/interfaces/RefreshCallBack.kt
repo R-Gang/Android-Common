@@ -24,3 +24,19 @@ interface RefreshCallBack {
     fun finishFailLoadmore()
 
 }
+
+open class SmartRefresh : RefreshCallBack {
+    override fun finishSuccessRefresh() {
+
+    }
+
+    override fun finishSuccessLoadmore() {
+    }
+
+    override fun finishFailRefresh() {
+    }
+
+    override fun finishFailLoadmore() {
+    }
+
+}

@@ -1,4 +1,4 @@
-package com.gang.library.common.view
+package com.gang.library.ui.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -25,15 +25,13 @@ class DrawableCenterTextView : TextView {
 
     override fun onDraw(canvas: Canvas) { //在布局文件中设置TextView的四周图片，用getCompoundDrawables方法可以获取这4个位置的图片
         val drawables = compoundDrawables
-        if (drawables != null) {
-            val left = drawables[0]
-            if (left != null) {
-                val textWidth = paint.measureText(text.toString())
-                val padding = compoundDrawablePadding
-                val width: Int = left.intrinsicHeight
-                val bodyWidth = textWidth + width + padding
-                canvas.translate((getWidth() - bodyWidth) / 2, 0f)
-            }
+        val left = drawables[0]
+        if (left != null) {
+            val textWidth = paint.measureText(text.toString())
+            val padding = compoundDrawablePadding
+            val width: Int = left.intrinsicHeight
+            val bodyWidth = textWidth + width + padding
+            canvas.translate((getWidth() - bodyWidth) / 2, 0f)
         }
         super.onDraw(canvas)
     }
