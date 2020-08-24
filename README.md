@@ -1,15 +1,15 @@
-# Android-Common
- kotlin 基础库
+# kotlin 基础库
 
 
-引入：
+引入方式：
+
     allprojects {
-    		repositories {
-    			...
-    			maven { url 'https://jitpack.io' }
-    		}
-    	}
+        repositories {
+                 ...
+                 maven { url 'https://jitpack.io' }
+             }
+         }
 
     dependencies {
-    	        implementation 'com.github.R-Gang:Android-Common:Tag'
-    	}
+         implementation 'com.github.R-Gang:Android-Common:0.1.0'
+    }
