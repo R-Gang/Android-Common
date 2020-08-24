@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.apkfuns.logutils:export-api:1.1.8@aar">
     <ANNOTATIONS>
-      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/9e045bcefa02efe7c8b7f2a371394ddd/annotations.zip!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ecc209c90c5bfceadfb4d7eb9ea267da/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/9e045bcefa02efe7c8b7f2a371394ddd/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/9e045bcefa02efe7c8b7f2a371394ddd/res" />
+      <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ecc209c90c5bfceadfb4d7eb9ea267da/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../../AndroidStudio/caches/transforms-2/files-2.1/ecc209c90c5bfceadfb4d7eb9ea267da/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../../../AndroidStudio/caches/modules-2/files-2.1/com.apkfuns.logutils/export-api/1.1.8/b04b7585789f4b4d689a0ed37c491e834842267a/export-api-1.1.8-javadoc.jar!/" />
