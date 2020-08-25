@@ -9,6 +9,7 @@ import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
 import com.gang.library.common.utils.permissions.BasePermissionActivity
+import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.base_title_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -33,6 +34,7 @@ abstract class BaseActivity : BasePermissionActivity() {
         }
         AppManager.appManager?.addActivity(this)
         CrashHandler.instance?.init(this) //初始化全局异常管理
+        StatusBarUtil.setTranslucent(this, 30)// 状态栏半透明 statusBarAlpha值需要在 0 ~ 255,默认值是112
         initView(savedInstanceState)
         initData()
         onClick()
