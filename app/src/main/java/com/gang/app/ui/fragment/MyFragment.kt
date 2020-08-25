@@ -1,8 +1,9 @@
-package com.gang.library.ui.fragment
+package com.gang.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
 import com.gang.app.R
+import com.gang.library.ui.fragment.BaseFragment
 
 /**
  * 我的

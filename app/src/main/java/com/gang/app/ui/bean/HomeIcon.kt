@@ -1,4 +1,4 @@
-package com.gang.library.ui.bean
+package com.gang.app.ui.bean
 
 /**
  *

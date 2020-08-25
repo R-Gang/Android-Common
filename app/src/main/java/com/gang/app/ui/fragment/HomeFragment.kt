@@ -1,11 +1,12 @@
-package com.gang.library.ui.fragment
+package com.gang.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
 import com.gang.app.R
 import com.gang.library.common.view.xrecyclerview.LayoutManager
-import com.gang.library.ui.adapter.HomeMenuAdapter
-import com.gang.library.ui.bean.HomeIcon
+import com.gang.app.ui.adapter.HomeMenuAdapter
+import com.gang.app.ui.bean.HomeIcon
+import com.gang.library.ui.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -29,7 +30,11 @@ class HomeFragment : BaseFragment() {
         homeMenu.add(HomeIcon(2, R.mipmap.cate3, "产品中心"))
         homeMenu.add(HomeIcon(3, R.mipmap.cate4, "营销网络"))
         LayoutManager.instance?.init(activity)?.initRecyclerGrid(recyclerView, 4)
-        recyclerView.adapter = HomeMenuAdapter(homeMenu, mActivity, R.layout.item_home_menu)
+        recyclerView.adapter = HomeMenuAdapter(
+            homeMenu,
+            mActivity,
+            R.layout.item_home_menu
+        )
     }
 
 }

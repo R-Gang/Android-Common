@@ -1,4 +1,4 @@
-package com.gang.library.ui.activity
+package com.gang.app.ui.activity
 
 import android.graphics.PixelFormat
 import android.os.Build
@@ -14,8 +14,9 @@ import com.gang.app.R
 import com.gang.library.common.AppManager
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil
-import com.gang.library.ui.fragment.HomeFragment
-import com.gang.library.ui.fragment.MyFragment
+import com.gang.app.ui.fragment.HomeFragment
+import com.gang.app.ui.fragment.MyFragment
+import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import kotlinx.android.synthetic.main.activity_main.*
 

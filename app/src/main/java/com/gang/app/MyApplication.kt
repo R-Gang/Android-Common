@@ -1,4 +1,6 @@
-package com.gang.library
+package com.gang.app
+
+import com.gang.library.BaseApplication
 
 
 class MyApplication : BaseApplication() {

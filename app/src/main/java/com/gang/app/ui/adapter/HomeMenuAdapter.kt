@@ -1,9 +1,9 @@
-package com.gang.library.ui.adapter
+package com.gang.app.ui.adapter
 
 import android.content.Context
 import com.gang.library.common.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter
 import com.gang.library.common.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder
-import com.gang.library.ui.bean.HomeIcon
+import com.gang.app.ui.bean.HomeIcon
 import kotlinx.android.synthetic.main.item_home_menu.view.*
 
 /**
