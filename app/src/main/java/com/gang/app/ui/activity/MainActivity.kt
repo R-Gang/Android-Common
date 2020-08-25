@@ -76,7 +76,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 } else {
                     ft.show(homeFragment!!)
                 }
-            1 ->  //动态
+            1 ->  //我的
                 if (null == myFragment) {
                     myFragment = MyFragment()
                     ft.add(R.id.ll_content, myFragment!!)
