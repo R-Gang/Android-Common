@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.gang.library.common.user.ToUIEvent
 import com.gang.library.common.utils.permissions.BasePermissionFragment
 import com.gang.library.ui.activity.BaseActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 /**
  * 基类Fragment
@@ -92,6 +92,6 @@ abstract class BaseFragment : BasePermissionFragment() {
 
     //Eventbus
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    open fun onEvent(event: ToUIEvent?) {
+    open fun onEvent(objects: Objects) {
     }
 }

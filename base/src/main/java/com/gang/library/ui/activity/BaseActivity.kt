@@ -8,13 +8,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
-import com.gang.library.common.user.ToUIEvent
 import com.gang.library.common.utils.permissions.BasePermissionActivity
-import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.base_title_bar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 /**
  * Created by haoruigang on 2018-4-3 09:51:22 继承权限父类
@@ -34,7 +33,6 @@ abstract class BaseActivity : BasePermissionActivity() {
         }
         AppManager.appManager?.addActivity(this)
         CrashHandler.instance?.init(this) //初始化全局异常管理
-        StatusBarUtil.setTranslucent(this, 30)// 状态栏半透明 statusBarAlpha值需要在 0 ~ 255,默认值是112
         initView(savedInstanceState)
         initData()
         onClick()
@@ -108,6 +106,6 @@ abstract class BaseActivity : BasePermissionActivity() {
 
     //Eventbus
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    open fun onEvent(event: ToUIEvent?) {
+    open fun onEvent(objects: Objects) {
     }
 }

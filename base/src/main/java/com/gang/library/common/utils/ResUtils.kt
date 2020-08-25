@@ -15,7 +15,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
-import com.luck.picture.lib.tools.PictureFileUtils
 import java.io.*
 
 /**
@@ -91,21 +90,21 @@ object ResUtils {
                 imageUri
             )
         ) {
-            if (PictureFileUtils.isExternalStorageDocument(imageUri)) {
+            if (FileUtils.isExternalStorageDocument(imageUri)) {
                 val docId = DocumentsContract.getDocumentId(imageUri)
                 val split = docId.split(":").toTypedArray()
                 val type = split[0]
                 if ("primary".equals(type, ignoreCase = true)) {
                     return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
                 }
-            } else if (PictureFileUtils.isDownloadsDocument(imageUri)) {
+            } else if (FileUtils.isDownloadsDocument(imageUri)) {
                 val id = DocumentsContract.getDocumentId(imageUri)
                 val contentUri = ContentUris.withAppendedId(
                     Uri.parse("content://downloads/public_downloads"),
                     java.lang.Long.valueOf(id)
                 )
-                return PictureFileUtils.getDataColumn(context, contentUri, null, null)
-            } else if (PictureFileUtils.isMediaDocument(imageUri)) {
+                return FileUtils.getDataColumn(context, contentUri, null, null)
+            } else if (FileUtils.isMediaDocument(imageUri)) {
                 val docId = DocumentsContract.getDocumentId(imageUri)
                 val split = docId.split(":").toTypedArray()
                 val type = split[0]
@@ -124,7 +123,7 @@ object ResUtils {
                 val selection = MediaStore.Images.Media._ID + "=?"
                 val selectionArgs =
                     arrayOf(split[1])
-                return PictureFileUtils.getDataColumn(context, contentUri, selection, selectionArgs)
+                return FileUtils.getDataColumn(context, contentUri, selection, selectionArgs)
             }
         } // MediaStore (and general)
         else if ("content".equals(
@@ -132,7 +131,7 @@ object ResUtils {
                 ignoreCase = true
             )
         ) { // Return the remote address
-            return if (PictureFileUtils.isGooglePhotosUri(imageUri)) imageUri.lastPathSegment else PictureFileUtils.getDataColumn(
+            return if (FileUtils.isGooglePhotosUri(imageUri)) imageUri.lastPathSegment else FileUtils.getDataColumn(
                 context,
                 imageUri,
                 null,

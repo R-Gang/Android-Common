@@ -7,6 +7,7 @@ import com.gang.library.common.utils.U
 import com.gang.library.ui.interfaces.Setter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.util.*
 
 /**
  *
@@ -54,8 +55,8 @@ enum class UserManager {
     }
 
     @Subscribe
-    fun onEvent(event: ToUIEvent?) {
-        event?.apply {
+    fun onEvent(objects: Objects) {
+        objects.apply {
 
         }
     }

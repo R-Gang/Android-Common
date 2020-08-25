@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/gif_tag"
+            android:background="@color/blueHome"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/refresh_try"
