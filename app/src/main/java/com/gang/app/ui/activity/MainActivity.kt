@@ -11,11 +11,11 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.gang.app.R
+import com.gang.app.ui.fragment.HomeFragment
+import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil
-import com.gang.app.ui.fragment.HomeFragment
-import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +27,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private var position = 0
     private var homeFragment: HomeFragment? = null
-    private var teacherFragment: MyFragment? = null
+    private var myFragment: MyFragment? = null
 
     override val layoutId: Int
         get() = R.layout.activity_main
@@ -77,11 +77,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     ft.show(homeFragment!!)
                 }
             1 ->  //动态
-                if (null == teacherFragment) {
-                    teacherFragment = MyFragment()
-                    ft.add(R.id.ll_content, teacherFragment!!)
+                if (null == myFragment) {
+                    myFragment = MyFragment()
+                    ft.add(R.id.ll_content, myFragment!!)
                 } else {
-                    ft.show(teacherFragment!!)
+                    ft.show(myFragment!!)
                 }
 
         }
@@ -89,8 +89,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun hideFragments(ft: FragmentTransaction) {
-        if (null != teacherFragment) ft.hide(teacherFragment!!)
         if (null != homeFragment) ft.hide(homeFragment!!)
+        if (null != myFragment) ft.hide(myFragment!!)
     }
 
     //控制normal 状态的当前View 隐藏，其它空间仍然为显示
@@ -98,7 +98,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         object : Setter<TextView, TextView> {
             override fun set(view: TextView, value: TextView?, index: Int) {
                 assert(value != null)
-                view.isSelected = view.id == value!!.id
+                view.isSelected = view.id == value?.id
             }
         }
 
