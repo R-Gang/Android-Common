@@ -19,8 +19,9 @@ object Config {
 
     //CALL_PHONE权限
     const val RC_CALL_PHONE = 100
-    const val REQUEST_CODE_WRITE = 102
+    const val REQUEST_CODE_WRITE = 101
 
+    // 文件类型
     const val TYPE_ALL = 0
     const val TYPE_IMAGE = 1
     const val TYPE_VIDEO = 2
@@ -32,5 +33,13 @@ object Config {
     const val TYPE_ZIP = 8
     const val TYPE_FILE = 9
 
-    var isShowLog = BuildConfig.DEBUG // 是否显示日志
+    // 是否显示日志
+    var isShowLog = BuildConfig.DEBUG
+
+    // 阿里云配置参数
+    var accessKeyId = ""
+    var accessKeySecret = ""
+    var ossBucket = ""
+    var ENDPOINT = "http://oss-cn-beijing.aliyuncs.com/"
+    var OSS_URL = "https://$ossBucket.oss-cn-beijing.aliyuncs.com/"
 }

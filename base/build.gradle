@@ -71,6 +71,9 @@ dependencies {
     // BGA Zxing
     api 'cn.yipianfengye.android:zxing-library:2.2'
 
+    //aliyun
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.2'
+
     // okhttp
     api 'com.lzy.net:okhttputils:1.8.1'
 

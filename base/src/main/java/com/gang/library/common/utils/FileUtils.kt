@@ -651,4 +651,21 @@ object FileUtils {
             }
         return cachePath
     }
+
+    /**
+     * 判断文件是否存在
+     * @param strFile
+     * @return
+     */
+    fun fileIsExists(strFile: String?): Boolean {
+        try {
+            val f = File(strFile)
+            if (!f.exists()) {
+                return false
+            }
+        } catch (e: Exception) {
+            return false
+        }
+        return true
+    }
 }
