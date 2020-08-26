@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.ViewPropertyTransition
@@ -35,6 +36,12 @@ object GlideUtils {
             fadeAnim.duration = 233
             fadeAnim.start()
         }
+
+    // 获取 Glide
+    fun Glide(context: Context
+    ): RequestManager { //通过RequestOptions扩展功能
+        return Glide.with(context)
+    }
 
     // Glide 配置
     @SuppressLint("CheckResult")

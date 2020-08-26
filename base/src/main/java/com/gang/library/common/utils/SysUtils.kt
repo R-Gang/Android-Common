@@ -40,8 +40,8 @@ object SysUtils {
 
     //获取CALL_PHONE权限 haoruigang on 2018-4-3 15:29:46
     fun getCallPhone(context: Context, stuPhone: String) {
-        (context as BaseActivity).requestPermission(
-            Config.RC_CALL_PHONE, arrayOf(Manifest.permission.CALL_PHONE),
+        (context as BaseActivity).requestPermission(Config.RC_CALL_PHONE,
+            arrayOf(Manifest.permission.CALL_PHONE),
             context.getString(R.string.rationale_call_phone),
             object : PermissionCallBackM {
                 @SuppressLint("MissingPermission")

@@ -1,4 +1,4 @@
-package com.gang.library.ui.interfaces
+package com.gang.library.common.view.smartrefresh
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 

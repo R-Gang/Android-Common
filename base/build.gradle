@@ -77,17 +77,11 @@ dependencies {
     // retrofit
     api rootProject.ext.dependencies["converter-gson"]
 
-    // easypermissions 权限
-    api 'pub.devrel:easypermissions:1.2.0'
-
     // xrecyclerview
-    api('com.jcodecraeer:xrecyclerview:1.5.9')
+    api 'com.jcodecraeer:xrecyclerview:1.6.0'
 
     // dialog
-    api 'com.github.ForgetAll:LoadingDialog:v1.0.4'
-
-    // 沉浸式状态栏
-    api 'com.jaeger.statusbarutil:library:1.5.0'
+    api 'com.github.ForgetAll:LoadingDialog:v1.1.2'
 
     // 圆角图片
     api 'com.makeramen:roundedimageview:2.3.0'

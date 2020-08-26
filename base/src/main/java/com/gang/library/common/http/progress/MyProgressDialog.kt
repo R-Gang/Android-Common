@@ -1,6 +1,7 @@
 package com.gang.library.common.http.progress
 
 import android.app.Activity
+import android.content.Context
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog
 
 /**
@@ -19,7 +20,7 @@ import com.xiasuhuei321.loadingdialog.view.LoadingDialog
 class MyProgressDialog : LoadingDialog {
     private var activity: Activity?
     private var isDismiss = false
-    var isShow = false
+    private var isShow = false
 
     /**
      * 不可取消(true不可，false可取消)
@@ -65,6 +66,13 @@ class MyProgressDialog : LoadingDialog {
         if (activity != null && !activity!!.isFinishing) {
             super.close()
             isShow = false
+        }
+    }
+
+    companion object {
+        // LoadingDialog 自定义参数
+        fun get(context: Context): LoadingDialog {
+            return LoadingDialog(context)
         }
     }
 }

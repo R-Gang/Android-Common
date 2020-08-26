@@ -1,4 +1,4 @@
-package com.gang.library.common.view.xrecyclerview
+package com.gang.library.common.view.manager
 
 import android.content.Context
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -79,7 +79,8 @@ class LayoutManager {
         val instance: LayoutManager?
             get() {
                 if (null == mInstance) {
-                    mInstance = LayoutManager()
+                    mInstance =
+                        LayoutManager()
                 }
                 return mInstance
             }

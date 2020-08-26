@@ -1,4 +1,4 @@
-package com.gang.library.common.view.xrecyclerview
+package com.gang.library.common.view.manager
 
 import android.content.Context
 import android.view.View

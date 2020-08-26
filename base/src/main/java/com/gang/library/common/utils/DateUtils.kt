@@ -35,7 +35,7 @@ object DateUtils {
     fun getDateToString(milSecond: Long, pattern: String?): String {
         var milSecond = milSecond
         if (milSecond < 100000000000L) {
-            milSecond = milSecond * 1000
+            milSecond *= 1000
         }
         val date = Date(milSecond)
         val format = SimpleDateFormat(pattern)
@@ -60,7 +60,7 @@ object DateUtils {
         }
         var milSecond = time.toLong()
         if (milSecond < 100000000000L) {
-            milSecond = milSecond * 1000
+            milSecond *= 1000
         }
         val date = Date(milSecond)
         return GetFriendlyTime(date)

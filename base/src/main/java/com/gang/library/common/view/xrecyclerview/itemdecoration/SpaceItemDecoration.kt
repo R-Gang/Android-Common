@@ -1,4 +1,4 @@
-package com.gang.library.common.view.xrecyclerview
+package com.gang.library.common.view.xrecyclerview.itemdecoration
 
 import android.graphics.Canvas
 import android.graphics.Rect

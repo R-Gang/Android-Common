@@ -5,7 +5,8 @@ import android.content.Context
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
-import com.apkfuns.logutils.LogUtils
+import com.gang.library.common.user.Config
+import com.gang.library.common.utils.LogUtils
 import com.tencent.smtt.sdk.QbSdk
 
 
@@ -20,10 +21,11 @@ open class BaseApplication : Application() {
     private fun init() { //
         // 初始化Logger 是否开启日志
         LogUtils.getLogConfig()
-            .configAllowLog(BuildConfig.DEBUG)
+            .configAllowLog(Config.isShowLog)
             .configTagPrefix(resources.getString(R.string.app_name))
             .configShowBorders(true)
             .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")
+
         struct()
 
         val cb = object : QbSdk.PreInitCallback {

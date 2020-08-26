@@ -8,4 +8,12 @@
     <string name="rationale_call_phone">这个应用程序需要访问你的电话。</string>
     <string name="rationale_file">这个应用程序需要访问你读取权限，这样你就可以查看文件了。</string>
 
+    <!--    api 'pub.devrel:easypermissions:1.2.0'-->
+    <string name="rationale_ask">This app may not work correctly without the requested permissions.</string>
+    <string name="rationale_ask_again">
+        This app may not work correctly without the requested permissions.
+        Open the app settings screen to modify app permissions.
+    </string>
+    <string name="title_settings_dialog">Permissions Required</string>
+
 </resources>

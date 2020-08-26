@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorAccent">#ff80cbc4</color>
+    <color name="colorPrimary">#ff212121</color>
+    <color name="colorPrimaryDark">@android:color/black</color>
+
     <!--白色透明度-->
     <color name="white">#FFFFFF</color>
     <color name="transparency_white_60">#E0FFFFFF</color>

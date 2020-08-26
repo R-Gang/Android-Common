@@ -11,11 +11,14 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.gang.app.R
+import com.gang.app.common.user.ToUIEvent
 import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
+import com.gang.library.common.EventBus
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil
+import com.gang.library.common.utils.U
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -86,6 +89,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         }
         ft.commitAllowingStateLoss()
+        // eventbus 演示
+        EventBus.post(ToUIEvent(ToUIEvent.MESSAGE_EVENT, index))
     }
 
     private fun hideFragments(ft: FragmentTransaction) {
@@ -118,4 +123,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         return super.dispatchKeyEvent(paramKeyEvent)
     }
 
+    // eventbus 演示
+    override fun onEvent(any: Any) {
+        (any as ToUIEvent).apply {
+            if (tag == ToUIEvent.MESSAGE_EVENT) {
+                U.showToast(obj.toString())
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.gang.library.ui.interfaces
+package com.gang.library.common.view.smartrefresh
 
 /**
  *
@@ -25,7 +25,8 @@ interface RefreshCallBack {
 
 }
 
-open class SmartRefresh : RefreshCallBack {
+open class SmartRefresh :
+    RefreshCallBack {
     override fun finishSuccessRefresh() {
 
     }

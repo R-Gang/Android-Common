@@ -3,10 +3,11 @@ package com.gang.app.ui.fragment
 import android.os.Bundle
 import android.view.View
 import com.gang.app.R
-import com.gang.library.common.view.xrecyclerview.LayoutManager
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
+import com.gang.library.common.view.manager.LayoutManager
 import com.gang.library.ui.fragment.BaseFragment
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -22,6 +23,8 @@ class HomeFragment : BaseFragment() {
 
     override fun initView(view: View?, savedInstanceState: Bundle?) {
 
+        refresh_layout.refreshHeader = ClassicsHeader(mActivity)
+        refresh_layout.setOnRefreshListener {}
     }
 
     override fun initData() {
