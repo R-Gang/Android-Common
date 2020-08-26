@@ -33,14 +33,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-//    signingConfigs {
-//        configs {
-//            keyAlias 'gang'
-//            keyPassword 'gang'
-//            storeFile file('../gang.jks')
-//            storePassword 'gang'
-//        }
-//    }
+    signingConfigs {
+        configs {
+            keyAlias 'gang'
+            keyPassword 'ruigang'
+            storeFile file('../gang.jks')
+            storePassword 'ruigang'
+        }
+    }
 
     buildTypes {
         release {
@@ -49,7 +49,7 @@ android {
             zipAlignEnabled true
             minifyEnabled false
             shrinkResources false
-//            signingConfig signingConfigs.configs
+            signingConfig signingConfigs.configs
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -61,14 +61,14 @@ android {
             minifyEnabled false
             // 移除无用的resource文件
             shrinkResources false
-//            signingConfig signingConfigs.configs
+            signingConfig signingConfigs.configs
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "HFZX_${variant.versionName}_${releaseTime()}.apk"
+            outputFileName = "Gang_${variant.versionName}_${releaseTime()}.apk"
 //${variant.versionCode}_
         }
     }
