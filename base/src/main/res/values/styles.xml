@@ -54,4 +54,28 @@
         <attr name="fv_repeatBt" format="string" />
     </declare-styleable>
 
+    <!--LoadingDialog-->
+    <attr name="speed">
+        <enum name="speedOne" value="1" />
+        <enum name="speedTwo" value="2" />
+    </attr>
+    <attr name="strokeColor" format="color" />
+    <declare-styleable name="RightDiaView">
+        <attr name="strokeColor" />
+        <attr name="speed" />
+    </declare-styleable>
+    <declare-styleable name="WrongDiaView">
+        <attr name="strokeColor" />
+        <attr name="speed" />
+    </declare-styleable>
+
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>

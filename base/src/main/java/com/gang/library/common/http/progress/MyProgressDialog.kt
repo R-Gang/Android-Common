@@ -2,8 +2,7 @@ package com.gang.library.common.http.progress
 
 import android.app.Activity
 import android.content.Context
-import com.xiasuhuei321.loadingdialog.view.LoadingDialog
-
+import com.gang.library.common.view.loadingdialog.view.LoadingDialog
 /**
  *
  * @ProjectName:    gang

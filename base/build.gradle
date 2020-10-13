@@ -83,9 +83,6 @@ dependencies {
     // xrecyclerview
     api 'com.jcodecraeer:xrecyclerview:1.6.0'
 
-    // dialog
-    api 'com.github.ForgetAll:LoadingDialog:v1.1.2'
-
     // 圆角图片
     api 'com.makeramen:roundedimageview:2.3.0'
 
