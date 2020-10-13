@@ -549,16 +549,36 @@ object U {
         return s.trim { it <= ' ' }.replace(" ", "")
     }
 
-    //把dp转换成px
+    /**
+     * dp转px
+     */
     fun dip2px(context: Context, dpValue: Float): Int {
         val scale = context.resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
     }
 
-    //把px转换成dp
+    /**
+     * px转dp
+     */
     fun px2dip(context: Context, pxValue: Float): Int {
         val scale = context.resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
+    }
+
+    /**
+     * px转sp
+     */
+    fun px2sp(context: Context, spValue: Float): Int {
+        val fontScale = context.resources.displayMetrics.scaledDensity
+        return (spValue / fontScale + 0.5f).toInt()
+    }
+
+    /**
+     * sp转px
+     */
+    fun sp2px(context: Context, spValue: Float): Int {
+        val fontScale = context.resources.displayMetrics.scaledDensity
+        return (spValue * fontScale + 0.5f).toInt()
     }
 
     /**
