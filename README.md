@@ -11,5 +11,5 @@
     }
 
     dependencies {
-         implementation 'com.github.R-Gang:Android-Common:0.1.0'
+         implementation 'com.github.R-Gang:Android-Common:latest.release'
     }
