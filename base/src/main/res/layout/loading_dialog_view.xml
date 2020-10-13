@@ -8,25 +8,25 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <com.xiasuhuei321.loadingdialog.view.LVCircularRing
+    <com.gang.library.common.view.loadingdialog.view.LVCircularRing
         android:id="@+id/lv_circularring"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:visibility="gone" />
 
-    <com.xiasuhuei321.loadingdialog.view.LoadCircleView
+    <com.gang.library.common.view.loadingdialog.view.LoadCircleView
         android:id="@+id/lcv_circleload"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:visibility="visible" />
 
-    <com.xiasuhuei321.loadingdialog.view.RightDiaView
+    <com.gang.library.common.view.loadingdialog.view.RightDiaView
         android:id="@+id/rdv_right"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:visibility="gone" />
 
-    <com.xiasuhuei321.loadingdialog.view.WrongDiaView
+    <com.gang.library.common.view.loadingdialog.view.WrongDiaView
         android:id="@+id/wv_wrong"
         android:layout_width="50dp"
         android:layout_height="50dp"
