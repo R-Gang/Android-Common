@@ -160,22 +160,22 @@ class WrongDiaView @JvmOverloads constructor(
      *
      * @param times 重复次数，例如设置1，除了第一次绘制还会额外重绘一次
      */
-    protected fun setRepeatTime(times: Int) {
+    fun setRepeatTime(times: Int) {
         if (drawEveryTime) this.times = times
     }
 
     /**
      * 动态画出还是直接画出
      */
-    protected fun setDrawDynamic(drawEveryTime: Boolean) {
+    fun setDrawDynamic(drawEveryTime: Boolean) {
         this.drawEveryTime = drawEveryTime
     }
 
     /**
      * 设置速度
      */
-    protected fun setSpeed(speed: Int) {
-        require(!(speed <= 0 && speed >= 3)) {
+    fun setSpeed(speed: Int) {
+        require(speed !in 3 downTo 0) {
             "how can u set this speed??  " + speed + "  do not " +
                     "use reflect to use this method!u can see the LoadingDialog class for how to" +
                     "set the speed"
@@ -183,7 +183,7 @@ class WrongDiaView @JvmOverloads constructor(
         this.speed = speed
     }
 
-    protected fun setDrawColor(color: Int) {
+    fun setDrawColor(color: Int) {
         mPaint!!.color = color
     }
 

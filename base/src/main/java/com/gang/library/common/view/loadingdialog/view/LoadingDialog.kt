@@ -76,8 +76,8 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
         viewList.add(mSuccessView)
         viewList.add(mFailedView)
         viewList.add(mCircleLoadView)
-        mSuccessView!!.setOnDrawFinishListener(this)
-        mFailedView!!.setOnDrawFinishListener(this)
+        mSuccessView.setOnDrawFinishListener(this)
+        mFailedView.setOnDrawFinishListener(this)
     }
 
     override fun dispatchFinishEvent(v: View?) {
@@ -98,15 +98,15 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
 
     private fun setParams(size: Int) {
         if (size < 0) return
-        val successParams = mSuccessView!!.layoutParams
+        val successParams = mSuccessView.layoutParams
         successParams.height = size
         successParams.width = size
-        mSuccessView!!.layoutParams = successParams
-        val failedParams = mFailedView!!.layoutParams
+        mSuccessView.layoutParams = successParams
+        val failedParams = mFailedView.layoutParams
         failedParams.height = size
         failedParams.width = size
-        mFailedView!!.layoutParams = failedParams
-        val loadingParams = mLoadingView!!.layoutParams
+        mFailedView.layoutParams = failedParams
+        val loadingParams = mLoadingView.layoutParams
         loadingParams.height = size
         loadingParams.width = size
     }
@@ -146,14 +146,14 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
     open fun show() {
         hideAll()
         if (loadStyle == STYLE_RING) {
-            mLoadingView!!.visibility = View.VISIBLE
+            mLoadingView.visibility = View.VISIBLE
             mCircleLoadView!!.visibility = View.GONE
             mLoadingDialog!!.show()
-            mLoadingView!!.startAnim()
+            mLoadingView.startAnim()
             Log.i("show", "style_ring")
         } else if (loadStyle == STYLE_LINE) {
             mCircleLoadView!!.visibility = View.VISIBLE
-            mLoadingView!!.visibility = View.GONE
+            mLoadingView.visibility = View.GONE
             mLoadingDialog!!.show()
             Log.i("show", "style_line")
         }
@@ -179,7 +179,7 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
     fun close() {
         h.removeCallbacksAndMessages(null)
         if (mLoadingDialog != null) {
-            mLoadingView!!.stopAnim()
+            mLoadingView.stopAnim()
             mLoadingDialog.dismiss()
         }
     }
@@ -192,9 +192,9 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
      */
     fun setLoadingText(msg: String?): LoadingDialog {
         if (msg != null) {
-            loadingText!!.visibility = View.VISIBLE
-            loadingText!!.text = msg
-        } else loadingText!!.visibility = View.GONE
+            loadingText.visibility = View.VISIBLE
+            loadingText.text = msg
+        } else loadingText.visibility = View.GONE
         return this
     }
 
@@ -226,7 +226,7 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
      * 当你需要一个成功的反馈的时候，在加载成功的回调中调用此方法
      */
     fun loadSuccess() {
-        mLoadingView!!.stopAnim()
+        mLoadingView.stopAnim()
         hideAll()
         mSuccessView.setDrawDynamic(openSuccessAnim)
         mSuccessView.visibility = View.VISIBLE
@@ -244,7 +244,7 @@ open class LoadingDialog(private var mContext: Context?) : FinishDrawListener {
      * 当你需要一个失败的反馈的时候，在加载失败的回调中调用此方法
      */
     fun loadFailed() {
-        mLoadingView!!.stopAnim()
+        mLoadingView.stopAnim()
         hideAll()
         mFailedView.setDrawDynamic(openFailedAnim)
         mFailedView.visibility = View.VISIBLE

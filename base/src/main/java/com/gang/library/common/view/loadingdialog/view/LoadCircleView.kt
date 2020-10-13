@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import com.gang.library.common.utils.U
 
 /**
  * Created by xiasuhuei321 on 2017/5/15.
@@ -45,7 +46,7 @@ class LoadCircleView @JvmOverloads constructor(
             } else if (widthSpecMode != MeasureSpec.AT_MOST) {
                 widthSpecSize
             } else {
-                SizeUtils.dip2px(mContext, 50f)
+                U.dip2px(mContext, 50f)
             }
         setMeasuredDimension(mWidth, mWidth)
         mPadding = 8f
