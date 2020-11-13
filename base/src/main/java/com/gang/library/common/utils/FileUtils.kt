@@ -668,4 +668,80 @@ object FileUtils {
         }
         return true
     }
+
+    // 遍历文件夹下所有文件
+    private fun loopRead(dir: File, sb: StringBuffer) {
+        val files = dir.listFiles()
+        if (files != null) for (file in files) {
+            if (file.isDirectory) {
+                loopRead(file, sb)
+            } else {
+                if (file.length() != 0L) {
+                    sb.append(readFileToString(file))
+                }
+            }
+        }
+    }
+
+    //读取文件里面的内容
+    private fun readFileToString(file: File): String? {
+        var br: BufferedReader? = null
+        val sb = StringBuilder()
+        try {
+            br = BufferedReader(FileReader(file))
+            var line: String? = null
+            while (br.readLine().also { line = it } != null) {
+                val s = line!!.trim { it <= ' ' }
+                if (s.length == 0) {
+                    continue
+                }
+                if (s.startsWith("/") || s.startsWith("*")) {
+                    continue
+                }
+                sb.append(line).append("\n")
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                br?.close()
+            } catch (e2: java.lang.Exception) {
+                e2.printStackTrace()
+            }
+        }
+        return sb.toString()
+    }
+
+    //将读取的路径以及相应的内容写入指定的文件
+    private fun write(str: String, writer: Writer?) {
+        try {
+            writer!!.write(str)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                writer?.close()
+            } catch (e2: java.lang.Exception) {
+                e2.printStackTrace()
+            }
+        }
+    }
+
+    /**
+     *  申请软著代码复制删除注释和空行
+     *
+     *  PROJECT_URL : 扫描的源代码
+     *  OUT_PATH : 文档输出路径
+     */
+    fun codeSource(PROJECT_URL: String, OUT_PATH: String) {
+        //文件读取路径
+        val dir = File(PROJECT_URL)
+        //文件输出路径
+        val target = File(OUT_PATH)
+        val bw = BufferedWriter(FileWriter(target))
+
+        val sb = StringBuffer()
+        loopRead(dir, sb)
+        write(sb.toString(), bw)
+    }
 }

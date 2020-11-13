@@ -1,8 +1,12 @@
 package com.gang.library.common.view.xrecyclerview.xrecycleradapter
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemLongClick
@@ -12,37 +16,58 @@ abstract class XrecyclerAdapter : RecyclerView.Adapter<XrecyclerViewHolder> {
     var datas = mutableListOf<Any>()
     var onItemClick: ViewOnItemClick? = null
     var longClick: ViewOnItemLongClick? = null
-    var mContext: Context
+    private var mObject: Any? = null
+    lateinit var mContext: Context
+
+    constructor(`object`: Any) {
+        instanceofObj(`object`)
+    }
 
     //为butter准备的构造
-    constructor(datas: MutableList<*>, context: Context) {
+    constructor(datas: MutableList<*>, `object`: Any) {
         this.datas.clear()
         this.datas.addAll(datas as ArrayList<*>)
-        mContext = context
+        instanceofObj(`object`)
     }
 
     constructor(
         datas: MutableList<*>,
-        context: Context,
+        `object`: Any,
         onItemClick1: ViewOnItemClick,
         onItemLongClick: ViewOnItemLongClick
     ) {
         this.datas.clear()
         this.datas.addAll(datas as ArrayList<*>)
-        mContext = context
+        instanceofObj(`object`)
         onItemClick = onItemClick1
         longClick = onItemLongClick
     }
 
     constructor(
         datas: MutableList<*>,
-        context: Context,
+        `object`: Any,
         onItemClick1: ViewOnItemClick
     ) {
         this.datas.clear()
         this.datas.addAll(datas as ArrayList<*>)
-        mContext = context
+        instanceofObj(`object`)
         onItemClick = onItemClick1
+    }
+
+    @SuppressLint("UseRequireInsteadOfGet")
+    private fun instanceofObj(`object`: Any) {
+        mObject = `object`
+        when (`object`) {
+            is Fragment -> {
+                mContext = `object`.context!!
+            }
+            is Activity -> {
+                mContext = `object`
+            }
+            is View -> {
+                mContext = `object`.context
+            }
+        }
     }
 
     //创建新View，被LayoutManager所调用

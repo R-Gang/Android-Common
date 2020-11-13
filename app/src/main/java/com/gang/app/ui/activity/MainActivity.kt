@@ -50,7 +50,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         radioButtons.forEach { it.setOnClickListener(this) }
         setChioceItem(position)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //判断是否需要开启通知栏功能
-            NotifiUtil.OpenNotificationSetting(this, null)
+            NotifiUtil.OpenNotificationSetting(this, null, "")
         }
     }
 

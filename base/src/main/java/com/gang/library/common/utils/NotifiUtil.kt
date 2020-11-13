@@ -34,10 +34,11 @@ class NotifiUtil {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         fun OpenNotificationSetting(
             context: Context,
-            mOnNextLitener: OnNextLitener?
+            mOnNextLitener: OnNextLitener?,
+            appName: String?
         ) {
             if (!isNotificationEnabled(context)) {
-                showSettingDialog(context)
+                showSettingDialog(context, appName)
             } else {
                 mOnNextLitener?.onNext()
             }
@@ -104,9 +105,9 @@ class NotifiUtil {
             context.startActivity(intent)
         }
 
-        private fun showSettingDialog(mContext: Context) { //提示弹窗
+        private fun showSettingDialog(mContext: Context, appName: String?) { //提示弹窗
             val dialog: Dialog = AlertDialog.Builder(mContext)
-                .setTitle("开启推送实时接收维保信息")
+                .setTitle("开启推送实时接收" + appName + "信息")
                 .setPositiveButton(
                     "通知我"
                 ) { dialog12: DialogInterface, which: Int ->

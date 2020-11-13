@@ -12,7 +12,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView
 /**
  * Date: 2019/4/10
  * Author: haoruigang
- * Description: com.zhuangxiuweibao.app.common.view.xrecyclerview
+ * Description: xrecyclerview 管理
  */
 class LayoutManager {
 
@@ -34,10 +34,11 @@ class LayoutManager {
         return manager
     }
 
-    fun initRecyclerGrid(recyclerView: RecyclerView, span: Int) {
+    fun initRecyclerGrid(recyclerView: RecyclerView, span: Int): GridLayoutManager {
         val manager = GridLayoutManager(mContext, span)
         manager.orientation = RecyclerView.VERTICAL
         recyclerView.layoutManager = manager
+        return manager
     }
 
     //    初始化 RecyclerView的配置

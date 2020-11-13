@@ -9,7 +9,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView
  * @ProjectName:    Android-Common
  * @Package:        com.gang.library.common.view.xrecyclerview
  * @ClassName:      XRecyclerView
- * @Description:    XRecyclerView
+ * @Description:    XRecyclerView 刷新
  * @Author:         haoruigang
  * @CreateDate:     2020/8/25 16:48
  * @UpdateUser:     更新者：
