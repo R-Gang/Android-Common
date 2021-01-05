@@ -1,10 +1,12 @@
 package com.gang.app.ui.activity
 
+import android.app.Activity
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.Window
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -18,7 +20,10 @@ import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil
+import com.gang.library.common.utils.StatusBarUtil
 import com.gang.library.common.utils.U
+import com.gang.library.common.utils.notch.CutoutUtil
+import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +49,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         // 目前kotlin-android-extensions暂时还不支持跨模块
         findViewById<RelativeLayout>(R.id.rl_back_button).visibility = View.GONE
         findViewById<TextView>(R.id.tv_title).text = resources.getString(R.string.app_name)
+    }
+
+    override fun onNotchCreate(activity: Activity?) {
+        //去掉标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        //全屏显示
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+        // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
     }
 
     override fun initData() {
