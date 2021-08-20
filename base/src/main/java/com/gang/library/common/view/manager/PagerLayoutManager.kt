@@ -1,4 +1,4 @@
-package com.gang.app.common.view.manager
+package com.gang.library.common.view.manager
 
 import android.content.Context
 import android.view.View
@@ -13,10 +13,11 @@ import com.gang.library.common.view.srecyclerview.OnPageChangeListener
  */
 class PagerLayoutManager internal constructor(context: Context?) : LinearLayoutManager(context),
     OnChildAttachStateChangeListener {
-    private val mPagerSnapHelper: PagerSnapHelper = PagerSnapHelper()
-    private var mOnPageChangeListener: OnPageChangeListener? = null
-    private var currentPostion = 0
-    private var haveSelect = false
+    val mPagerSnapHelper: PagerSnapHelper = PagerSnapHelper()
+    var mOnPageChangeListener: OnPageChangeListener? = null
+    var currentPostion = 0
+    var haveSelect = false
+
     override fun onAttachedToWindow(view: RecyclerView) {
         view.addOnChildAttachStateChangeListener(this)
         mPagerSnapHelper.attachToRecyclerView(view)

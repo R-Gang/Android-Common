@@ -15,11 +15,11 @@ import kotlinx.android.synthetic.main.base_title_bar.*
  * Created by haoruigang on 2019-3-8 18:19:23.
  * 关于
  */
-class WebViewActivity : BaseActivity() {
+open class WebViewActivity : BaseActivity() {
 
 
-    var tvTitle: TextView = tv_title
-    var wbXy: WebView = wb_xy
+    lateinit var tvTitle: TextView
+    lateinit var wbXy: WebView
 
     private var mUrl: String? = ""
     private var mTitleName: String? = ""
@@ -28,11 +28,13 @@ class WebViewActivity : BaseActivity() {
         get() = R.layout.activity_webview
 
     override fun initView(savedInstanceState: Bundle?) {
-        fileUrlByIntent
+        tvTitle = findViewById(R.id.tv_title)
+        wbXy = findViewById(R.id.wb_xy)
     }
 
     override fun initData() {
-
+        fileUrlByIntent
+        mUrl?.let { setUrl(it) }
     }
 
     private fun setUrl(url: String) { //声明WebSettings子类

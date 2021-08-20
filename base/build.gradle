@@ -72,10 +72,13 @@ dependencies {
     api 'cn.yipianfengye.android:zxing-library:2.2'
 
     //aliyun
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.2'
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.2'
 
     // okhttp
     api 'com.lzy.net:okhttputils:1.8.1'
+
+    // okgo
+    api 'com.lzy.net:okgo:3.0.4'
 
     // retrofit
     api rootProject.ext.dependencies["converter-gson"]
@@ -91,5 +94,10 @@ dependencies {
 
     // x5 tbs
     api 'com.klinkerapps:android-smsmms:5.1.0'
+
+    // 版本更新
+    api 'com.qianwen:update-app:3.5.2'
+    // 版本更新用的okhttp-utils,okgo
+    api 'com.qianwen:okhttp-utils:3.8.0'
 
 }

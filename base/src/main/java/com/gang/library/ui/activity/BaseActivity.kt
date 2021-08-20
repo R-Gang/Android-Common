@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
@@ -15,7 +13,6 @@ import com.gang.library.common.EventBus
 import com.gang.library.common.utils.StatusBarUtil
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
-import com.gang.library.common.utils.notch.callback.NotchCallback
 import com.gang.library.common.utils.permissions.BasePermissionActivity
 import kotlinx.android.synthetic.main.base_title_bar.*
 import org.greenrobot.eventbus.Subscribe
@@ -38,6 +35,13 @@ abstract class BaseActivity : BasePermissionActivity() {
             EventBus.register(this) //注册EventBus
         }
 
+        AppManager.appManager?.addActivity(this)
+        CrashHandler.instance?.init(this) //初始化全局异常管理
+        StatusBarUtil.setTransparentForImageView(this, null)
+        initView(savedInstanceState)
+        initData()
+        onClick()
+
         //刘海屏适配
         // 方案一
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -59,15 +63,10 @@ abstract class BaseActivity : BasePermissionActivity() {
             if (this !is CutoutAdapt) {
                 // 需自行将该界面视图元素下移，否则可能会被刘海遮挡
                 onNotchCreate(this)
+            }else{
+                StatusBarUtil.setTranslucent(this, 30)// 状态栏半透明 statusBarAlpha值需要在 0 ~ 255,默认值是112
             }
         }
-
-        AppManager.appManager?.addActivity(this)
-        CrashHandler.instance?.init(this) //初始化全局异常管理
-        StatusBarUtil.setTranslucent(this, 30)// 状态栏半透明 statusBarAlpha值需要在 0 ~ 255,默认值是112
-        initView(savedInstanceState)
-        initData()
-        onClick()
     }
 
     /********************* 子类实现  */ // 获取布局文件

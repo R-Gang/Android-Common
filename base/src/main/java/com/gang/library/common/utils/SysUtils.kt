@@ -12,6 +12,7 @@ import com.gang.library.common.user.Config
 import com.gang.library.common.utils.permissions.PermissionCallBackM
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.activity.FileDisplayActivity
+import com.gang.library.ui.activity.WebViewActivity
 
 /**
  *
@@ -71,6 +72,23 @@ object SysUtils {
             object : PermissionCallBackM {
                 override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
                     FileDisplayActivity.actionStart(context, filePath, fileName)
+                }
+
+                override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
+                    LogUtils.e("TODO: WRITE_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT)
+                }
+            })
+    }
+
+    //获取WRITE_EXTERNAL_STORAGE权限 haoruigang on 2018-4-3 15:29:46
+    fun actionStartWeb(context: Context, filePath: String, fileName: String) {
+        //动态权限申请
+        (context as BaseActivity).requestPermission(Config.REQUEST_CODE_WRITE,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            context.getString(R.string.rationale_file),
+            object : PermissionCallBackM {
+                override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
+                    WebViewActivity.actionStart(context, filePath, fileName)
                 }
 
                 override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {

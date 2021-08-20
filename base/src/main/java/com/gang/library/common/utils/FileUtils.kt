@@ -40,6 +40,7 @@ object FileUtils {
     const val APP_NAME = "PictureSelector"
     const val CAMERA_PATH = "/$APP_NAME/CameraImage/"
     const val CROP_PATH = "/$APP_NAME/CropImage/"
+
     /**
      * @param context
      * @param type
@@ -105,6 +106,14 @@ object FileUtils {
         }
         return tmpFile
     }
+
+    /**
+     * 获取assets下的网页
+     */
+    fun getAssetFile(url: String): String {
+        return "file:///android_asset/$url"
+    }
+
 
     /**
      * TAG for log messages.

@@ -7,7 +7,9 @@ import android.os.StrictMode.VmPolicy
 import android.util.Log
 import com.gang.library.common.user.Config
 import com.gang.library.common.utils.LogUtils
+import com.lzy.okgo.OkGo
 import com.tencent.smtt.sdk.QbSdk
+import com.zhy.http.okhttp.OkHttpUtils
 
 
 open class BaseApplication : Application() {
@@ -38,6 +40,14 @@ open class BaseApplication : Application() {
         }
         //x5内核初始化接口
         QbSdk.initX5Environment(applicationContext, cb)
+
+
+        // okhttp-utils
+        OkHttpUtils.getInstance()
+            .init(this)
+            .debug(true, "okHttp")
+            .timeout(20 * 1000)
+        OkGo.getInstance().init(this)
     }
 
     //解决NetworkOnMainThreadException异常
