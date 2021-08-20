@@ -56,4 +56,13 @@
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
+
+    <com.gang.app.ui.widget.ColorWheel
+        android:id="@+id/color_wheel"
+        android:layout_marginLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:circle_radius="150dp"
+        app:center_radius="20dp" />
+
 </com.gang.library.common.view.SmartRefreshLayout>

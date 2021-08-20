@@ -82,7 +82,7 @@ static def releaseTime() {
 dependencies {
     // 导航栏
     implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
-    
+
     implementation project(path: ':base')
 
 }
