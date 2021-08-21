@@ -5,8 +5,8 @@ import android.content.Context
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.user.Config
-import com.gang.library.common.utils.LogUtils
 import com.lzy.okgo.OkGo
 import com.tencent.smtt.sdk.QbSdk
 import com.zhy.http.okhttp.OkHttpUtils

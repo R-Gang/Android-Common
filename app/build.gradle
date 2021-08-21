@@ -94,12 +94,18 @@ dependencies {
     // Dex处理
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    //EventBus解耦
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //日志工具类
     implementation 'com.apkfuns.logutils:library:1.7.5'
 
     // SmartRefreshLayout
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4'
+
+    // BGA Zxing
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
 
     // 圆角图片
     implementation 'com.makeramen:roundedimageview:2.3.0'

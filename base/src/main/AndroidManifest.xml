@@ -38,11 +38,11 @@
 
         <!--查看附件-->
         <activity
-            android:name="com.gang.library.ui.activity.FileDisplayActivity"
+            android:name=".ui.activity.FileDisplayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gang.library.ui.activity.WebViewActivity"
+            android:name=".ui.activity.WebViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

@@ -64,7 +64,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 //            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 //
 //        // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
-////        StatusBarUtil.setTransparentForImageView(this, null)
+//        StatusBarUtil.setTransparentForImageView(this, null)
 //    }
 
     override fun initData() {
