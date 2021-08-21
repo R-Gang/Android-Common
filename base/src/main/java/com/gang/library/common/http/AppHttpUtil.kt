@@ -1,26 +1,19 @@
-package com.gang.library.common.http;
+package com.gang.library.common.http
 
-
-import androidx.annotation.NonNull;
-
-import com.vector.update_app.HttpManager;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
-import com.zhy.http.okhttp.callback.StringCallback;
-
-import java.io.File;
-import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.vector.update_app.HttpManager
+import com.zhy.http.okhttp.OkHttpUtils
+import com.zhy.http.okhttp.callback.FileCallBack
+import com.zhy.http.okhttp.callback.StringCallback
+import okhttp3.Call
+import okhttp3.Request
+import okhttp3.Response
+import java.io.File
 
 /**
  * Created by Vector
  * on 2017/6/19 0019.
  */
-
-public class AppHttpUtil implements HttpManager {
+class AppHttpUtil : HttpManager {
     /**
      * 异步get
      *
@@ -28,23 +21,24 @@ public class AppHttpUtil implements HttpManager {
      * @param params   get参数
      * @param callBack 回调
      */
-    @Override
-    public void asyncGet(@NonNull String url, @NonNull Map<String, String> params, @NonNull final HttpManager.Callback callBack) {
+    override fun asyncGet(
+        url: String,
+        params: Map<String, String>,
+        callBack: HttpManager.Callback
+    ) {
         OkHttpUtils.get()
-                .url(url)
-                .params(params)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Response response, Exception e, int id) {
-                        callBack.onError(validateError(e, response));
-                    }
+            .url(url)
+            .params(params)
+            .build()
+            .execute(object : StringCallback() {
+                override fun onError(call: Call, response: Response, e: Exception, id: Int) {
+                    callBack.onError(validateError(e, response))
+                }
 
-                    @Override
-                    public void onResponse(String response, int id) {
-                        callBack.onResponse(response);
-                    }
-                });
+                override fun onResponse(response: String, id: Int) {
+                    callBack.onResponse(response)
+                }
+            })
     }
 
     /**
@@ -54,24 +48,24 @@ public class AppHttpUtil implements HttpManager {
      * @param params   post请求参数
      * @param callBack 回调
      */
-    @Override
-    public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final HttpManager.Callback callBack) {
+    override fun asyncPost(
+        url: String,
+        params: Map<String, String>,
+        callBack: HttpManager.Callback
+    ) {
         OkHttpUtils.post()
-                .url(url)
-                .params(params)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Response response, Exception e, int id) {
-                        callBack.onError(validateError(e, response));
-                    }
+            .url(url)
+            .params(params)
+            .build()
+            .execute(object : StringCallback() {
+                override fun onError(call: Call, response: Response, e: Exception, id: Int) {
+                    callBack.onError(validateError(e, response))
+                }
 
-                    @Override
-                    public void onResponse(String response, int id) {
-                        callBack.onResponse(response);
-                    }
-                });
-
+                override fun onResponse(response: String, id: Int) {
+                    callBack.onResponse(response)
+                }
+            })
     }
 
     /**
@@ -82,34 +76,32 @@ public class AppHttpUtil implements HttpManager {
      * @param fileName 文件名称
      * @param callback 回调
      */
-    @Override
-    public void download(@NonNull String url, @NonNull String path, @NonNull String fileName, @NonNull final HttpManager.FileCallback callback) {
+    override fun download(
+        url: String,
+        path: String,
+        fileName: String,
+        callback: HttpManager.FileCallback
+    ) {
         OkHttpUtils.get()
-                .url(url)
-                .build()
-                .execute(new FileCallBack(path, fileName) {
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
-                        callback.onProgress(progress, total);
-                    }
+            .url(url)
+            .build()
+            .execute(object : FileCallBack(path, fileName) {
+                override fun inProgress(progress: Float, total: Long, id: Int) {
+                    callback.onProgress(progress, total)
+                }
 
-                    @Override
-                    public void onError(Call call, Response response, Exception e, int id) {
-                        callback.onError(validateError(e, response));
-                    }
+                override fun onError(call: Call, response: Response, e: Exception, id: Int) {
+                    callback.onError(validateError(e, response))
+                }
 
-                    @Override
-                    public void onResponse(File response, int id) {
-                        callback.onResponse(response);
+                override fun onResponse(response: File, id: Int) {
+                    callback.onResponse(response)
+                }
 
-                    }
-
-                    @Override
-                    public void onBefore(Request request, int id) {
-                        super.onBefore(request, id);
-                        callback.onBefore();
-                    }
-                });
-
+                override fun onBefore(request: Request, id: Int) {
+                    super.onBefore(request, id)
+                    callback.onBefore()
+                }
+            })
     }
 }

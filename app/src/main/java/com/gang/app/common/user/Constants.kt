@@ -22,6 +22,18 @@ class Constants {
 
         val REQUEST_CODE_WRITE: Int=9090
 
+        // 是否测试服
+        var isTest = true
+
+        //  https://newApiT.ilovegrowth.cn/(测试环境)  http://newapi.acz.1bu2bu.com/（开发环境） https://api.ilovegrowth.cn/（生产环境）
+        private val BASE_API =
+            if (isTest) "http://newapi.acz.1bu2bu.com/" else "https://newApiT.ilovegrowth.cn/"
+
+
+        // 1.获取验证码
+        var GET_RANDOM_CODE = BASE_API + "code"
+
+
     }
 
 }

@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.item_home_menu.view.*
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
+
+/**
+ * 适配器基础使用方式
+ */
 class HomeMenuAdapter(
     datas: MutableList<*>, context: Context, override val layoutResId: Int
 ) :

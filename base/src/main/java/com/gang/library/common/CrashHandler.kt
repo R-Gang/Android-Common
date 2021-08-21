@@ -79,7 +79,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         object : Thread() {
             override fun run() {
                 Looper.prepare()
-                Toast.makeText(mContext, "程序开小差了呢..", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, "休息一下稍后再试..", Toast.LENGTH_SHORT).show()
                 Looper.loop()
             }
         }.start()

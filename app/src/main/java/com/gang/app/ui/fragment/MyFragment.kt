@@ -10,6 +10,8 @@ import com.gang.library.ui.fragment.BaseFragment
 /**
  * 我的
  * Created by haoruigang on 2018/4/23 14:22.
+ *
+ * 1.WebView工具使用方式示例
  */
 class MyFragment : BaseFragment() {
 
@@ -23,12 +25,12 @@ class MyFragment : BaseFragment() {
     }
 
     override fun initData() {
-        SysUtils.actionStartWeb(
-            mActivity,
-            "https://shop90820925.m.youzan.com/v2/showcase/homepage?kdt_id=90628757",
-//            FileUtils.getAssetFile("pullWeiXin.html"),
-//            "https://applinks.dpm.org.cn/pullWeiXin.html",
-            "故宫小店"
-        )
+//        SysUtils.actionStartWeb(
+//            mActivity,
+//            "https://shop90820925.m.youzan.com/v2/showcase/homepage?kdt_id=90628757",
+////            FileUtils.getAssetFile("pullWeiXin.html"),
+////            "https://applinks.dpm.org.cn/pullWeiXin.html",
+//            "故宫小店"
+//        )
     }
 }

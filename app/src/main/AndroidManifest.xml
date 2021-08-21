@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
+        <activity android:name=".ui.activity.UpdateAppActivity"></activity>
+        <activity android:name=".ui.activity.HttpApiActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"

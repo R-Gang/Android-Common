@@ -1,4 +1,4 @@
-package com.gang.library.common.http
+package com.gang.app.common.http
 
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.http.callback.HttpCallBack
@@ -84,16 +84,14 @@ class OkHttpUtils {
 
     companion object {
         // OkHttpUtils 自定义请求配置
-        fun get(): Companion {
-            return OkHttpUtils
-        }
 
         val instance: com.gang.library.common.http.OkHttpUtils
             get() = SingletonHolder.INSTANCE
     }
 
     private object SingletonHolder {
-        var INSTANCE: com.gang.library.common.http.OkHttpUtils = OkHttpUtils()
+        var INSTANCE: com.gang.library.common.http.OkHttpUtils =
+            com.gang.library.common.http.OkHttpUtils()
     }
 
 }

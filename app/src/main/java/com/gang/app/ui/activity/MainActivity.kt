@@ -1,8 +1,6 @@
 package com.gang.app.ui.activity
 
-import android.Manifest
 import android.app.Activity
-import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
@@ -15,29 +13,26 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.gang.app.R
-import com.gang.app.common.user.Constants
-import com.gang.app.common.user.Constants.Companion.VERSION_PATH
 import com.gang.app.common.user.ToUIEvent
 import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
-import com.gang.app.ui.widget.ColorWheel
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
-import com.gang.library.common.http.AppHttpUtil
 import com.gang.library.common.user.UserManager
-import com.gang.library.common.utils.LogUtils
 import com.gang.library.common.utils.NotifiUtil
-import com.gang.library.common.utils.ResUtils.getString
 import com.gang.library.common.utils.U
-import com.gang.library.common.utils.permissions.PermissionCallBackM
-import com.gang.library.common.utils.version.UpdateCallback
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
-import com.vector.update_app.UpdateAppManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+/**
+ * 1.刘海屏适配示例
+ * 2.EventBus使用方式示例
+ * 3.判断是否需要开启通知栏功能
+ * 4.沉浸式状态栏
+ */
+@RequiresApi(api = Build.VERSION_CODES.O)
 class MainActivity : BaseActivity(), View.OnClickListener {
 
     private var radioButtons: MutableList<TextView> = ArrayList()
@@ -59,45 +54,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         findViewById<RelativeLayout>(R.id.rl_back_button).visibility = View.GONE
         findViewById<TextView>(R.id.tv_title).text = resources.getString(R.string.app_name)
 
-
-        //动态权限申请
-        requestPermission(
-            Constants.REQUEST_CODE_WRITE, arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ),
-            getString(R.string.rationale_file),
-            object : PermissionCallBackM {
-                override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
-                    //版本更新
-                    UpdateAppManager.Builder() //当前Activity
-                        .setActivity(this@MainActivity) //更新地址
-                        .setUpdateUrl(VERSION_PATH)
-                        .handleException { obj: java.lang.Exception -> obj.printStackTrace() } //实现httpManager接口的对象
-                        .setHttpManager(AppHttpUtil())
-                        .build()
-                        .checkNewApp(UpdateCallback(this@MainActivity))
-                }
-
-                override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
-                    TODO("Not yet implemented")
-                    LogUtils.e("MainActivity", "TODO: WRITE_EXTERNAL_STORAGE Denied")
-                }
-
-            })
-
     }
 
-    override fun onNotchCreate(activity: Activity?) {
-        //去掉标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        //全屏显示
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-        // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
-//        StatusBarUtil.setTransparentForImageView(this, null)
-    }
+//    override fun onNotchCreate(activity: Activity?) {
+//        //去掉标题
+//        requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        //全屏显示
+//        window.decorView.systemUiVisibility =
+//            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//
+//        // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
+////        StatusBarUtil.setTransparentForImageView(this, null)
+//    }
 
     override fun initData() {
         radioButtons.forEach { it.setOnClickListener(this) }
