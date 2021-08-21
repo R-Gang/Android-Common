@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.library.common.view.manager.LayoutManager
 import com.gang.library.common.view.srecyclerview.SRVAdapter
+import com.jcodecraeer.xrecyclerview.XRecyclerView
 import kotlin.math.abs
 
 /**
