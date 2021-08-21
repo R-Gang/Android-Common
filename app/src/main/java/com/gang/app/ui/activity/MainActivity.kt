@@ -23,6 +23,7 @@ import com.gang.library.common.utils.NotifiUtil
 import com.gang.library.common.utils.U
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
+import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     override fun initView(savedInstanceState: Bundle?) {
         window.setFormat(PixelFormat.TRANSLUCENT)
+        StatusBarUtil.setTransparent(this);
         // 添加底部按钮
         radioButtons.add(ll_home_btn)
         radioButtons.add(ll_my_btn)
@@ -56,16 +58,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     }
 
-//    override fun onNotchCreate(activity: Activity?) {
-//        //去掉标题
-//        requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        //全屏显示
-//        window.decorView.systemUiVisibility =
-//            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//
-//        // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
-//        StatusBarUtil.setTransparentForImageView(this, null)
-//    }
+    override fun onNotchCreate(activity: Activity?) {
+        //去掉标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        //全屏显示
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+        // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
+//        StatusBarUtil.setTransparent(activity);
+    }
 
     override fun initData() {
         radioButtons.forEach { it.setOnClickListener(this) }

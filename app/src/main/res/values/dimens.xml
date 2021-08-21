@@ -1,0 +1,12 @@
+<resources>
+
+    <!--文字大小-->
+    <dimen name="text_size_9">9sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+
+
+    <!--距离大小-->
+    <dimen name="margin_size_1">1dp</dimen>
+    <dimen name="margin_size_2">2dp</dimen>
+
+</resources>
