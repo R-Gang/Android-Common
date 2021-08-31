@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
 import com.gang.app.ui.fragment.HomeFragment
@@ -150,6 +151,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onEvent(any: Any) {
         (any as ToUIEvent).apply {
             if (tag == ToUIEvent.MESSAGE_EVENT) {
+                LogUtils.e("MainActivity===eventbus 演示")
                 U.showToast(obj.toString())
             }
         }

@@ -37,7 +37,6 @@ abstract class BaseActivity : BasePermissionActivity() {
 
         AppManager.appManager?.addActivity(this)
         CrashHandler.instance?.init(this) //初始化全局异常管理
-        StatusBarUtil.setTransparentForImageView(this, null)
         initView(savedInstanceState)
         initData()
         onClick()

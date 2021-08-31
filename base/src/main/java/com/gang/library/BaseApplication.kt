@@ -1,10 +1,10 @@
 package com.gang.library
 
-import android.app.Application
 import android.content.Context
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import androidx.multidex.MultiDexApplication
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.user.Config
 import com.lzy.okgo.OkGo
@@ -12,7 +12,7 @@ import com.tencent.smtt.sdk.QbSdk
 import com.zhy.http.okhttp.OkHttpUtils
 
 
-open class BaseApplication : Application() {
+open class BaseApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -42,12 +42,16 @@ open class BaseApplication : Application() {
         QbSdk.initX5Environment(applicationContext, cb)
 
 
-        // okhttp-utils
-        OkHttpUtils.getInstance()
-            .init(this)
-            .debug(true, "okHttp")
-            .timeout(20 * 1000)
-        OkGo.getInstance().init(this)
+        // 版本更新
+        if (Config.isOpenVersionUpdate) {
+            // okhttp-utils
+            OkHttpUtils.getInstance()
+                .init(this)
+                .debug(true, "okHttp")
+                .timeout(20 * 1000)
+            OkGo.getInstance().init(this)
+        }
+
     }
 
     //解决NetworkOnMainThreadException异常
@@ -78,6 +82,7 @@ open class BaseApplication : Application() {
          * 获取系统上下文
          */
         lateinit var appContext: Context
-            private set
+
+
     }
 }

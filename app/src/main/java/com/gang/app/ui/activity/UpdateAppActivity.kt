@@ -25,7 +25,7 @@ class UpdateAppActivity : BaseActivity() {
 
     override fun initData() {
         TODO("Not yet implemented")
-        LogUtils.e("UpdateAppActivity", "TODO: WRITE_EXTERNAL_STORAGE Denied")
+
     }
 
     override fun initView(savedInstanceState: Bundle?) {

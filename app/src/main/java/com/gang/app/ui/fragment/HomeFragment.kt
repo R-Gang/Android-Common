@@ -1,7 +1,9 @@
 package com.gang.app.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
@@ -27,6 +29,8 @@ class HomeFragment : BaseFragment() {
 
         refresh_layout.refreshHeader = ClassicsHeader(mActivity)
         refresh_layout.setOnRefreshListener {}
+
+
     }
 
     override fun initData() {
@@ -42,22 +46,22 @@ class HomeFragment : BaseFragment() {
         )
 
         //        监听事件
-//        color_wheel.setOnColorChangedListener(object: com.gang.library.ui.widget.ColorWheel.OnColorChangedListener {
-//            override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
-////                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
-//                LogUtils.d(Color.argb(a, r, g, b))
-//            }
-//
-//            override fun onColorPick(a: Int, r: Int, g: Int, b: Int) {
-//
-//                // 将 rgb 转换成 hsv，s 即为饱和度  色调（H），饱和度（S），明度（V）
-//                val c = Color.argb(a, r, g, b)
-//                val hsv = FloatArray(3)
-//                Color.colorToHSV(c, hsv)
-//
-//                LogUtils.d(Color.argb(a, r, g, b))
-//            }
-//        })
+        color_wheel.setOnColorChangedListener(object: com.gang.library.ui.widget.ColorWheel.OnColorChangedListener {
+            override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
+//                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
+                LogUtils.d(Color.argb(a, r, g, b))
+            }
+
+            override fun onColorPick(a: Int, r: Int, g: Int, b: Int) {
+
+                // 将 rgb 转换成 hsv，s 即为饱和度  色调（H），饱和度（S），明度（V）
+                val c = Color.argb(a, r, g, b)
+                val hsv = FloatArray(3)
+                Color.colorToHSV(c, hsv)
+
+                LogUtils.d(Color.argb(a, r, g, b))
+            }
+        })
     }
 
 }

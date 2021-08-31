@@ -61,14 +61,20 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
-                    android:id="@+id/iv_title_right"
+                    android:id="@+id/iv_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/iv_title_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_size_15" />
 
                 <TextView
                     android:id="@+id/tv_title_right"
@@ -88,7 +94,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="标题"
+                android:text=""
                 android:textColor="@color/color_3"
                 android:textSize="@dimen/text_size_18" />
 

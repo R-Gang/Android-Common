@@ -2,14 +2,17 @@ package com.gang.app.ui.activity
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.gang.app.R
 import com.gang.app.common.http.HttpManager
 import com.gang.library.bean.BaseDataModel
 import com.gang.library.bean.UserEntity
 import com.gang.library.common.http.callback.HttpCallBack
+import com.gang.library.common.user.Config
+import com.gang.library.common.user.UserManager
+import com.gang.library.common.utils.DateUtils
 import com.gang.library.common.utils.U
+import com.gang.library.common.utils.oss.AliYunOss
 
 /**
  * 接口使用方式示例
@@ -17,6 +20,7 @@ import com.gang.library.common.utils.U
 class HttpApiActivity : AppCompatActivity() {
 
 
+    private lateinit var headImage: String
     private var countDownTimer: CountDownTimer? = null
     val phoneNum = ""
 
@@ -24,6 +28,17 @@ class HttpApiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_http_api)
 
+
+        //return the compressed file path Config.photo +
+        var mImageName =
+             DateUtils.getCurTimeLong("yyyyMMddHHmmss") + UserManager.INSTANCE.userData.user_id
+                .toString() + ".jpg"
+        //Url
+        if (mImageName != null && mImageName != "") {
+            headImage = Config.OSS_URL.toString() + mImageName
+        }
+        // 阿里云使用方式
+//        AliYunOss.getInstance(this)?.upload(mImageName, "", null)
 
         /**
          * haoruigang 2018-3-30 10:31:11   获取验证码接口
@@ -34,7 +49,7 @@ class HttpApiActivity : AppCompatActivity() {
                 this, true
             ) {
                 override fun onSuccess(date: BaseDataModel<UserEntity?>?) {
-//                    countDown()
+                    countDown()
                     //                        String code = date.getData().get(0).getCode();
 //                        etCode.setText(code);
                 }

@@ -36,6 +36,9 @@ object Config {
     // 是否显示日志
     var isShowLog = BuildConfig.DEBUG
 
+    // 开启版本更新功能
+    var isOpenVersionUpdate = false
+
     // 阿里云配置参数
     var accessKeyId = ""
     var accessKeySecret = ""

@@ -25,12 +25,12 @@ class MyFragment : BaseFragment() {
     }
 
     override fun initData() {
-//        SysUtils.actionStartWeb(
-//            mActivity,
+        SysUtils.actionStartWeb(
+            mActivity,
 //            "https://shop90820925.m.youzan.com/v2/showcase/homepage?kdt_id=90628757",
-////            FileUtils.getAssetFile("pullWeiXin.html"),
-////            "https://applinks.dpm.org.cn/pullWeiXin.html",
-//            "故宫小店"
-//        )
+            FileUtils.getAssetFile("pullWeiXin.html"),
+//            "https://applinks.dpm.org.cn/pullWeiXin.html",
+            "故宫小店"
+        )
     }
 }
