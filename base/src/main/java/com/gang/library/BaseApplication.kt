@@ -7,9 +7,7 @@ import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.user.Config
-import com.lzy.okgo.OkGo
 import com.tencent.smtt.sdk.QbSdk
-import com.zhy.http.okhttp.OkHttpUtils
 
 
 open class BaseApplication : MultiDexApplication() {
@@ -41,16 +39,6 @@ open class BaseApplication : MultiDexApplication() {
         //x5内核初始化接口
         QbSdk.initX5Environment(applicationContext, cb)
 
-
-        // 版本更新
-        if (Config.isOpenVersionUpdate) {
-            // okhttp-utils
-            OkHttpUtils.getInstance()
-                .init(this)
-                .debug(true, "okHttp")
-                .timeout(20 * 1000)
-            OkGo.getInstance().init(this)
-        }
 
     }
 

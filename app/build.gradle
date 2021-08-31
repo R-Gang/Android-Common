@@ -141,7 +141,7 @@ dependencies {
     // 版本更新用的okhttp-utils,okgo
     implementation 'com.qianwen:okhttp-utils:3.8.0'
 
-    implementation 'com.github.R-Gang:Android-Common:0.1.4@aar'
-//    implementation project(path: ':base')
+//    implementation 'com.github.R-Gang:Android-Common:0.1.4@aar'
+    implementation project(path: ':base')
 
 }

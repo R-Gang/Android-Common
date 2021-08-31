@@ -105,6 +105,5 @@ dependencies {
     implementation 'com.qianwen:update-app:3.5.2'
     // 版本更新用的okhttp-utils,okgo
     implementation 'com.qianwen:okhttp-utils:3.8.0'
-    implementation files('libs/wheelview_1.3.3.jar')
 
 }

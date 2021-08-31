@@ -12,7 +12,6 @@ import com.alibaba.sdk.android.oss.model.*
 import com.gang.library.BaseApplication.Companion.appContext
 import com.gang.library.common.user.Config
 import com.gang.library.common.utils.oss.callback.ProgressCallback
-import java.io.File
 
 /**
  * Created by haoruigang on 2016/9/2.

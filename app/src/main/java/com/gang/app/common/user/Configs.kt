@@ -15,7 +15,9 @@ import com.gang.library.BuildConfig
  * @UpdateRemark:   更新说明：
  * @Version:        Config
  */
-object Config {
+object Configs {
 
+    // 开启版本更新功能
+    var isOpenVersionUpdate = false
 
 }
