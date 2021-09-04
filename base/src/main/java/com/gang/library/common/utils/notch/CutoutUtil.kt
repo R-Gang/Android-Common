@@ -4,9 +4,15 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
+import android.graphics.Point
 import android.os.Build
+import android.view.Display
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication.Companion.appContext
+import com.gang.library.common.utils.U
 import com.gang.library.common.utils.notch.callback.NotchCallback
 
 /**
@@ -158,5 +164,59 @@ object CutoutUtil {
             }
             callback.Notch(isNotch)
         })
+    }
+
+
+    // 第三种适配
+    private var mIsAllScreenDevice = false
+    @TargetApi(28)
+    fun isAllScreenDevice(activity: Activity, callback: NotchCallback) {
+        //是否是全面屏低于 API 21的，都不会是全面屏
+        mIsAllScreenDevice = false
+        // 低于 API 21的，都不会是全面屏。。。
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            mIsAllScreenDevice = false
+        } else {
+            val windowManager = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            if (windowManager != null) {
+                val display = windowManager.defaultDisplay
+                val point = Point()
+                display.getRealSize(point)
+                val width: Float
+                val height: Float
+                if (point.x < point.y) {
+                    width = point.x.toFloat()
+                    height = point.y.toFloat()
+                } else {
+                    width = point.y.toFloat()
+                    height = point.x.toFloat()
+                }
+                if (height / width >= 1.97f) {
+                    mIsAllScreenDevice = true
+                }
+            }
+        }
+        callback.Notch(mIsAllScreenDevice)
+    }
+
+//    fun array(left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0) = arrayOf(U.dip2px(left), U.dip2px(top), U.dip2px(right), U.dip2px(bottom))
+
+    fun infinityParams(vararg params: Pair<View, Array<Int>>) {
+        params.forEach {
+            val layout = it.first.layoutParams as ViewGroup.MarginLayoutParams
+            if (it.second[0] != 0) {
+                layout.leftMargin = it.second[0]
+            }
+            if (it.second[1] != 0) {
+                layout.topMargin = it.second[1]
+            }
+            if (it.second[2] != 0) {
+                layout.rightMargin = it.second[2]
+            }
+            if (it.second[3] != 0) {
+                layout.bottomMargin = it.second[3]
+            }
+            it.first.layoutParams = layout
+        }
     }
 }

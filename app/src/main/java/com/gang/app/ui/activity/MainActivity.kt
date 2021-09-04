@@ -49,17 +49,21 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun initView(savedInstanceState: Bundle?) {
         window.setFormat(PixelFormat.TRANSLUCENT)
         StatusBarUtil.setTransparent(this);
-        // 添加底部按钮
-        radioButtons.add(ll_home_btn)
-        radioButtons.add(ll_my_btn)
 
         // 目前kotlin-android-extensions暂时还不支持跨模块
         findViewById<RelativeLayout>(R.id.rl_back_button).visibility = View.GONE
         findViewById<TextView>(R.id.tv_title).text = resources.getString(R.string.app_name)
 
+        radioButtons.forEach { it.setOnClickListener(this) }
+        setChioceItem(position)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //判断是否需要开启通知栏功能
+            NotifiUtil.OpenNotificationSetting(this, null, "")
+        }
+
+
     }
 
-    override fun onNotchCreate(activity: Activity?) {
+    override fun onNotchCreate(activity: Activity) {
         //去掉标题
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         //全屏显示
@@ -71,11 +75,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun initData() {
-        radioButtons.forEach { it.setOnClickListener(this) }
-        setChioceItem(position)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //判断是否需要开启通知栏功能
-            NotifiUtil.OpenNotificationSetting(this, null, "")
-        }
+        // 添加底部按钮
+        radioButtons.add(ll_home_btn)
+        radioButtons.add(ll_my_btn)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
