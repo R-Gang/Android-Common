@@ -2,13 +2,11 @@ package com.gang.app.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextPaint
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.gang.app.R
-import com.gang.app.data.ProvinceData
-import com.gang.app.data.ProvinceData.Companion.options1Items
-import com.gang.app.data.ProvinceData.Companion.options2Items
+import com.gang.library.common.utils.U
 import kotlinx.android.synthetic.main.activity_picker.*
 
 /**
@@ -23,7 +21,16 @@ class PickerActivity : AppCompatActivity() {
     }
 
     private fun showPickerView() { // 城市弹出选择器
+        U.setSpannable(userAgreement, 2, 18, object : U.ClickableSpans {
+            override fun clickable(widget: View) {
+                U.showToast("点击了用户协议")
+            }
 
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.parseColor("#697CAD")
+            }
+        })
     }
 
     companion object {

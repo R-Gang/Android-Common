@@ -692,8 +692,7 @@ object U {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                //删除下划线
-                ds.isUnderlineText = false
+                click.updateDrawState(ds)
             }
         }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         textView.movementMethod = LinkMovementMethod.getInstance()
@@ -730,5 +729,10 @@ object U {
 
     interface ClickableSpans {
         fun clickable(widget: View)
+
+        fun updateDrawState(ds: TextPaint){
+            //删除下划线
+            ds.isUnderlineText = false
+        }
     }
 }

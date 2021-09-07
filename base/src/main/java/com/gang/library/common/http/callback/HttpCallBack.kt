@@ -27,37 +27,23 @@ import java.lang.reflect.Type
  * @Version:        1.0
  */
 abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
-    private var dialog: MyProgressDialog? = null
 
-    constructor() {}
     // 是否可取消请求，默认可取消  haoruigang  2017-11-28 11:12:09
-    constructor(activity: Activity?, isDismiss: Boolean) {
+    constructor(activity: Activity, isDismiss: Boolean) {
         dialog = if (isDismiss) MyProgressDialog(activity, true) else MyProgressDialog(activity)
         dialog?.show()
     }
 
-    constructor(activity: Activity?) {
+    constructor(activity: Activity) {
         dialog = MyProgressDialog(activity)
         dialog?.show()
-    }
-
-    private fun dismiss() {
-        if (null != dialog && dialog!!.isShowing()) dialog?.dismiss()
-    }
-
-    private fun getTType(clazz: Class<*>): Type? {
-        val mySuperClassType = clazz.genericSuperclass
-        val types =
-            (mySuperClassType as ParameterizedType?)!!.actualTypeArguments
-        return if (types != null && types.isNotEmpty()) {
-            types[0]
-        } else null
     }
 
     //----------引入之前的代码-------------
     private var statusCode = 0
     private var data: String? = null
     private var errorMsg: String? = null
+
     @Throws(Exception::class)
     override fun parseNetworkResponse(response: Response): Any {
         return response.body()!!.string()
@@ -103,5 +89,22 @@ abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
         LogUtils.e("error ---response$response $e")
         super.onError(call, response, e)
         onError(e)
+    }
+
+    companion object {
+        var dialog: MyProgressDialog? = null
+
+        fun getTType(clazz: Class<*>): Type? {
+            val mySuperClassType = clazz.genericSuperclass
+            val types =
+                (mySuperClassType as ParameterizedType?)!!.actualTypeArguments
+            return if (types.isNotEmpty()) {
+                types[0]
+            } else null
+        }
+
+        fun dismiss() {
+            if (null != dialog && dialog!!.isShowing()) dialog?.dismiss()
+        }
     }
 }

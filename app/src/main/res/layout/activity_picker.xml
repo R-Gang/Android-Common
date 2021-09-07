@@ -18,4 +18,15 @@
         android:layout_below="@id/picker_address"
         android:text="地址选择弹框" />
 
+    <TextView
+        android:id="@+id/userAgreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_5"
+        android:layout_toEndOf="@id/showPickerView"
+        android:gravity="center"
+        android:text="同意用户协议、隐私政策、儿童守护协议和儿童个人信息保护规则"
+        android:textColor="#ff717171"
+        android:textSize="13sp" />
+
 </RelativeLayout>
