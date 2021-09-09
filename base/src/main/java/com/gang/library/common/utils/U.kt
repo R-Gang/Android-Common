@@ -9,7 +9,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.os.Build
 import android.preference.PreferenceManager
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -21,12 +20,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
 import java.io.UnsupportedEncodingException
 import java.lang.reflect.Array
 import java.nio.charset.Charset
 import java.security.MessageDigest
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
 
@@ -146,11 +147,9 @@ object U {
     fun isNetConnected(context: Context): Boolean {
         val connectivity = context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (null != connectivity) {
-            val info = connectivity.activeNetworkInfo
-            if (null != info && info.isConnected) {
-                return info.state == NetworkInfo.State.CONNECTED
-            }
+        val info = connectivity.activeNetworkInfo
+        if (null != info && info.isConnected) {
+            return info.state == NetworkInfo.State.CONNECTED
         }
         return false
     }
@@ -336,8 +335,33 @@ object U {
      * @param phoneNumber
      * @return
      */
-    fun isPhoneNum(phoneNumber: String): Boolean {
-        return !TextUtils.isEmpty(phoneNumber) && phoneNumber.matches("0?(13|14|15|16|17|18|19)[0-9]{9}" as Regex)
+    fun isPhoneNum(phone: String): Boolean {
+        val regex =
+            "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$"
+        return if (phone.length != 11) {
+            showToast("手机号应为11位数")
+            false
+        } else {
+            val p = Pattern.compile(regex)
+            val m: Matcher = p.matcher(phone)
+            val isMatch: Boolean = m.matches()
+            LogUtils.e("isPhone: 是否正则匹配$isMatch")
+            isMatch
+        }
+    }
+
+    //判断输入的格式是否为手机号
+    fun isPhone(phone: String): Boolean {
+        val regex = "^1[3456789]\\d{9}$"
+        return if (phone.length != 11) {
+            showToast("手机号应为11位数")
+            false
+        } else {
+            val p = Pattern.compile(regex)
+            val m: Matcher = p.matcher(phone)
+            val isMatch: Boolean = m.matches()
+            isMatch
+        }
     }
 
     /**
@@ -362,34 +386,6 @@ object U {
             str = ""
         }
         return str.trim { it <= ' ' }
-    }
-
-    /**
-     * 描述：判断一个字符串是否为null或空值.
-     *
-     * @param str 指定的字符串
-     * @return true or false
-     */
-    fun isEmpty(str: String?): Boolean {
-        return str == null || str.trim { it <= ' ' }.isEmpty()
-    }
-
-    fun isNotEmpty(str: String?): Boolean {
-        return !isEmpty(str)
-    }
-
-    /**
-     * 描述：判断一个集合是否为null或空值.
-     *
-     * @param str 指定的集合
-     * @return true or false
-     */
-    fun isEmpty(list: List<*>?): Boolean {
-        return list == null || list.isEmpty()
-    }
-
-    fun isNotEmpty(list: List<*>?): Boolean {
-        return !isEmpty(list)
     }
 
     /**
@@ -503,10 +499,8 @@ object U {
         if (obj is SparseIntArray && obj.size() == 0) {
             return true
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            if (obj is SparseLongArray && obj.size() == 0) {
-                return true
-            }
+        if (obj is SparseLongArray && obj.size() == 0) {
+            return true
         }
         return false
     }
@@ -730,7 +724,7 @@ object U {
     interface ClickableSpans {
         fun clickable(widget: View)
 
-        fun updateDrawState(ds: TextPaint){
+        fun updateDrawState(ds: TextPaint) {
             //删除下划线
             ds.isUnderlineText = false
         }
