@@ -2,15 +2,13 @@ package com.gang.app.ui.activity
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
-import com.gang.app.common.http.HttpManager
-import com.gang.library.bean.BaseDataModel
-import com.gang.library.bean.UserEntity
-import com.gang.library.common.http.callback.HttpCallBack
+import com.gang.app.common.user.ToUIEvent
 import com.gang.library.common.user.Config
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.DateUtils
-import com.gang.library.common.utils.U
+import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 
 /**
@@ -42,23 +40,24 @@ class HttpApiActivity : BaseActivity() {
         /**
          * haoruigang 2018-3-30 10:31:11   获取验证码接口
          */
-        HttpManager.instance.doRandomCode("HttpApiActivity",
-            phoneNum,
-            object : HttpCallBack<BaseDataModel<UserEntity?>?>(
-                this@HttpApiActivity, true
-            ) {
-                override fun onSuccess(date: BaseDataModel<UserEntity?>?) {
-                    countDown()
-                    //                        String code = date.getData().get(0).getCode();
-//                        etCode.setText(code);
-                }
+//        HttpManager.instance.doRandomCode("HttpApiActivity",
+//            phoneNum,
+//            object : HttpCallBack<BaseDataModel<UserEntity?>?>(
+//                this@HttpApiActivity, true
+//            ) {
+//                override fun onSuccess(date: BaseDataModel<UserEntity?>?) {
+//                    countDown()
+//                    //                        String code = date.getData().get(0).getCode();
+////                        etCode.setText(code);
+//                }
+//
+//                override fun onFail(statusCode: Int, errorMsg: String?) {
+//                    U.showToast(errorMsg)
+//                }
+//
+//                override fun onError(throwable: Throwable?) {}
+//            })
 
-                override fun onFail(statusCode: Int, errorMsg: String?) {
-                    U.showToast(errorMsg)
-                }
-
-                override fun onError(throwable: Throwable?) {}
-            })
     }
 
     override fun initData() {
@@ -69,7 +68,7 @@ class HttpApiActivity : BaseActivity() {
 //        phoneNum = etPhone.getText().toString()
         //        if (!phoneNum.matches("0?(13|14|15|17|18)[0-9]{9}")) {
         if (phoneNum.length != 11) {
-            U.showToast("请输入正确的手机号码")
+            showToast("请输入正确的手机号码")
             return
         }
 //        tvGetCode.setClickable(false)
@@ -91,4 +90,15 @@ class HttpApiActivity : BaseActivity() {
         super.onDestroy()
         countDownTimer?.cancel()
     }
+
+    // eventbus 演示
+    override fun onEvent(any: Any) {
+        (any as ToUIEvent).apply {
+            if (tag == ToUIEvent.MESSAGE_EVENT) {
+                LogUtils.e("MainActivity===eventbus 演示")
+                showToast(obj.toString())
+            }
+        }
+    }
+
 }

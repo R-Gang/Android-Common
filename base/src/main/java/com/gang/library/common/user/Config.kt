@@ -21,6 +21,11 @@ object Config {
     const val RC_CALL_PHONE = 100
     const val REQUEST_CODE_WRITE = 101
 
+    /**
+     * startActivityForResult requestCode
+     */
+    const val toActivityRequestCode=0x000002
+
     // 文件类型
     const val TYPE_ALL = 0
     const val TYPE_IMAGE = 1

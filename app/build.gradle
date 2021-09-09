@@ -96,7 +96,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //EventBus解耦
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.2.0'
 
     //日志工具类
     implementation 'com.apkfuns.logutils:library:1.7.5'
@@ -141,7 +141,7 @@ dependencies {
     // 版本更新用的okhttp-utils,okgo
     implementation 'com.qianwen:okhttp-utils:3.8.0'
 
-//    implementation 'com.github.R-Gang:Android-Common:0.1.4@aar'
+//    implementation 'com.github.R-Gang:Android-Common:0.1.7@aar'
     implementation project(path: ':base')
 
 }

@@ -1,9 +1,10 @@
 package com.gang.app.ui.adapter
 
 import android.content.Context
+import com.gang.app.ui.bean.HomeIcon
+import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.common.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter
 import com.gang.library.common.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder
-import com.gang.app.ui.bean.HomeIcon
 import kotlinx.android.synthetic.main.item_home_menu.view.*
 
 /**
@@ -24,9 +25,10 @@ import kotlinx.android.synthetic.main.item_home_menu.view.*
  * 适配器基础使用方式
  */
 class HomeMenuAdapter(
-    datas: MutableList<*>, context: Context, override val layoutResId: Int
+    datas: MutableList<*>, `object`: Any, onItemClick1: ViewOnItemClick,
+    override val layoutResId: Int
 ) :
-    XrecyclerAdapter(datas, context) {
+    XrecyclerAdapter(datas, `object`, onItemClick1) {
 
     var homeIcon: HomeIcon? = null
 

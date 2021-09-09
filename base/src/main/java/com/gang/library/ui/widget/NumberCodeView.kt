@@ -23,7 +23,8 @@ import androidx.collection.SparseArrayCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.gang.library.R
-import com.gang.library.common.utils.U
+import com.gang.library.common.utils.dip2px
+
 /**
  *
  * @ClassName:      haoruigang
@@ -296,13 +297,13 @@ class NumberCodeView @JvmOverloads constructor(
             mCodeTextColor = DEFAULT_TEXT_COLOR
         }
         if (mCodeTextSize == -1) {
-            mCodeTextSize = U.dip2px(context, DEFAULT_TEXT_SIZE)
+            mCodeTextSize = dip2px(DEFAULT_TEXT_SIZE)
         }
         if (mFrameSize == -1) {
-            mFrameSize = U.dip2px(context, DEFAULT_FRAME_SIZE)
+            mFrameSize = dip2px(DEFAULT_FRAME_SIZE)
         }
         if (mFramePadding == -1) {
-            mFramePadding = U.dip2px(context, DEFAULT_FRAME_PADDING)
+            mFramePadding = dip2px(DEFAULT_FRAME_PADDING)
         }
         if (mCodeLength <= 0) {
             mCodeLength = DEFAULT_CODE_LENGTH

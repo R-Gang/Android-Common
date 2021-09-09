@@ -20,7 +20,7 @@ class Constants {
         val BASE_VERSION = "https://gitee.com/ganghan/version-update/raw/master/"
         var VERSION_PATH = BASE_VERSION + "mrgg_version_update.txt"
 
-        val REQUEST_CODE_WRITE: Int=9090
+        val REQUEST_CODE_WRITE: Int = 9090
 
         // 是否测试服
         var isTest = true

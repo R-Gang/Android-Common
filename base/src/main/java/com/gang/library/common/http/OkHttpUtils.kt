@@ -2,7 +2,8 @@ package com.gang.library.common.http
 
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.http.callback.HttpCallBack
-import com.gang.library.common.utils.U
+import com.gang.library.common.utils.getPreferences
+import com.gang.library.common.utils.transMap2String
 import com.lzy.okhttputils.OkHttpUtils
 import com.lzy.okhttputils.model.HttpHeaders
 import com.lzy.okhttputils.model.HttpParams
@@ -72,10 +73,10 @@ class OkHttpUtils {
     ) {
         if (map != null) {
             try {
-                LogUtils.e("get请求:$url,参数---${U.transMap2String(map)}")
+                LogUtils.e("get请求:$url,参数---${transMap2String(map)}")
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
-                val access_token = U.getPreferences("access_token", "")
+                val access_token = getPreferences("access_token", "")
 
                 var header = HttpHeaders()
                 if (headers == null) {
@@ -122,10 +123,10 @@ class OkHttpUtils {
     ) {
         if (map != null) {
             try {
-                LogUtils.e("get请求:$url,参数---${U.transMap2String(map)}")
+                LogUtils.e("get请求:$url,参数---${transMap2String(map)}")
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
-                val access_token = U.getPreferences("access_token", "")
+                val access_token = getPreferences("access_token", "")
 
                 var header = HttpHeaders()
                 if (headers == null) {

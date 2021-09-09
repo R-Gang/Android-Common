@@ -3,7 +3,7 @@ package com.gang.library.common.user
 import android.app.Activity
 import android.view.View
 import com.gang.library.bean.UserEntity
-import com.gang.library.common.utils.U
+import com.gang.library.common.utils.savePreferences
 import com.gang.library.ui.interfaces.Setter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -30,8 +30,8 @@ enum class UserManager {
 
     fun save(user: UserEntity) {
         userData = user
-        U.savePreferences("user_id", userData.user_id)
-        U.savePreferences("user_token", userData.user_token)
+        savePreferences("user_id", userData.user_id)
+        savePreferences("user_token", userData.user_token)
     }
 
     fun isLogin(): Boolean {

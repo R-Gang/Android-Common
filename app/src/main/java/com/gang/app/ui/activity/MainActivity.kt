@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.Window
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -21,7 +20,7 @@ import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil
-import com.gang.library.common.utils.U
+import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import com.jaeger.library.StatusBarUtil
@@ -60,7 +59,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             NotifiUtil.OpenNotificationSetting(this, null, "")
         }
 
-
     }
 
     override fun onNotchCreate(activity: Activity) {
@@ -68,7 +66,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE)
         //全屏显示
         window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
 //        StatusBarUtil.setTransparent(activity);
@@ -116,7 +115,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
         ft.commitAllowingStateLoss()
         // eventbus 演示
-        EventBus.post(ToUIEvent(ToUIEvent.MESSAGE_EVENT, index))
+        EventBus.postSticky(ToUIEvent(ToUIEvent.MESSAGE_EVENT, index))
     }
 
     private fun hideFragments(ft: FragmentTransaction) {
@@ -154,7 +153,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         (any as ToUIEvent).apply {
             if (tag == ToUIEvent.MESSAGE_EVENT) {
                 LogUtils.e("MainActivity===eventbus 演示")
-                U.showToast(obj.toString())
+                showToast(obj.toString())
             }
         }
     }

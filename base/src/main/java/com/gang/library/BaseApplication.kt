@@ -27,7 +27,6 @@ open class BaseApplication : MultiDexApplication() {
             .configShowBorders(true)
             .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")
 
-        struct()
 
         val cb = object : QbSdk.PreInitCallback {
             override fun onViewInitFinished(arg0: Boolean) {
@@ -44,7 +43,7 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     //解决NetworkOnMainThreadException异常
-    private fun struct() {
+    fun struct() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads().detectDiskWrites().detectNetwork() // or

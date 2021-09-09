@@ -109,4 +109,9 @@ dependencies {
     // 版本更新用的okhttp-utils,okgo
     implementation 'com.qianwen:okhttp-utils:3.8.0'
 
+    // Anko Commons`
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+
 }

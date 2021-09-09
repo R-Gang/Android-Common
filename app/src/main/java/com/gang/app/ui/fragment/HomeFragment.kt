@@ -1,13 +1,16 @@
 package com.gang.app.ui.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
+import com.gang.app.ui.activity.HttpApiActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
 import com.gang.library.common.view.manager.LayoutManager
+import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -19,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
  *
  * 1.RecyclerView基本使用方式
  */
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), ViewOnItemClick {
 
     private var homeMenu = arrayListOf<HomeIcon>()
 
@@ -41,12 +44,13 @@ class HomeFragment : BaseFragment() {
         LayoutManager.instance?.init(activity)?.initRecyclerGrid(recyclerView, 4)
         recyclerView.adapter = HomeMenuAdapter(
             homeMenu,
-            mActivity,
+            mActivity, this,
             R.layout.item_home_menu
         )
 
         //        监听事件
-        color_wheel.setOnColorChangedListener(object: com.gang.library.ui.widget.ColorWheel.OnColorChangedListener {
+        color_wheel.setOnColorChangedListener(object :
+            com.gang.library.ui.widget.ColorWheel.OnColorChangedListener {
             override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
 //                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
                 LogUtils.d(Color.argb(a, r, g, b))
@@ -62,6 +66,10 @@ class HomeFragment : BaseFragment() {
                 LogUtils.d(Color.argb(a, r, g, b))
             }
         })
+    }
+
+    override fun setOnItemClickListener(view: View?, position: Int) {
+        startActivity(Intent(mActivity,HttpApiActivity::class.java))
     }
 
 }
