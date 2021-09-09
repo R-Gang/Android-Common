@@ -11,15 +11,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
-import com.gang.library.common.EventBus
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.common.utils.notch.callback.NotchCallback
 import com.gang.library.common.utils.permissions.BasePermissionActivity
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.base_title_bar.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 /**
  * Created by haoruigang on 2018-4-3 09:51:22 继承权限父类
@@ -34,8 +35,9 @@ abstract class BaseActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
         mContext = this
-        if (!EventBus.isRegistered(this)) {
-            EventBus.register(this) //注册EventBus
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this) //注册EventBus
         }
 
         AppManager.appManager?.addActivity(this)
@@ -43,7 +45,10 @@ abstract class BaseActivity : BasePermissionActivity() {
         initData()
         initView(savedInstanceState)
         onClick()
+        Notch()
+    }
 
+    fun Notch() {
         //刘海屏适配
         // 方案一
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -121,8 +126,8 @@ abstract class BaseActivity : BasePermissionActivity() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        if (EventBus.isRegistered(this)) {
-            EventBus.unregister(this) //反注册EventBus
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this) //反注册EventBus
         }
         if (Util.isOnMainThread() && !this.isFinishing) {
             Glide.with(applicationContext).pauseRequests()
@@ -149,5 +154,7 @@ abstract class BaseActivity : BasePermissionActivity() {
     //Eventbus
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     open fun onEvent(any: Any) {
+
     }
+
 }

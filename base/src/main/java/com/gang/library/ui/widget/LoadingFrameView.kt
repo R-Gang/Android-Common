@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.gang.library.R
-import com.gang.library.common.view.loadingdialog.view.LVCircularRing
+import com.xiasuhuei321.loadingdialog.view.LVCircularRing
 import kotlinx.android.synthetic.main.loading_frame_layout.view.*
 import kotlinx.android.synthetic.main.loading_progress.view.*
 

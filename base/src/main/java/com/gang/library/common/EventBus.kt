@@ -40,6 +40,10 @@ object EventBus {
         EventBus.getDefault().post(objects)
     }
 
+    fun postSticky(objects: Any) {
+        EventBus.getDefault().postSticky(objects)
+    }
+
     //Eventbus
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     open fun onEvent(objects: Objects) {

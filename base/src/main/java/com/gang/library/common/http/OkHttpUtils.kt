@@ -4,7 +4,8 @@ import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.http.callback.HttpCallBack
 import com.gang.library.common.utils.U
 import com.lzy.okhttputils.OkHttpUtils
-import java.util.*
+import com.lzy.okhttputils.model.HttpHeaders
+import com.lzy.okhttputils.model.HttpParams
 
 /**
  *
@@ -35,14 +36,66 @@ class OkHttpUtils {
         map: Map<String, String>?,
         callBack: HttpCallBack<*>?
     ) {
+        getHeaderJsonRequest(tag, url, map as HashMap<String, String>?, null, null, callBack)
+    }
+
+    /**
+     * 参数调用
+     * post
+     * @param url
+     * @param map
+     * @param callBack
+     */
+    fun postOkHttpJsonRequest(
+        tag: String?,
+        url: String,
+        map: Map<String, String>?,
+        callBack: HttpCallBack<*>?
+    ) {
+        postHeaderJsonRequest(tag, url, map as HashMap<String, String>?, null, null, callBack)
+    }
+
+    /**
+     * 参数调用
+     * get
+     * @param url
+     * @param map
+     * @param callBack
+     */
+    fun getHeaderJsonRequest(
+        tag: String?,
+        url: String,
+        map: HashMap<String, String>?,
+        headers: HttpHeaders?,
+        httpParams: HttpParams?,
+        callBack: HttpCallBack<*>?
+    ) {
         if (map != null) {
             try {
                 LogUtils.e("get请求:$url,参数---${U.transMap2String(map)}")
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
+                val access_token = U.getPreferences("access_token", "")
+
+                var header = HttpHeaders()
+                if (headers == null) {
+                    header.put("Content-Type", "application/x-www-form-urlencoded")
+                    header.put("Authorization", "Bearer $access_token")
+                    header.put("Accept", "application/json")
+                } else {
+                    header = headers
+                }
+
+                var httpParam = HttpParams()
+                if (httpParams != null) {
+                    httpParam = httpParams
+                }
+
                 OkHttpUtils.get(url)
+                    .headers(header)
                     .params(params)
-                    .execute<Any>(callBack)
+                    .params(httpParam)
+                    .execute(callBack)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -59,20 +112,40 @@ class OkHttpUtils {
      * @param map
      * @param callBack
      */
-    fun postOkHttpJsonRequest(
+    fun postHeaderJsonRequest(
         tag: String?,
         url: String,
-        map: Map<String, String>?,
+        map: HashMap<String, String>?,
+        headers: HttpHeaders?,
+        httpParams: HttpParams?,
         callBack: HttpCallBack<*>?
     ) {
         if (map != null) {
             try {
-                LogUtils.e("post请求:$url,参数---${U.transMap2String(map)}")
+                LogUtils.e("get请求:$url,参数---${U.transMap2String(map)}")
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
+                val access_token = U.getPreferences("access_token", "")
+
+                var header = HttpHeaders()
+                if (headers == null) {
+                    header.put("Content-Type", "application/x-www-form-urlencoded")
+                    header.put("Authorization", "Bearer $access_token")
+                    header.put("Accept", "application/json")
+                } else {
+                    header = headers
+                }
+
+                var httpParam = HttpParams()
+                if (httpParams != null) {
+                    httpParam = httpParams
+                }
+
                 OkHttpUtils.post(url)
+                    .headers(header)
                     .params(params)
-                    .execute<Any>(callBack)
+                    .params(httpParam)
+                    .execute(callBack)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -83,10 +156,6 @@ class OkHttpUtils {
     }
 
     companion object {
-        // OkHttpUtils 自定义请求配置
-        fun get(): Companion {
-            return OkHttpUtils
-        }
 
         val instance: com.gang.library.common.http.OkHttpUtils
             get() = SingletonHolder.INSTANCE

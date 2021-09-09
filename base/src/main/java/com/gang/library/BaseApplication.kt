@@ -19,6 +19,7 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     private fun init() { //
+
         // 初始化Logger 是否开启日志
         LogUtils.getLogConfig()
             .configAllowLog(Config.isShowLog)

@@ -1,8 +1,9 @@
 package com.gang.library.common.http.progress
 
 import android.app.Activity
-import android.content.Context
-import com.gang.library.common.view.loadingdialog.view.LoadingDialog
+import android.view.View
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog
+
 /**
  *
  * @ProjectName:    gang
@@ -16,10 +17,9 @@ import com.gang.library.common.view.loadingdialog.view.LoadingDialog
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class MyProgressDialog : LoadingDialog {
-    private var activity: Activity?
-    private var isDismiss = false
-    private var isShow = false
+class MyProgressDialog : View {
+
+    private lateinit var activity: Activity
 
     /**
      * 不可取消(true不可，false可取消)
@@ -27,8 +27,8 @@ class MyProgressDialog : LoadingDialog {
      * @param activity
      * @param isDismiss
      */
-    constructor(activity: Activity?, isDismiss: Boolean) : super(activity) {
-        this.isDismiss = isDismiss
+    constructor(activity: Activity, isDismiss: Boolean) : super(activity) {
+        MyProgressDialog.isDismiss = isDismiss
         this.activity = activity
         init()
     }
@@ -38,21 +38,24 @@ class MyProgressDialog : LoadingDialog {
      *
      * @param activity
      */
-    constructor(activity: Activity?) : super(activity) {
+    constructor(activity: Activity) : super(activity) {
         this.activity = activity
         init()
     }
 
     private fun init() {
-        setLoadingText("加载中")
-            .setSuccessText("加载成功") //显示加载成功时的文字
-            .setInterceptBack(isDismiss)
-            .show()
+        if (loadingDialog == null) {
+            loadingDialog = LoadingDialog(activity)
+        }
+        loadingDialog?.setLoadingText("加载中")
+            ?.setSuccessText("加载成功") //显示加载成功时的文字
+            ?.setInterceptBack(isDismiss)
+            ?.show()
     }
 
-    override fun show() {
-        if (activity != null && !activity!!.isFinishing) {
-            super.show()
+    fun show() {
+        if (!activity.isFinishing) {
+            loadingDialog?.show()
             isShow = true
         }
     }
@@ -62,16 +65,16 @@ class MyProgressDialog : LoadingDialog {
     }
 
     fun dismiss() {
-        if (activity != null && !activity!!.isFinishing) {
-            super.close()
+        if (!activity.isFinishing) {
+            loadingDialog?.close()
             isShow = false
         }
     }
 
     companion object {
-        // LoadingDialog 自定义参数
-        fun get(context: Context): LoadingDialog {
-            return LoadingDialog(context)
-        }
+        var loadingDialog: LoadingDialog? = null
+
+        var isDismiss = false
+        var isShow = false
     }
 }

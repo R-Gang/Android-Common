@@ -30,11 +30,12 @@ open class WebViewActivity : BaseActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         tvTitle = findViewById(R.id.tv_title)
         wbXy = findViewById(R.id.wb_xy)
+        fileUrlByIntent
+        mUrl?.let { setUrl(it) }
     }
 
     override fun initData() {
-        fileUrlByIntent
-        mUrl?.let { setUrl(it) }
+
     }
 
     private fun setUrl(url: String) { //声明WebSettings子类

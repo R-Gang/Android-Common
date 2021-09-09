@@ -44,9 +44,8 @@ abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
     private var data: String? = null
     private var errorMsg: String? = null
 
-    @Throws(Exception::class)
-    override fun parseNetworkResponse(response: Response): Any {
-        return response.body()!!.string()
+    override fun parseNetworkResponse(response: Response): String? {
+        return response.body()?.string()
     }
 
     //  成功回调

@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-    <com.gang.library.common.view.loadingdialog.view.LVCircularRing
+    <com.xiasuhuei321.loadingdialog.view.LVCircularRing
         android:id="@+id/load_info_pb"
         android:layout_width="40dp"
         android:layout_height="40dp"
