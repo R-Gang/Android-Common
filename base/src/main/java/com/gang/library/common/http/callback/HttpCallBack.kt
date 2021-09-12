@@ -28,6 +28,8 @@ import java.lang.reflect.Type
  */
 abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
 
+    constructor() {}
+
     // 是否可取消请求，默认可取消  haoruigang  2017-11-28 11:12:09
     constructor(activity: Activity, isDismiss: Boolean) {
         dialog = if (isDismiss) MyProgressDialog(activity, true) else MyProgressDialog(activity)

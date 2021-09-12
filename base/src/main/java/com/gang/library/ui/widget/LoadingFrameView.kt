@@ -34,6 +34,7 @@ class LoadingFrameView @JvmOverloads constructor(
      * @return
      */
     var loadInfoPb: LVCircularRing? = load_info_pb
+
     /**
      * 加载中文字
      *
@@ -42,24 +43,28 @@ class LoadingFrameView @JvmOverloads constructor(
     var loadInfo: TextView? = load_info
     var noInfoPic: ImageView? = no_info_pic
     var noInfo: TextView? = no_info
+
     /**
      * 加载失败图片
      *
      * @return
      */
     var ivRepeatPic: ImageView? = iv_repeat_pic
+
     /**
      * 加载失败文字
      *
      * @return
      */
     var tvRepeatInfo: TextView? = tv_repeat_info
+
     /**
      * 加载失败按钮
      *
      * @return
      */
     var tvTry: TextView? = tv_try
+
     // 当前布局显示状态
     private var lastItem = 0
 
@@ -352,18 +357,22 @@ class LoadingFrameView @JvmOverloads constructor(
          * 显示内容
          */
         const val CONTAINER_ITEM = 0
+
         /**
          * 显示加载
          */
         const val PROGRESS_ITEM = 1
+
         /**
          * 显示错误
          */
         const val ERROR_ITEM = 2
+
         /**
          * 显示自定义
          */
         const val CUSTOM_ITEM = 3
+
         /**
          * 显示暂无内容
          */
