@@ -61,7 +61,9 @@ class HttpApiActivity : BaseActivity() {
                     showToast(errorMsg)
                 }
 
-                override fun onError(throwable: Throwable?) {}
+                override fun onError(throwable: Throwable?) {
+                    showToast(throwable.toString())
+                }
             })
 
     }
