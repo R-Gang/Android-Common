@@ -114,6 +114,9 @@ dependencies {
     // 圆角图片
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
+    //LoadingDialog
+    implementation 'com.github.ForgetAll:LoadingDialog:v1.1.2'
+
     // okhttp
     implementation 'com.lzy.net:okhttputils:1.8.1'
     // okgo
@@ -141,7 +144,7 @@ dependencies {
     // 版本更新用的okhttp-utils,okgo
     implementation 'com.qianwen:okhttp-utils:3.8.0'
 
-    implementation 'com.github.R-Gang:Android-Common:0.1.8@aar'
-//    implementation project(path: ':base')
+//    implementation 'com.github.R-Gang:Android-Common:v0.1.5-beta.0@aar'
+    implementation project(path: ':base')
 
 }

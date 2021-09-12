@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
+import com.gang.app.bean.BaseModel
+import com.gang.app.common.http.ApiCallBack
+import com.gang.app.common.http.HttpManager
 import com.gang.app.common.user.ToUIEvent
 import com.gang.library.common.user.Config
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.DateUtils
+import com.gang.library.common.utils.MD5
 import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 
@@ -19,7 +23,7 @@ class HttpApiActivity : BaseActivity() {
 
     private lateinit var headImage: String
     private var countDownTimer: CountDownTimer? = null
-    val phoneNum = ""
+    val phoneNum = "18510507183"
 
 
     override val layoutId: Int
@@ -37,30 +41,29 @@ class HttpApiActivity : BaseActivity() {
         // 阿里云使用方式
 //        AliYunOss.getInstance(this)?.upload(mImageName, "", null)
 
-        /**
-         * haoruigang 2018-3-30 10:31:11   获取验证码接口
-         */
-//        HttpManager.instance.doRandomCode("HttpApiActivity",
-//            phoneNum,
-//            object : HttpCallBack<BaseDataModel<UserEntity?>?>(
-//                this@HttpApiActivity, true
-//            ) {
-//                override fun onSuccess(date: BaseDataModel<UserEntity?>?) {
-//                    countDown()
-//                    //                        String code = date.getData().get(0).getCode();
-////                        etCode.setText(code);
-//                }
-//
-//                override fun onFail(statusCode: Int, errorMsg: String?) {
-//                    U.showToast(errorMsg)
-//                }
-//
-//                override fun onError(throwable: Throwable?) {}
-//            })
 
     }
 
     override fun initData() {
+
+        /**
+         * haoruigang 2018-3-30 10:31:11   获取验证码接口
+         */
+        HttpManager.instance.clientConfig("HttpApiActivity",
+            object : ApiCallBack<BaseModel<String>>() {
+                override fun onSuccess(date: BaseModel<String>?) {
+//                    countDown()
+                    //                        String code = date.getData().get(0).getCode();
+//                        etCode.setText(code);
+                }
+
+                override fun onFail(statusCode: Int, errorMsg: String?) {
+                    showToast(errorMsg)
+                }
+
+                override fun onError(throwable: Throwable?) {}
+            })
+
     }
 
     // 倒计时

@@ -25,13 +25,15 @@ class Constants {
         // 是否测试服
         var isTest = true
 
-        //  https://newApiT.ilovegrowth.cn/(测试环境)  http://newapi.acz.1bu2bu.com/（开发环境） https://api.ilovegrowth.cn/（生产环境）
+        //
         private val BASE_API =
-            if (isTest) "http://newapi.acz.1bu2bu.com/" else "https://newApiT.ilovegrowth.cn/"
+            if (isTest) "http://jt.xiakehai.net" else ""
 
+        // 发送手机验证码
+        var SENDVCODE = "$BASE_API/api/system/sendVcode.do"
 
-        // 1.获取验证码
-        var GET_RANDOM_CODE = BASE_API + "code"
+        // 客户端基本配置
+        val CLIENT_CONFIG = "$BASE_API/api/system/client_config/get.do"
 
 
     }

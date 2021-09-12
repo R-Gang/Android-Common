@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><!--Android P系统的设备上-->
+<network-security-config>
+    <!--    使用明文通信 android:usesCleartextTraffic="true"   -->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
+

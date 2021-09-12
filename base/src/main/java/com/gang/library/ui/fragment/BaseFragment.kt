@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.gang.library.common.EventBus
 import com.gang.library.common.utils.permissions.BasePermissionFragment
 import com.gang.library.ui.activity.BaseActivity
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -44,8 +44,8 @@ abstract class BaseFragment : BasePermissionFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(layoutId, container, false)
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this) //注册EventBus
+        if (!EventBus.isRegistered(this)) {
+            EventBus.register(this) //注册EventBus
         }
         return view
     }
@@ -84,8 +84,8 @@ abstract class BaseFragment : BasePermissionFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this) //反注册EventBus
+        if (EventBus.isRegistered(this)) {
+            EventBus.unregister(this) //反注册EventBus
         }
     }
 

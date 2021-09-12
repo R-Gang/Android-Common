@@ -46,14 +46,15 @@ abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
     private var data: String? = null
     private var errorMsg: String? = null
 
-    override fun parseNetworkResponse(response: Response): String? {
-        return response.body()?.string()
+    @Throws(Exception::class)
+    override fun parseNetworkResponse(response: Response?): Any? {
+        return response?.body()?.string()
     }
 
     //  成功回调
     override fun onSuccess(o: Any?, call: Call?, response: Response?) {
-//        LogUtils.e("接口返回数据 $o")
-        LogUtils.e(o.toString())
+        LogUtils.json("接口返回数据\n$o")
+//        LogUtils.e(o.toString())
         try {
             val jsonObject = JSONObject(o.toString())
             statusCode = jsonObject.optInt("status")
@@ -82,12 +83,13 @@ abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
     }
 
     // 失败后的回调
+    @Throws(Exception::class)
     override fun onError(
         call: Call?,
-        response: Response,
-        e: Exception?
+        response: Response?,
+        e: Exception?,
     ) {
-        LogUtils.e("error ---response$response $e")
+        LogUtils.e("error ---response:$response $e")
         super.onError(call, response, e)
         onError(e)
     }

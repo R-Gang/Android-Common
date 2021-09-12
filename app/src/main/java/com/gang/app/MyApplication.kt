@@ -1,7 +1,6 @@
 package com.gang.app
 
 import com.gang.app.common.user.Configs
-import com.gang.app.data.ProvinceData
 import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
 import com.lzy.okgo.OkGo
@@ -27,11 +26,8 @@ class MyApplication : BaseApplication() {
     }
 
     private fun init() {
-        Thread {
-            // 子线程中解析省市区数据
-            ProvinceData.initJsonData()
-        }.start()
 
+        struct()
 
         // 版本更新
         if (Configs.isOpenVersionUpdate) {

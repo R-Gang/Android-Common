@@ -5,17 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.PickerActivity">
 
-    <com.gang.app.common.view.picker.ProvincePickerView
-        android:id="@+id/picker_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="66dp" />
-
     <Button
         android:id="@+id/showPickerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/picker_address"
         android:text="地址选择弹框" />
 
     <TextView

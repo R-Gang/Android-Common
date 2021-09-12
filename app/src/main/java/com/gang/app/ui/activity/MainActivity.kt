@@ -18,6 +18,7 @@ import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
+import com.gang.library.common.http.progress.MyProgressDialog
 import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil
 import com.gang.library.common.utils.showToast
@@ -58,6 +59,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //判断是否需要开启通知栏功能
             NotifiUtil.OpenNotificationSetting(this, null, "")
         }
+
+        MyProgressDialog(this).show()
 
     }
 

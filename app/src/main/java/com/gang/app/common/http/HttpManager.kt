@@ -1,7 +1,6 @@
 package com.gang.app.common.http
 
 import com.gang.app.common.user.Constants
-import com.gang.library.common.http.OkHttpUtils
 import com.gang.library.common.http.callback.HttpCallBack
 import java.util.*
 
@@ -10,6 +9,7 @@ import java.util.*
  * 类描述：网络帮助类(主要用来管理参数)
  */
 class HttpManager {
+
     /**
      * haoruigang on 2018-3-30 10:30:01
      * 描述:获取验证码
@@ -18,11 +18,26 @@ class HttpManager {
      * @param phoneNum
      * @param callBack
      */
-    fun doRandomCode(tag: String?, phoneNum: String, callBack: HttpCallBack<*>) {
+    fun doRandomCode(
+        tag: String?,
+        phoneNum: String,
+        phoneMd5Sum: String,
+        callBack: ApiCallBack<*>
+    ) {
         val map = HashMap<String, String>()
-        map["mobile"] = phoneNum
-        OkHttpUtils.instance.getOkHttpJsonRequest(tag, Constants.GET_RANDOM_CODE, map, callBack)
+        map["phone"] = phoneNum
+        map["phoneMd5Sum"] = phoneMd5Sum
+        Api.instance.postOkHttpJsonRequest(tag, Constants.SENDVCODE, map, callBack)
     }
+
+    /**
+     * 客户端基本配置
+     */
+    fun clientConfig(tag: String?, callBack: ApiCallBack<*>) {
+        val map = HashMap<String, String>()
+        Api.instance.getOkHttpJsonRequest(tag, Constants.CLIENT_CONFIG, map, callBack)
+    }
+
 
     private object SingletonHolder {
         var INSTANCE: HttpManager = HttpManager()

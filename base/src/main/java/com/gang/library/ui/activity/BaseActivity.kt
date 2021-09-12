@@ -11,13 +11,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
+import com.gang.library.common.EventBus
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.common.utils.notch.callback.NotchCallback
 import com.gang.library.common.utils.permissions.BasePermissionActivity
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.base_title_bar.*
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
@@ -36,8 +36,8 @@ abstract class BaseActivity : BasePermissionActivity() {
         setContentView(layoutId)
         mContext = this
 
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this) //注册EventBus
+        if (!EventBus.isRegistered(this)) {
+            EventBus.register(this) //注册EventBus
         }
 
         AppManager.appManager?.addActivity(this)
@@ -126,8 +126,8 @@ abstract class BaseActivity : BasePermissionActivity() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this) //反注册EventBus
+        if (EventBus.isRegistered(this)) {
+            EventBus.unregister(this) //反注册EventBus
         }
         if (Util.isOnMainThread() && !this.isFinishing) {
             Glide.with(applicationContext).pauseRequests()
