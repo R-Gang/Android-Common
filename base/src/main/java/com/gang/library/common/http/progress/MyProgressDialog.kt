@@ -1,7 +1,6 @@
 package com.gang.library.common.http.progress
 
 import android.app.Activity
-import android.view.View
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog
 
 /**
@@ -17,9 +16,9 @@ import com.xiasuhuei321.loadingdialog.view.LoadingDialog
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class MyProgressDialog : View {
+class MyProgressDialog : LoadingDialog {
 
-    private lateinit var activity: Activity
+    private var activity: Activity
 
     /**
      * 不可取消(true不可，false可取消)
@@ -44,18 +43,16 @@ class MyProgressDialog : View {
     }
 
     private fun init() {
-        if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(activity)
-        }
-        loadingDialog?.setLoadingText("加载中")
-            ?.setSuccessText("加载成功") //显示加载成功时的文字
-            ?.setInterceptBack(isDismiss)
-            ?.show()
+        setLoadingText("加载中")
+            .setSuccessText("加载成功") //显示加载成功时的文字
+            .setInterceptBack(isDismiss)
+            .show()
+
     }
 
-    fun show() {
+    override fun show() {
         if (!activity.isFinishing) {
-            loadingDialog?.show()
+            super.show()
             isShow = true
         }
     }
@@ -66,13 +63,12 @@ class MyProgressDialog : View {
 
     fun dismiss() {
         if (!activity.isFinishing) {
-            loadingDialog?.close()
+            close()
             isShow = false
         }
     }
 
     companion object {
-        var loadingDialog: LoadingDialog? = null
 
         var isDismiss = false
         var isShow = false

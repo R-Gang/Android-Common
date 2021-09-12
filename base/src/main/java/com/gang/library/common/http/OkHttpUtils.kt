@@ -74,6 +74,7 @@ class OkHttpUtils {
         if (map != null) {
             try {
                 LogUtils.e("get请求:$url,参数---${transMap2String(map)}")
+
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
                 val access_token = getPreferences("access_token", "")
@@ -124,6 +125,7 @@ class OkHttpUtils {
         if (map != null) {
             try {
                 LogUtils.e("get请求:$url,参数---${transMap2String(map)}")
+
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
                 val access_token = getPreferences("access_token", "")
