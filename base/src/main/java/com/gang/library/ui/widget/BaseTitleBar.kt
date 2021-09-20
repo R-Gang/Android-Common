@@ -1,4 +1,4 @@
-package com.jietu.software.app.ui.widget
+package com.gang.library.ui.widget
 
 import android.content.Context
 import android.graphics.Typeface

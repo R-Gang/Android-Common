@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_111_c4_solid"
+        android:paddingLeft="18dp"
+        android:paddingTop="11dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="11dp"
+        android:text="请勾选同意后再登录"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+</LinearLayout>

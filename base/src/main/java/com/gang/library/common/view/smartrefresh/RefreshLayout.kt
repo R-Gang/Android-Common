@@ -1,6 +1,7 @@
 package com.gang.library.common.view.smartrefresh
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+
 
 /**
  *
@@ -22,7 +23,7 @@ class RefreshLayout(private val refreshLayout: SmartRefreshLayout) : SmartRefres
     }
 
     override fun finishSuccessLoadmore() {
-        refreshLayout.finishLoadmore()
+        refreshLayout.finishLoadMore()
     }
 
     override fun finishFailRefresh() {
@@ -30,7 +31,7 @@ class RefreshLayout(private val refreshLayout: SmartRefreshLayout) : SmartRefres
     }
 
     override fun finishFailLoadmore() {
-        refreshLayout.finishLoadmore(false)
+        refreshLayout.finishLoadMore(false)
     }
 
 }

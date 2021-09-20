@@ -2,21 +2,40 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gang.library">
 
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 闪光灯权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 振动器权限 -->
+    <!-- 访问网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 闪光灯权限 -->
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 允许程序振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 允许程序修改声音设置信息 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- 从扩展存储读取权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 电话权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 麦克风权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 写入扩展存储权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许程序在手机屏幕关闭后后台进程仍然运行 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 下载完成通知栏提醒权限-->
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <!-- 允许程序访问电话状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- 允许程序开机自动运行 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 允许应用程序改变任务的顺序 -->
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <!-- 用于获取wifi的获取权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于访问wifi网络信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application>
@@ -45,6 +64,7 @@
             android:name=".ui.activity.WebViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

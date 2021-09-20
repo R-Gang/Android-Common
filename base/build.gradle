@@ -65,8 +65,9 @@ dependencies {
     implementation 'com.apkfuns.logutils:library:1.7.5'
 
     // SmartRefreshLayout
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4'
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 
     // 沉浸式状态栏
     implementation 'com.jaeger.statusbarutil:library:1.5.1'

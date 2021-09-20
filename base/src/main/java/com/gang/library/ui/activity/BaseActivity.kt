@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
@@ -48,7 +49,7 @@ abstract class BaseActivity : BasePermissionActivity() {
         Notch()
     }
 
-    fun Notch() {
+    open fun Notch() {
         //刘海屏适配
         // 方案一
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -76,6 +77,56 @@ abstract class BaseActivity : BasePermissionActivity() {
                 StatusBarUtil.setTranslucent(this, 30)// 状态栏半透明 statusBarAlpha值需要在 0 ~ 255,默认值是112
             }
         }
+    }
+
+    // 隐藏导航栏和状态栏通过系统上滑或者下滑拉出导航栏后会自动隐藏，
+    open fun hideSystemUI() {
+        val decorView = window.decorView
+        decorView.systemUiVisibility =
+                //(修改这个选项，可以设置不同模式 。
+                // 模式一：SYSTEM_UI_FLAG_IMMERSIVE_STICKY 通过系统上滑或者下滑拉出导航栏后会自动隐藏，
+                // 模式二：SYSTEM_UI_FLAG_IMMERSIVE不会自动隐藏)
+            (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    //使用下面三个参数，可以使内容显示在system bar的下面，防止system bar显示或
+                    //隐藏时，Activity的大小被resize。
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    // 隐藏导航栏和状态栏
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+    // 隐藏导航栏通过系统上滑或者下滑拉出导航栏后会自动隐藏，
+    open fun hideNavigationSystemUI() {
+        val decorView = window.decorView
+        decorView.systemUiVisibility =
+                //(修改这个选项，可以设置不同模式 。
+            (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    // 隐藏导航栏
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+    }
+
+    // 隐藏状态栏通过系统上滑或者下滑拉出导航栏后会自动隐藏
+    open fun hideStableSystemUI() {
+        val decorView = window.decorView
+        decorView.systemUiVisibility =
+                //(修改这个选项，可以设置不同模式 。
+            (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    // 隐藏状态栏
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+
+    //显示system bar， 同时还是希望内容显示在system bar的下方。
+    open fun showSystemUI() {
+        val decorView = window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }
 
     /********************* 子类实现  */ // 获取布局文件

@@ -1,5 +1,7 @@
 package com.gang.library.common.utils
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
@@ -23,6 +25,7 @@ import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
 import com.gang.library.common.user.Config.toActivityRequestCode
+import com.gang.library.ui.widget.ToastCustom
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import java.io.UnsupportedEncodingException
@@ -72,6 +75,11 @@ fun showToast(msg: String?, duration: Int) {
         toast?.setText(msg)
     }
     toast?.show()
+}
+
+// 自定义Toast
+fun toastCustom(content: String) {
+    ToastCustom.showToast(BaseApplication.appContext, content)
 }
 
 /**
@@ -796,4 +804,13 @@ inline fun <reified T : Activity> Activity.toActivityForResult(vararg params: ko
         first = System.currentTimeMillis()
         startActivityForResult<T>(toActivityRequestCode, *params)
     }
+}
+
+// 闪烁动画
+fun flash(view: View) {
+    val alphaAnimation1 = ObjectAnimator.ofFloat(view, "alpha", 0.1f, 1f)
+    alphaAnimation1.repeatCount = ValueAnimator.INFINITE
+    alphaAnimation1.repeatMode = ValueAnimator.REVERSE
+    alphaAnimation1.duration = 1000
+    alphaAnimation1.start()
 }
