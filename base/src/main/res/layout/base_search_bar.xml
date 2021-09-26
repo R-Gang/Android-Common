@@ -19,6 +19,7 @@
         app:titleTextAppearance="@style/Toolbar.TitleText">
 
         <RelativeLayout
+            android:id="@+id/rlSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

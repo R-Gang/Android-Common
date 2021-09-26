@@ -7,11 +7,29 @@ import androidx.fragment.app.FragmentPagerAdapter
 /**
  * Created by haoruigang on 2016/1/20.
  */
-class VPAdapter(
-    fm: FragmentManager?,
-    private var fragmentList: List<Fragment>,
-    private var mTitleList: ArrayList<String>
-) : FragmentPagerAdapter(fm!!) {
+class VPFragmentAdapter(
+    fm: FragmentManager,
+) : FragmentPagerAdapter(fm) {
+
+    private var fragmentList: List<Fragment> = arrayListOf()
+    private var mTitleList: ArrayList<String> = arrayListOf()
+
+    constructor(
+        fm: FragmentManager,
+        fragmentList: List<Fragment>,
+    ) : this(fm) {
+        this.fragmentList = fragmentList
+    }
+
+    constructor(
+        fm: FragmentManager,
+        fragmentList: List<Fragment>,
+        mTitleList: ArrayList<String>,
+    ) : this(fm) {
+        this.fragmentList = fragmentList
+        this.mTitleList = mTitleList
+    }
+
 
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]
@@ -21,15 +39,15 @@ class VPAdapter(
         return if (fragmentList.isNotEmpty()) fragmentList.size else 0
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return mTitleList[position]
+    override fun getPageTitle(position: Int): CharSequence {
+        return if (mTitleList.isNotEmpty()) mTitleList[position] else ""
     }
 
     // 刷新fragment
     fun setFragments(
         fm: FragmentManager,
         fragments: ArrayList<Fragment>?,
-        mTitleList: ArrayList<String>
+        mTitleList: ArrayList<String>,
     ) {
         if (fragments != null) {
             val ft = fm.beginTransaction()

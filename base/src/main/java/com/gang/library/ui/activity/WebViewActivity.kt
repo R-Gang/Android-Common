@@ -35,7 +35,7 @@ open class WebViewActivity : BaseActivity() {
     }
 
     override fun initData() {
-
+        dark()
     }
 
     private fun setUrl(url: String) { //声明WebSettings子类
@@ -58,7 +58,7 @@ open class WebViewActivity : BaseActivity() {
         wbXy.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
-                url: String
+                url: String,
             ): Boolean {
                 view.loadUrl(url)
                 return true
@@ -89,7 +89,7 @@ open class WebViewActivity : BaseActivity() {
         fun actionStart(
             context: Context,
             mUrl: String?,
-            mTitleName: String?
+            mTitleName: String?,
         ) {
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("Url", mUrl)

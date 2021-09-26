@@ -41,6 +41,8 @@ abstract class BaseActivity : BasePermissionActivity() {
             EventBus.register(this) //注册EventBus
         }
 
+        StatusBarUtil.setTranslucentForImageView(this, 0, null)
+
         AppManager.appManager?.addActivity(this)
         CrashHandler.instance?.init(this) //初始化全局异常管理
         initData()
@@ -73,10 +75,14 @@ abstract class BaseActivity : BasePermissionActivity() {
             if (this !is CutoutAdapt) {
                 // 需自行将该界面视图元素下移，否则可能会被刘海遮挡
                 onNotchCreate(this)
-            } else {
-                StatusBarUtil.setTranslucent(this, 30)// 状态栏半透明 statusBarAlpha值需要在 0 ~ 255,默认值是112
             }
         }
+    }
+
+    // 状态栏颜色自适应
+    open fun dark() {
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     }
 
     // 隐藏导航栏和状态栏通过系统上滑或者下滑拉出导航栏后会自动隐藏，
@@ -87,6 +93,8 @@ abstract class BaseActivity : BasePermissionActivity() {
                 // 模式一：SYSTEM_UI_FLAG_IMMERSIVE_STICKY 通过系统上滑或者下滑拉出导航栏后会自动隐藏，
                 // 模式二：SYSTEM_UI_FLAG_IMMERSIVE不会自动隐藏)
             (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    // 状态栏颜色自适应
+                    or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     //使用下面三个参数，可以使内容显示在system bar的下面，防止system bar显示或
                     //隐藏时，Activity的大小被resize。
                     or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -103,6 +111,8 @@ abstract class BaseActivity : BasePermissionActivity() {
         decorView.systemUiVisibility =
                 //(修改这个选项，可以设置不同模式 。
             (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    // 状态栏颜色自适应
+                    or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     // 隐藏导航栏
                     or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
@@ -114,6 +124,8 @@ abstract class BaseActivity : BasePermissionActivity() {
         decorView.systemUiVisibility =
                 //(修改这个选项，可以设置不同模式 。
             (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    // 状态栏颜色自适应
+                    or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     // 隐藏状态栏

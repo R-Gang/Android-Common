@@ -40,7 +40,7 @@ enum class UserManager {
 
     fun <T : View?, V> apply(
         list: List<T>,
-        setter: Setter<in T, V>, value: V
+        setter: Setter<in T, V>, value: V,
     ) {
         var i = 0
         val count = list.size

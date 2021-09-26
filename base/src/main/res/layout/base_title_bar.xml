@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/appbar"
     android:theme="@style/AppTheme.AppBarOverlay"
     app:elevation="0dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:theme="@style/ToolbarTheme"
         app:contentInsetLeft="0dp"
@@ -21,12 +21,19 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ll_emtity"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="@dimen/margin_size_20" />
 
             <RelativeLayout
                 android:id="@+id/rl_back_button"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_below="@+id/ll_emtity"
                 android:gravity="center">
 
                 <ImageView
@@ -40,7 +47,7 @@
                     android:id="@+id/iv_title_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_size_15" />
+                    android:layout_marginStart="@dimen/margin_size_15" />
 
                 <TextView
                     android:id="@+id/tv_title_left"
@@ -57,8 +64,9 @@
 
             <RelativeLayout
                 android:id="@+id/rl_next_button"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_below="@+id/ll_emtity"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:visibility="visible">
@@ -90,7 +98,8 @@
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_below="@+id/ll_emtity"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:singleLine="true"
@@ -102,7 +111,7 @@
                 android:id="@+id/title_line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@id/tv_title"
                 android:background="@color/color_f6" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
