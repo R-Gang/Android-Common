@@ -32,6 +32,8 @@ import java.io.UnsupportedEncodingException
 import java.lang.reflect.Array
 import java.nio.charset.Charset
 import java.security.MessageDigest
+import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
@@ -813,4 +815,27 @@ fun flash(view: View) {
     alphaAnimation1.repeatMode = ValueAnimator.REVERSE
     alphaAnimation1.duration = 1000
     alphaAnimation1.start()
+}
+
+
+fun getStartOfDay(): Date {
+    val calendar = Calendar.getInstance()
+    calendar.time = Date()
+    calendar[Calendar.HOUR_OF_DAY] = 0
+    calendar[Calendar.MINUTE] = 0
+    calendar[Calendar.SECOND] = 0
+    calendar[Calendar.MILLISECOND] = 0
+    return calendar.time
+}
+
+// 获取几天前
+fun getDaysAgo(date: Date): Long {
+    val diff = getStartOfDay().time - date.time
+    return if (diff < 0) {
+        // if the input date millisecond > today's 12:00am millisecond it is today
+        // (this won't work if you input tomorrow)
+        0
+    } else {
+        TimeUnit.MILLISECONDS.toDays(diff)
+    }
 }

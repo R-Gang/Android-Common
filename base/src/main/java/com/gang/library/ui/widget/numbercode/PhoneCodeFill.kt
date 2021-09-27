@@ -36,12 +36,23 @@ class PhoneCodeFill : RelativeLayout {
     private val codes = arrayListOf<String>()
     private var imm: InputMethodManager? = null
 
-    constructor(context: Context) : super(context) {
+    var color_default = R.drawable.rect_c6_f2_solid
+    var color_focus = R.drawable.rect_c11_ff58_solid
+
+    constructor(context: Context) : this(context, null) {
         loadView()
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         loadView()
+
+        val types = context.obtainStyledAttributes(attrs, R.styleable.PhoneCodeView)
+        // 默认颜色
+        color_default =
+            types.getColor(R.styleable.PhoneCodeView_color_default, R.drawable.rect_c6_f2_solid)
+        // 选择颜色
+        color_focus =
+            types.getColor(R.styleable.PhoneCodeView_color_default, R.drawable.rect_c11_ff58_solid)
     }
 
     private fun loadView() {
@@ -112,8 +123,7 @@ class PhoneCodeFill : RelativeLayout {
      * 设置高亮颜色
      */
     private fun setColor() {
-        val color_default = R.drawable.rect_111_c4_solid
-        val color_focus = R.drawable.rect_c11_ff58_solid
+
         v1.setBackgroundResource(color_default)
         v2.setBackgroundResource(color_default)
         v3.setBackgroundResource(color_default)

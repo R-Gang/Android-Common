@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.library.R
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 
@@ -23,10 +27,11 @@ class LayoutManager {
         return this
     }
 
-    fun initRecyclerView(
-        recyclerView: RecyclerView,
-        isVertical: Boolean
-    ): LinearLayoutManager {
+    fun initRecyclerView(recyclerView: RecyclerView) {
+        initRecyclerView(recyclerView, true)
+    }
+
+    fun initRecyclerView(recyclerView: RecyclerView,isVertical: Boolean): LinearLayoutManager {
         val manager = LinearLayoutManager(mContext)
         manager.orientation =
             if (isVertical) RecyclerView.VERTICAL else LinearLayoutManager.HORIZONTAL
@@ -34,17 +39,27 @@ class LayoutManager {
         return manager
     }
 
-    fun initRecyclerGrid(recyclerView: RecyclerView, span: Int): GridLayoutManager {
+    fun initRecyclerGrid(recyclerView: RecyclerView,span: Int) {
+        initRecyclerGrid(recyclerView, span, true)
+    }
+
+    fun initRecyclerGrid(recyclerView: RecyclerView,span: Int,isVertical: Boolean): GridLayoutManager {
         val manager = GridLayoutManager(mContext, span)
-        manager.orientation = RecyclerView.VERTICAL
+        manager.orientation =
+            if (isVertical) RecyclerView.VERTICAL else LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = manager
         return manager
     }
 
+    fun initXrecyclerView(xRecyclerView: XRecyclerView) {
+        initXrecyclerView(xRecyclerView, true)
+    }
+
     //    初始化 RecyclerView的配置
-    fun iniXrecyclerView(xRecyclerView: XRecyclerView): LinearLayoutManager {
+    fun initXrecyclerView(xRecyclerView: XRecyclerView, isVertical: Boolean): LinearLayoutManager {
         val layoutManager = LinearLayoutManager(mContext)
-        layoutManager.orientation = RecyclerView.VERTICAL
+        layoutManager.orientation =
+            if (isVertical) RecyclerView.VERTICAL else LinearLayoutManager.HORIZONTAL
         xRecyclerView.layoutManager = layoutManager
         // xRecyclerView.setRefreshHeader(new CustomArrowHeader(this));
         xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader)
@@ -57,9 +72,15 @@ class LayoutManager {
         return layoutManager
     }
 
-    fun iniXrecyclerGrid(xRecyclerView: XRecyclerView, span: Int) {
+
+    fun initXrecyclerGrid(xRecyclerView: XRecyclerView, span: Int) {
+        initXrecyclerGrid(xRecyclerView, span, true)
+    }
+
+    fun initXrecyclerGrid(xRecyclerView: XRecyclerView, span: Int, isVertical: Boolean) {
         val manager = GridLayoutManager(mContext, span)
-        manager.orientation = RecyclerView.VERTICAL
+        manager.orientation =
+            if (isVertical) RecyclerView.VERTICAL else LinearLayoutManager.HORIZONTAL
         xRecyclerView.layoutManager = manager
         xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader)
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman)
@@ -68,6 +89,17 @@ class LayoutManager {
         xRecyclerView.setLoadingMoreEnabled(false)
         xRecyclerView.defaultRefreshHeaderView.setRefreshTimeVisible(true)
         xRecyclerView.itemAnimator = DefaultItemAnimator() //设置Item增加、移除动画
+    }
+
+    /**
+     * 流式布局recyclerView
+     */
+    fun initFlexbox(recyclerView: RecyclerView) {
+        val layoutManager = FlexboxLayoutManager(mContext)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.justifyContent = JustifyContent.FLEX_START
+        layoutManager.flexWrap = FlexWrap.WRAP
+        recyclerView.layoutManager = layoutManager
     }
 
     companion object {

@@ -38,5 +38,13 @@
         <attr name="center_color" format="color" />
     </declare-styleable>
 
+    <!--着色器-->
+    <declare-styleable name="PhoneCodeView">
+        <!-- 默认颜色 -->
+        <attr name="color_default" format="color" />
+        <!-- 选中颜色 -->
+        <attr name="color_focus" format="color" />
+    </declare-styleable>
+
 
 </resources>

@@ -42,12 +42,23 @@ class PhoneCodeLine : RelativeLayout {
     private val codes: MutableList<String> = ArrayList()
     private var imm: InputMethodManager? = null
 
+    var color_default = Color.parseColor("#999999")
+    var color_focus = Color.parseColor("#3F8EED")
+
     constructor(context: Context) : super(context) {
         loadView()
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         loadView()
+
+        val types = context.obtainStyledAttributes(attrs, R.styleable.PhoneCodeView)
+        // 默认颜色
+        color_default =
+            types.getColor(R.styleable.PhoneCodeView_color_default, Color.parseColor("#999999"))
+        // 选择颜色
+        color_focus =
+            types.getColor(R.styleable.PhoneCodeView_color_default, Color.parseColor("#3F8EED"))
     }
 
     private fun loadView() {
@@ -127,8 +138,6 @@ class PhoneCodeLine : RelativeLayout {
      * 设置高亮颜色
      */
     private fun setColor() {
-        val color_default = Color.parseColor("#999999")
-        val color_focus = Color.parseColor("#3F8EED")
         v1!!.setBackgroundColor(color_default)
         v2!!.setBackgroundColor(color_default)
         v3!!.setBackgroundColor(color_default)
