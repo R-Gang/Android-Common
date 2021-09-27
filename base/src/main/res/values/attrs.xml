@@ -38,12 +38,16 @@
         <attr name="center_color" format="color" />
     </declare-styleable>
 
-    <!--着色器-->
+    <!--填充验证码-->
     <declare-styleable name="PhoneCodeView">
         <!-- 默认颜色 -->
         <attr name="color_default" format="color" />
         <!-- 选中颜色 -->
         <attr name="color_focus" format="color" />
+        <!-- 第四个文字颜色 -->
+        <attr name="code4_color" format="color" />
+        <!-- 第四个光标颜色 -->
+        <attr name="vline4_bg" format="color" />
     </declare-styleable>
 
 
