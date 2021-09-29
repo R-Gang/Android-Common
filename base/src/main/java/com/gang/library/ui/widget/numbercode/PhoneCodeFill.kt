@@ -41,6 +41,7 @@ class PhoneCodeFill : RelativeLayout {
     var color_focus = R.drawable.rect_c11_ff58_solid
     var code4Color = R.color.color_f
     var vLine4Bg = resources.getDrawable(R.drawable.edit_cursor_color3)
+    var flashDuration = 500
 
     constructor(context: Context) : this(context, null) {
         loadView()
@@ -50,17 +51,25 @@ class PhoneCodeFill : RelativeLayout {
         loadView()
 
         val types = context.obtainStyledAttributes(attrs, R.styleable.PhoneCodeView)
-        // 默认颜色
-        color_default =
-            types.getColor(R.styleable.PhoneCodeView_color_default, R.drawable.rect_c6_f2_solid)
-        // 选择颜色
-        color_focus =
-            types.getColor(R.styleable.PhoneCodeView_color_default, R.drawable.rect_c11_ff58_solid)
-        // 第四个颜色
-        code4Color =
-            types.getColor(R.styleable.PhoneCodeView_code4_color, R.color.color_f)
-        // 第四个光标背景
-        vLine4Bg = types.getDrawable(R.styleable.PhoneCodeView_vline4_bg)
+        try {
+            // 默认颜色
+            color_default =
+                types.getColor(R.styleable.PhoneCodeView_color_default, R.drawable.rect_c6_f2_solid)
+            // 选择颜色
+            color_focus =
+                types.getColor(R.styleable.PhoneCodeView_color_default,
+                    R.drawable.rect_c11_ff58_solid)
+            // 第四个颜色
+            code4Color =
+                types.getColor(R.styleable.PhoneCodeView_code4_color, R.color.color_f)
+            // 第四个光标背景
+            vLine4Bg = types.getDrawable(R.styleable.PhoneCodeView_vline4_bg)
+            // 光标闪烁频率
+            flashDuration =
+                types.getDimensionPixelOffset(R.styleable.PhoneCodeView_flash_duration, 500)
+        } finally {
+            types.recycle() //TypeArray用完需要recycle
+        }
     }
 
     private fun loadView() {
@@ -147,20 +156,20 @@ class PhoneCodeFill : RelativeLayout {
             v1.setBackgroundResource(color_focus)
 
             v_line1.show()
-            flash(v_line1)
+            flash(v_line1, flashDuration.toLong())
         }
         if (codes.size == 1) {
             v2.setBackgroundResource(color_focus)
 
             v_line2.show()
-            flash(v_line2)
+            flash(v_line2, flashDuration.toLong())
 
         }
         if (codes.size == 2) {
             v3.setBackgroundResource(color_focus)
 
             v_line3.show()
-            flash(v_line3)
+            flash(v_line3, flashDuration.toLong())
 
         }
         if (codes.size >= 3) {
@@ -172,7 +181,7 @@ class PhoneCodeFill : RelativeLayout {
                 v_line4.gone()
             } else {
                 v_line4.show()
-                flash(v_line4)
+                flash(v_line4, flashDuration.toLong())
             }
 
 
@@ -214,7 +223,7 @@ class PhoneCodeFill : RelativeLayout {
         }
         // 默认第一个显示闪烁
         v_line1.show()
-        flash(v_line1)
+        flash(v_line1, flashDuration.toLong())
     }
 
     /**

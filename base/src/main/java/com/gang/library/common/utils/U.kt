@@ -809,11 +809,11 @@ inline fun <reified T : Activity> Activity.toActivityForResult(vararg params: ko
 }
 
 // 闪烁动画
-fun flash(view: View) {
+fun flash(view: View, duration: Long = 1000L) {
     val alphaAnimation1 = ObjectAnimator.ofFloat(view, "alpha", 0.1f, 1f)
     alphaAnimation1.repeatCount = ValueAnimator.INFINITE
     alphaAnimation1.repeatMode = ValueAnimator.REVERSE
-    alphaAnimation1.duration = 1000
+    alphaAnimation1.duration = duration
     alphaAnimation1.start()
 }
 

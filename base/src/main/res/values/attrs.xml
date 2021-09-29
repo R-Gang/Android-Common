@@ -48,6 +48,8 @@
         <attr name="code4_color" format="color" />
         <!-- 第四个光标颜色 -->
         <attr name="vline4_bg" format="color" />
+        <!-- 光标闪烁频率 -->
+        <attr name="flash_duration" format="dimension" />
     </declare-styleable>
 
 

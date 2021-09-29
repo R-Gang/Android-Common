@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:theme="@style/ToolbarTheme"
         app:contentInsetLeft="0dp"
@@ -21,7 +21,8 @@
         <RelativeLayout
             android:id="@+id/rlSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_gravity="bottom"
+            android:layout_height="45dp">
 
             <RelativeLayout
                 android:id="@+id/rl_back_button"

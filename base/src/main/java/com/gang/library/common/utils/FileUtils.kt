@@ -52,7 +52,7 @@ object FileUtils {
         context: Context,
         type: Int,
         outputCameraPath: String,
-        format: String
+        format: String,
     ): File? {
         val path =
             if (!TextUtils.isEmpty(outputCameraPath)) outputCameraPath else CAMERA_PATH
@@ -68,7 +68,7 @@ object FileUtils {
     fun createCropFile(
         context: Context,
         type: Int,
-        format: String
+        format: String,
     ): File? {
         return createMediaFile(
             context,
@@ -82,7 +82,7 @@ object FileUtils {
         context: Context,
         parentPath: String,
         type: Int,
-        format: String
+        format: String,
     ): File? {
         val state = Environment.getExternalStorageState()
         val rootDir =
@@ -168,7 +168,7 @@ object FileUtils {
      */
     fun getDataColumn(
         context: Context, uri: Uri?, selection: String?,
-        selectionArgs: Array<String>?
+        selectionArgs: Array<String>?,
     ): String? {
         var cursor: Cursor? = null
         val column = "_data"
@@ -367,11 +367,11 @@ object FileUtils {
     }
 
     /*
- * 旋转图片
- * @param angle
- * @param bitmap
- * @return Bitmap
- */
+     * 旋转图片
+     * @param angle
+     * @param bitmap
+     * @return Bitmap
+     */
     fun rotaingImageView(angle: Int, bitmap: Bitmap): Bitmap { //旋转图片 动作
         val matrix = Matrix()
         matrix.postRotate(angle.toFloat())
@@ -474,7 +474,7 @@ object FileUtils {
     fun createDir(
         context: Context,
         filename: String,
-        directory_path: String
+        directory_path: String,
     ): String {
         val state = Environment.getExternalStorageState()
         val rootDir =
