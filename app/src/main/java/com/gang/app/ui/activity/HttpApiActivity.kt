@@ -31,6 +31,9 @@ class HttpApiActivity : BaseActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         //return the compressed file path Config.photo +
+
+        dark()
+
         var mImageName =
             DateUtils.getCurTimeLong("yyyyMMddHHmmss") + UserManager.INSTANCE.userData.user_id
                 .toString() + ".jpg"
@@ -41,7 +44,14 @@ class HttpApiActivity : BaseActivity() {
         // 阿里云使用方式
 //        AliYunOss.getInstance(this)?.upload(mImageName, "", null)
 
+    }
 
+    //重写Activity该方法，当窗口焦点变化时自动隐藏system bar，这样可以排除在弹出dialog和menu时，system bar会重新显示的问题。
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            hideSystemUI()
+        }
     }
 
     override fun initData() {
@@ -49,22 +59,22 @@ class HttpApiActivity : BaseActivity() {
         /**
          * haoruigang 2018-3-30 10:31:11   获取验证码接口
          */
-        HttpManager.instance.clientConfig("HttpApiActivity",
-            object : ApiCallBack<BaseModel<String>>() {
-                override fun onSuccess(date: BaseModel<String>?) {
-//                    countDown()
-                    //                        String code = date.getData().get(0).getCode();
-//                        etCode.setText(code);
-                }
-
-                override fun onFail(statusCode: Int, errorMsg: String?) {
-                    showToast(errorMsg)
-                }
-
-                override fun onError(throwable: Throwable?) {
-                    showToast(throwable.toString(),3000)
-                }
-            })
+//        HttpManager.instance.clientConfig("HttpApiActivity",
+//            object : ApiCallBack<BaseModel<String>>() {
+//                override fun onSuccess(date: BaseModel<String>?) {
+////                    countDown()
+//                    //                        String code = date.getData().get(0).getCode();
+////                        etCode.setText(code);
+//                }
+//
+//                override fun onFail(statusCode: Int, errorMsg: String?) {
+//                    showToast(errorMsg)
+//                }
+//
+//                override fun onError(throwable: Throwable?) {
+//                    showToast(throwable.toString(),3000)
+//                }
+//            })
 
     }
 

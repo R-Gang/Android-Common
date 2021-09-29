@@ -58,7 +58,7 @@ object ResUtils {
     fun setTvaddDrawable(
         textView: TextView, @DrawableRes imgResId: Int,
         index: Int,
-        padding: Int
+        padding: Int,
     ) {
         if (imgResId == -1) {
             textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
@@ -82,7 +82,7 @@ object ResUtils {
     @TargetApi(19)
     fun getImageAbsolutePath(
         context: Context?,
-        imageUri: Uri?
+        imageUri: Uri?,
     ): String? {
         if (context == null || imageUri == null) return null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(
@@ -90,21 +90,21 @@ object ResUtils {
                 imageUri
             )
         ) {
-            if (FileUtils.isExternalStorageDocument(imageUri)) {
+            if (isExternalStorageDocument(imageUri)) {
                 val docId = DocumentsContract.getDocumentId(imageUri)
                 val split = docId.split(":").toTypedArray()
                 val type = split[0]
                 if ("primary".equals(type, ignoreCase = true)) {
                     return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
                 }
-            } else if (FileUtils.isDownloadsDocument(imageUri)) {
+            } else if (isDownloadsDocument(imageUri)) {
                 val id = DocumentsContract.getDocumentId(imageUri)
                 val contentUri = ContentUris.withAppendedId(
                     Uri.parse("content://downloads/public_downloads"),
                     java.lang.Long.valueOf(id)
                 )
-                return FileUtils.getDataColumn(context, contentUri, null, null)
-            } else if (FileUtils.isMediaDocument(imageUri)) {
+                return getDataColumn(contentUri, null, null)
+            } else if (isMediaDocument(imageUri)) {
                 val docId = DocumentsContract.getDocumentId(imageUri)
                 val split = docId.split(":").toTypedArray()
                 val type = split[0]
@@ -123,7 +123,7 @@ object ResUtils {
                 val selection = MediaStore.Images.Media._ID + "=?"
                 val selectionArgs =
                     arrayOf(split[1])
-                return FileUtils.getDataColumn(context, contentUri, selection, selectionArgs)
+                return getDataColumn(contentUri, selection, selectionArgs)
             }
         } // MediaStore (and general)
         else if ("content".equals(
@@ -131,8 +131,7 @@ object ResUtils {
                 ignoreCase = true
             )
         ) { // Return the remote address
-            return if (FileUtils.isGooglePhotosUri(imageUri)) imageUri.lastPathSegment else FileUtils.getDataColumn(
-                context,
+            return if (isGooglePhotosUri(imageUri)) imageUri.lastPathSegment else getDataColumn(
                 imageUri,
                 null,
                 null
@@ -219,7 +218,7 @@ object ResUtils {
     // 判断SD卡是否存在
     fun isExistSDCard(): Boolean {
         return Environment.getExternalStorageState() ==
-            Environment.MEDIA_MOUNTED
+                Environment.MEDIA_MOUNTED
     }
 
     /**
@@ -228,7 +227,7 @@ object ResUtils {
      */
     fun getRealFilePathFromUri(
         context: Context,
-        uri: Uri?
+        uri: Uri?,
     ): String? {
         if (null == uri) return null
         val scheme = uri.scheme

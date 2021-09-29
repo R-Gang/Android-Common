@@ -4,15 +4,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
 import com.gang.app.ui.activity.HttpApiActivity
+import com.gang.app.ui.activity.PickerActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
 import com.gang.library.common.view.manager.LayoutManager
 import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
-import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import com.gang.library.ui.widget.ColorWheel
+import com.scwang.smart.refresh.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -30,9 +34,14 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
 
     override fun initView(view: View?, savedInstanceState: Bundle?) {
 
-        refresh_layout.refreshHeader = ClassicsHeader(mActivity)
-        refresh_layout.setOnRefreshListener {}
+        // 目前kotlin-android-extensions暂时还不支持跨模块
+        view?.findViewById<RelativeLayout>(R.id.rl_back_button)?.visibility = View.GONE
+        view?.findViewById<TextView>(R.id.tv_title)?.text = resources.getString(R.string.app_name)
 
+        refresh_layout.setRefreshHeader(ClassicsHeader(activity))
+        refresh_layout.setOnRefreshListener {
+            refresh_layout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+        }
 
     }
 
@@ -49,8 +58,7 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         )
 
         //        监听事件
-        color_wheel.setOnColorChangedListener(object :
-            com.gang.library.ui.widget.ColorWheel.OnColorChangedListener {
+        color_wheel.setOnColorChangedListener(object : ColorWheel.OnColorChangedListener {
             override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
 //                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
                 LogUtils.d(Color.argb(a, r, g, b))
@@ -69,7 +77,15 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
     }
 
     override fun setOnItemClickListener(view: View?, position: Int) {
-        startActivity(Intent(mActivity,HttpApiActivity::class.java))
+        when (position) {
+            0 -> {
+                startActivity(Intent(mActivity, HttpApiActivity::class.java))
+            }
+            1 -> {
+                startActivity(Intent(mActivity, PickerActivity::class.java))
+            }
+        }
     }
+
 
 }

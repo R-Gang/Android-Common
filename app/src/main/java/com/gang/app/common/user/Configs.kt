@@ -19,5 +19,7 @@ object Configs {
 
     // 开启版本更新功能
     var isOpenVersionUpdate = false
+    // 开启阿里云推送功能
+    var isOpenAlibabaPush = false
 
 }

@@ -2,8 +2,6 @@ package com.gang.app.bean
 
 /**
  *
- * @ProjectName:    JieTu
- * @Package:        com.jietu.software.app.bean
  * @ClassName:      BaseBeanModel
  * @Description:     java类作用描述
  * @Author:         haoruigang

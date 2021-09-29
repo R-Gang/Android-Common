@@ -2,6 +2,7 @@ package com.gang.app.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.TextPaint
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.gang.app.R
 import com.gang.library.common.utils.ClickableSpans
 import com.gang.library.common.utils.setSpannable
 import com.gang.library.common.utils.showToast
+import com.gang.library.ui.widget.numbercode.PhoneCodeFill
 import kotlinx.android.synthetic.main.activity_picker.*
 
 /**
@@ -19,10 +21,11 @@ class PickerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_picker)
-        showPickerView.setOnClickListener { showPickerView() }
+        initView()
+        showPickerView.setOnClickListener {  }
     }
 
-    private fun showPickerView() { // 城市弹出选择器
+    private fun initView() { // 城市弹出选择器
         setSpannable(userAgreement, 2, 18, object : ClickableSpans {
             override fun clickable(widget: View) {
                 showToast("点击了用户协议")
@@ -33,6 +36,19 @@ class PickerActivity : AppCompatActivity() {
                 ds.color = Color.parseColor("#697CAD")
             }
         })
+
+        mNumberCodeView = findViewById<View>(R.id.number_code_view) as PhoneCodeFill
+        mNumberCodeView.showSoftInput()
+        mNumberCodeView.setOnInputListener(object : PhoneCodeFill.OnInputListener {
+            override fun onSucess(code: String?) {
+                //TODO: 例如底部【下一步】按钮可点击
+                mInputCode = code
+            }
+
+            override fun onInput() {
+                //TODO:例如底部【下一步】按钮不可点击
+            }
+        })
     }
 
     companion object {
@@ -40,6 +56,12 @@ class PickerActivity : AppCompatActivity() {
         private var pname: String? = null
         private var cname: String? = null
         private var dname: String? = null
+
+        private var countDownTimer: CountDownTimer? = null
+        lateinit var mNumberCodeView: PhoneCodeFill
+
+        var phoneNum = ""
+        private var mInputCode: String? = null
     }
 
 }

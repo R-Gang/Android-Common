@@ -24,7 +24,6 @@ import com.gang.library.common.utils.NotifiUtil
 import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
-import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -48,11 +47,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     override fun initView(savedInstanceState: Bundle?) {
         window.setFormat(PixelFormat.TRANSLUCENT)
-        StatusBarUtil.setTransparent(this);
-
-        // 目前kotlin-android-extensions暂时还不支持跨模块
-        findViewById<RelativeLayout>(R.id.rl_back_button).visibility = View.GONE
-        findViewById<TextView>(R.id.tv_title).text = resources.getString(R.string.app_name)
+        dark()
 
         radioButtons.forEach { it.setOnClickListener(this) }
         setChioceItem(position)
@@ -60,17 +55,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             NotifiUtil.OpenNotificationSetting(this, null, "")
         }
 
-        MyProgressDialog(this).show()
-
     }
 
     override fun onNotchCreate(activity: Activity) {
         //去掉标题
 //        requestWindowFeature(Window.FEATURE_NO_TITLE)
         //全屏显示
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//        window.decorView.systemUiVisibility =
+//            View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+//                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
 //        StatusBarUtil.setTransparent(activity);
@@ -160,4 +153,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+    //重写Activity该方法，当窗口焦点变化时自动隐藏system bar，这样可以排除在弹出dialog和menu时，system bar会重新显示的问题。
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            hideNavigationSystemUI()
+        }
+    }
+
 }

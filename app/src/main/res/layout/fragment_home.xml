@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:srlEnableFooterFollowWhenLoadFinished="true"
-    app:srlEnableScrollContentWhenLoaded="true">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <include layout="@layout/base_title_bar" />
+
         <FrameLayout
             android:id="@+id/fl_search"
+            android:layout_below="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_size_40"
             android:layout_marginStart="@dimen/margin_size_15"
@@ -57,13 +58,13 @@
 
         <com.gang.library.ui.widget.ColorWheel
             android:id="@+id/color_wheel"
-            android:layout_marginLeft="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/recyclerView"
-            app:circle_radius="150dp"
-            app:center_radius="20dp" />
+            android:layout_marginLeft="50dp"
+            app:center_radius="20dp"
+            app:circle_radius="150dp" />
 
     </RelativeLayout>
 
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

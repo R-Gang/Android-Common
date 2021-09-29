@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".ui.activity.PickerActivity">
 
     <Button
@@ -22,4 +24,18 @@
         android:textColor="#ff717171"
         android:textSize="13sp" />
 
-</RelativeLayout>
+    <com.gang.library.ui.widget.numbercode.PhoneCodeFill
+        android:id="@+id/number_code_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_line1"
+        android:layout_marginTop="@dimen/margin_size_62"
+        android:inputType="number"
+        app:code4_color="@color/color_f"
+        app:vline4_bg="@drawable/edit_cursor_color3"
+        app:flash_duration="200dp"
+        android:paddingTop="@dimen/margin_size_10"
+        android:paddingBottom="@dimen/margin_size_10"
+        android:text="" />
+
+</LinearLayout>

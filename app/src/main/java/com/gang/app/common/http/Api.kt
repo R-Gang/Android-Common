@@ -4,13 +4,10 @@ import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.http.OkHttpUtils
 import com.gang.library.common.http.callback.HttpCallBack
 import com.gang.library.common.utils.getPreferences
-import com.gang.library.common.utils.transMap2String
 import com.lzy.okhttputils.model.HttpHeaders
 
 /**
  *
- * @ProjectName:
- * @Package:        com.jietu.software.app.common.http
  * @ClassName:      haoruigang
  * @Description:     java类作用描述
  * @Author:         haoruigang
@@ -34,10 +31,11 @@ class Api {
         tag: String?,
         url: String,
         map: Map<String, String>?,
-        callBack: HttpCallBack<*>?
+        callBack: HttpCallBack<*>?,
     ) {
         if (map != null) {
             try {
+                LogUtils.e(tag)
                 val params = HashMap<String, String>()
                 params.putAll(map as HashMap) // 不加密的参数
 
@@ -66,11 +64,11 @@ class Api {
         tag: String?,
         url: String,
         map: Map<String, String>?,
-        callBack: HttpCallBack<*>?
+        callBack: HttpCallBack<*>?,
     ) {
         if (map != null) {
             try {
-                LogUtils.e("post请求:$url,参数---${transMap2String(map)}")
+                LogUtils.e(tag)
                 val params = HashMap<String, String>()
                 params.putAll(map as HashMap) // 不加密的参数
 

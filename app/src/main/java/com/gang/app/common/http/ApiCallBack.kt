@@ -12,8 +12,6 @@ import org.json.JSONObject
 
 /**
  *
- * @ProjectName:
- * @Package:        com.jietu.software.app.common.http
  * @ClassName:      haoruigang
  * @Description:     java类作用描述
  * @Author:         haoruigang
