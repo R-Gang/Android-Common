@@ -2,9 +2,8 @@ package com.gang.library.ui.widget
 
 import android.content.Context
 import android.graphics.*
-import androidx.appcompat.widget.AppCompatImageView
-import android.widget.ImageView.ScaleType
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 
 /**
  * @ClassName: haoruigang
@@ -36,7 +35,6 @@ class SquircleImageView : AppCompatImageView {
 
     private fun init() {
         // Why not clipToOutline? Because clipping isn't supported for arbitrary paths ¯\_(ツ)_/¯
-        scaleType = ScaleType.FIT_CENTER
         setLayerType(
             LAYER_TYPE_HARDWARE,
             null
