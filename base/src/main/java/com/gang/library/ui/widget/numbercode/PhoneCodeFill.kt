@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnKeyListener
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gang.library.R
@@ -224,6 +225,32 @@ class PhoneCodeFill : RelativeLayout {
         // 默认第一个显示闪烁
         v_line1.show()
         flash(v_line1, flashDuration.toLong())
+    }
+
+    fun getetCode(): EditText {
+        return getView().et_code
+    }
+
+    fun getetCode1(): EditText {
+        return getView().tv_code1
+    }
+
+    fun getetCode2(): EditText {
+        return getView().tv_code2
+    }
+
+    fun getetCode3(): EditText {
+        return getView().tv_code3
+    }
+
+    fun getetCode4(): EditText {
+        return getView().tv_code4
+    }
+
+    // 验证码输入错误清空
+    fun clearCode() {
+        codes.clear()
+        showCode()
     }
 
     /**

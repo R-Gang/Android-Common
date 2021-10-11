@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gang.library.R
+import kotlinx.android.synthetic.main.phone_code.view.*
 import java.util.*
 
 /**
@@ -30,15 +31,6 @@ import java.util.*
  */
 class PhoneCodeLine : RelativeLayout {
 
-    private var tv_code1: TextView? = null
-    private var tv_code2: TextView? = null
-    private var tv_code3: TextView? = null
-    private var tv_code4: TextView? = null
-    private var v1: View? = null
-    private var v2: View? = null
-    private var v3: View? = null
-    private var v4: View? = null
-    private var et_code: EditText? = null
     private val codes: MutableList<String> = ArrayList()
     private var imm: InputMethodManager? = null
 
@@ -64,20 +56,11 @@ class PhoneCodeLine : RelativeLayout {
     private fun loadView() {
         imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val view: View = LayoutInflater.from(context).inflate(R.layout.phone_code_line, this)
-        initView(view)
         initEvent()
     }
 
-    private fun initView(view: View) {
-        tv_code1 = view.findViewById<View>(R.id.tv_code1) as TextView
-        tv_code2 = view.findViewById<View>(R.id.tv_code2) as TextView
-        tv_code3 = view.findViewById<View>(R.id.tv_code3) as TextView
-        tv_code4 = view.findViewById<View>(R.id.tv_code4) as TextView
-        et_code = view.findViewById<View>(R.id.et_code) as EditText
-        v1 = view.findViewById(R.id.v1)
-        v2 = view.findViewById(R.id.v2)
-        v3 = view.findViewById(R.id.v3)
-        v4 = view.findViewById(R.id.v4)
+    fun getView(): View {
+        return LayoutInflater.from(context).inflate(R.layout.phone_code, this)
     }
 
     private fun initEvent() {
@@ -126,10 +109,10 @@ class PhoneCodeLine : RelativeLayout {
         if (codes.size >= 4) {
             code4 = codes[3]
         }
-        tv_code1!!.text = code1
-        tv_code2!!.text = code2
-        tv_code3!!.text = code3
-        tv_code4!!.text = code4
+        tv_code1?.setText(code1, TextView.BufferType.NORMAL)
+        tv_code2?.setText(code2, TextView.BufferType.NORMAL)
+        tv_code3?.setText(code3, TextView.BufferType.NORMAL)
+        tv_code4?.setText(code4, TextView.BufferType.NORMAL)
         setColor() //设置高亮颜色
         callBack() //回调
     }
@@ -189,6 +172,32 @@ class PhoneCodeLine : RelativeLayout {
         if (imm != null && et_code != null) {
             et_code!!.postDelayed({ imm!!.showSoftInput(et_code, 0) }, 200)
         }
+    }
+
+    fun getetCode(): EditText {
+        return getView().et_code
+    }
+
+    fun getetCode1(): EditText {
+        return getView().tv_code1
+    }
+
+    fun getetCode2(): EditText {
+        return getView().tv_code2
+    }
+
+    fun getetCode3(): EditText {
+        return getView().tv_code3
+    }
+
+    fun getetCode4(): EditText {
+        return getView().tv_code4
+    }
+
+    // 验证码输入错误清空
+    fun clearCode() {
+        codes.clear()
+        showCode()
     }
 
     /**

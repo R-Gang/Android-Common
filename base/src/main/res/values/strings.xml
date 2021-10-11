@@ -16,4 +16,6 @@
     </string>
     <string name="title_settings_dialog">Permissions Required</string>
 
+    <string name="appbar_spring_behavior">com.google.android.material.appbar.AppBarLayoutSpringBehavior</string>
+
 </resources>

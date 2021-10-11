@@ -24,6 +24,8 @@
                 android:layout_height="49dp"
                 android:background="@null"
                 android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="1"
                 android:textColor="#333333"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -53,6 +55,8 @@
                 android:layout_height="49dp"
                 android:background="@null"
                 android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="1"
                 android:textColor="#333333"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -83,6 +87,8 @@
                 android:layout_height="49dp"
                 android:background="@null"
                 android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="1"
                 android:textColor="#333333"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -112,6 +118,8 @@
                 android:layout_height="49dp"
                 android:background="@null"
                 android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="1"
                 android:textColor="#333333"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -138,6 +146,7 @@
         android:background="@android:color/transparent"
         android:cursorVisible="false"
         android:inputType="number"
+        android:maxLength="4"
         android:textColor="@android:color/transparent" />
 
 </RelativeLayout>

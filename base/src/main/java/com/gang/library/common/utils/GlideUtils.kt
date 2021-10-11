@@ -3,15 +3,15 @@ package com.gang.library.common.utils
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
+import android.graphics.*
 import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.ViewPropertyTransition
+
 
 /**
  *
@@ -37,17 +37,11 @@ object GlideUtils {
             fadeAnim.start()
         }
 
-    // 获取 Glide
-    fun Glide(context: Context
-    ): RequestManager { //通过RequestOptions扩展功能
-        return Glide.with(context)
-    }
-
     // Glide 配置
     @SuppressLint("CheckResult")
-    fun getPhotoImageOption(
+    private fun getPhotoImageOption(
         context: Context,
-        defaultImage: Int
+        defaultImage: Int,
     ): RequestOptions { //通过RequestOptions扩展功能
         val options = RequestOptions()
         options.placeholder(defaultImage) //预览图片
@@ -60,19 +54,19 @@ object GlideUtils {
         context: Context,
         url: String?,
         defaultImage: Int,
-        imageView: ImageView
+        imageView: ImageView,
     ) {
         Glide.with(context).load(url).apply(getPhotoImageOption(context, defaultImage))
             .into(imageView)
     }
 
     // 圆角
-    fun setRadiusBitmap(
+    fun setGlideRadiusBitmap(
         context: Context,
         url: String?,
         defaultImage: Int,
         imageView: ImageView,
-        cornerRadius: Float
+        cornerRadius: Float,
     ) { //  获取Bitmap
         Glide.with(context).asBitmap().load(url)
             .apply(getPhotoImageOption(context, defaultImage))
@@ -86,6 +80,46 @@ object GlideUtils {
                     imageView.setImageDrawable(circularBitmapDrawable)
                 }
             })
+    }
+
+    // 获取bitmap图片
+    fun getGlideBitmap(
+        context: Context,
+        url: String?,
+        defaultImage: Int,
+        imageView: ImageView,
+        callBitmap: CallBitmap,
+    ) { //  获取Bitmap
+        Glide.with(context).asBitmap().load(url)
+            .apply(getPhotoImageOption(context, defaultImage))
+            .into(object : BitmapImageViewTarget(imageView) {
+                override fun setResource(resource: Bitmap?) {
+                    super.setResource(resource)
+                    callBitmap.bitmapRes(resource)
+                }
+            })
+    }
+
+    interface CallBitmap {
+        fun bitmapRes(resource: Bitmap?)
+    }
+
+    // 圓角
+    fun getRoundedCornerBitmap(bitmap: Bitmap, cornerRadius: Float = 50f): Bitmap? {
+        val roundBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(roundBitmap)
+        val color = -0xbdbdbe
+        val paint = Paint()
+        val rect = Rect(0, 0, bitmap.width, bitmap.height)
+        val rectF = RectF(rect)
+        val roundPx = cornerRadius
+        paint.isAntiAlias = true
+        canvas.drawARGB(0, 0, 0, 0)
+        paint.color = color
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(bitmap, rect, rect, paint)
+        return roundBitmap
     }
 
 }

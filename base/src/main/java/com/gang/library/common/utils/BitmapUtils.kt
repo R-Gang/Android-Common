@@ -16,16 +16,7 @@ import java.util.*
  * 二维码
  * Created by haoruigang on 2018/4/4 12:50.
  */
-class BitmapUtils {
-
-    private object SingletonHolder {
-        var INSTANCE = BitmapUtils()
-    }
-
-    companion object {
-        val instance: BitmapUtils
-            get() = SingletonHolder.INSTANCE
-    }
+object BitmapUtils {
 
     fun getCompressedBitmap(path: String?): Bitmap {
         val options = BitmapFactory.Options()

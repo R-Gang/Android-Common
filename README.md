@@ -83,6 +83,12 @@
     implementation 'com.github.mmin18:realtimeblurview:1.0.4'
     // 高斯模糊（推荐）
     implementation 'jp.wasabeef:blurry:4.0.0'
+
+    // 通过一行代码即可实现阴影效果
+    implementation 'com.github.Liberuman:ShadowDrawable:0.1'
+    // 识别图片中的颜色
+    implementation 'com.android.support:palette-v7:28.+'
+
     
 
     // BGA Zxing
@@ -103,8 +109,15 @@
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     // universal-image-loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    // 圆角、圆形ImageView，可绘制边框，圆形时可绘制内外两层边框，支持边框不覆盖图片，可绘制遮罩
+    implementation 'com.github.SheHuan:NiceImageView:1.0.5'
+    // 群聊组合头像Bitmap    
+    implementation 'com.github.Othershe:CombineBitmap:1.0.5'
 
-    
+    // 不规则图形布局的使用(或WidgetCommon不规则布局的实现方式)
+    implementation 'com.yxf:clippathlayout:1.0.+'
+
+
     //解析.plist文件
     implementation 'com.googlecode.plist:dd-plist:1.21'
     // zip解压
