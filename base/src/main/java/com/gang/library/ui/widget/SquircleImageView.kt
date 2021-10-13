@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import com.gang.library.common.utils.dp
+import org.jetbrains.anko.dip
 
 /**
  * @ClassName: haoruigang
@@ -58,14 +60,10 @@ class SquircleImageView : AppCompatImageView {
         val m = Matrix()
         m.setScale(w / 200f, h / 200f, 0f, 0f)
         clipPath!!.transform(m)
-        m.setScale((w - dp(1f)).toFloat() / w, (w - dp(1f)).toFloat() / h, w / 2f, h / 2f)
+        //m.setScale((w - dp(1f)).toFloat() / w, (w - dp(1f)).toFloat() / h, w / 2f, h / 2f) // 黑框
         clipPath!!.transform(m, borderPath)
         clipPath!!.toggleInverseFillType()
         borderPath.toggleInverseFillType()
-    }
-
-    fun dp(dp: Float): Int {
-        return Math.round(dp * context.resources.displayMetrics.density)
     }
 
     override fun dispatchDraw(canvas: Canvas) {

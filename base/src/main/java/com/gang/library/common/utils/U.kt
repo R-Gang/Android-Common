@@ -3,6 +3,7 @@ package com.gang.library.common.utils
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.text.style.ClickableSpan
 import android.util.*
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
@@ -37,6 +39,7 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
+import kotlin.math.roundToInt
 
 /**
  *
@@ -145,6 +148,42 @@ fun getVersionName(): String? {
         "unknown version"
     }
 }
+
+/**
+ * 状态栏高度
+ */
+var getStatusBarHeight = 0
+    get() {
+        val resources = BaseApplication.appContext.resources
+        val resourceId = resources?.getIdentifier("status_bar_height", "dimen", "android")
+        return resources?.getDimensionPixelSize(resourceId!!)!!
+    }
+
+/**
+ * 获取屏幕的密度
+ */
+var getDensity = 0
+    get() {
+        val displayMetrics = BaseApplication.appContext.resources?.displayMetrics
+        return displayMetrics?.densityDpi!!
+    }
+
+/**
+ * 获得屏幕宽高
+ *
+ * @return
+ */
+var screenArray = IntArray(2)
+    get() {
+        val wm =
+            BaseApplication.appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val outMetrics = DisplayMetrics()
+        wm.defaultDisplay.getMetrics(outMetrics)
+        val iArray = IntArray(2)
+        iArray[0] = outMetrics.widthPixels
+        iArray[1] = outMetrics.heightPixels
+        return iArray
+    }
 
 /**
  * 判断网络是否连接
@@ -552,6 +591,13 @@ fun getReplaceTrim(s: String): String {
 }
 
 /**
+ * dp
+ */
+fun dp(dp: Float): Int {
+    return (dp * BaseApplication.appContext.resources.displayMetrics.density).roundToInt()
+}
+
+/**
  * dp转px
  */
 fun dip2px(dpValue: Int): Int {
@@ -714,7 +760,13 @@ fun pictureToVideo(pictureType: String): Int {
  * @param start
  * @param end
  */
-fun setSpannable(textView: TextView, start: Int, end: Int, click: ClickableSpans) {
+fun setSpannable(
+    textView: TextView,
+    start: Int,
+    end: Int,
+    click: ClickableSpans,
+    flags: Int = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+) {
     val spanUser = SpannableStringBuilder(textView.text)
     spanUser.setSpan(object : ClickableSpan() {
         override fun onClick(widget: View) {
@@ -725,7 +777,7 @@ fun setSpannable(textView: TextView, start: Int, end: Int, click: ClickableSpans
             super.updateDrawState(ds)
             click.updateDrawState(ds)
         }
-    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }, start, end, flags)
     textView.movementMethod = LinkMovementMethod.getInstance()
     textView.text = spanUser
 }
@@ -734,8 +786,10 @@ interface ClickableSpans {
     fun clickable(widget: View)
 
     fun updateDrawState(ds: TextPaint) {
-        //删除下划线
+        //下划线
         ds.isUnderlineText = false
+        //删除线
+        ds.isStrikeThruText = false
     }
 }
 
@@ -799,7 +853,30 @@ inline fun <reified T : Activity> Activity.toActivity(vararg params: kotlin.Pair
 }
 
 /**
- * 防连点startActivity
+ * 防连点startActivity（自定义View中使用）
+ */
+inline fun <reified T : Activity> View.toActivity(vararg params: kotlin.Pair<String, Any?>) {
+    if (System.currentTimeMillis() - first > 500L) {
+        first = System.currentTimeMillis()
+        context.startActivity<T>(*params)
+    }
+}
+
+/**
+ * 防连点淡入淡出toActivityAnimation
+ */
+fun Activity.toActivityAnimation(intent: Intent, vararg views: Pair<View?, String>) {
+    if (System.currentTimeMillis() - first > 500L) {
+        first = System.currentTimeMillis()
+        val toBundle =
+            ActivityOptions.makeSceneTransitionAnimation(this, *views)
+                .toBundle()
+        startActivity(intent, toBundle)
+    }
+}
+
+/**
+ * 防连点toActivityForResult
  */
 inline fun <reified T : Activity> Activity.toActivityForResult(vararg params: kotlin.Pair<String, Any?>) {
     if (System.currentTimeMillis() - first > 500L) {
