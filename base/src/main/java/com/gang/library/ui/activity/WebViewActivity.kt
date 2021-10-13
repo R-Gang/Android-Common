@@ -21,8 +21,8 @@ open class WebViewActivity : BaseActivity() {
     lateinit var tvTitle: TextView
     lateinit var wbXy: WebView
 
-    private var mUrl: String? = ""
-    private var mTitleName: String? = ""
+    var mUrl: String? = ""
+    var mTitleName: String? = ""
 
     override val layoutId: Int
         get() = R.layout.activity_webview
@@ -38,7 +38,7 @@ open class WebViewActivity : BaseActivity() {
         dark()
     }
 
-    private fun setUrl(url: String) { //声明WebSettings子类
+    fun setUrl(url: String) { //声明WebSettings子类
         val webSettings = wbXy.settings
         webSettings.javaScriptEnabled = true
         //设置自适应屏幕，两者合用
@@ -70,8 +70,8 @@ open class WebViewActivity : BaseActivity() {
     /**
      * 获取传过来的网络url和标题
      */
-    private val fileUrlByIntent: Unit
-        private get() {
+    val fileUrlByIntent: Unit
+        get() {
             val intent = intent
             mUrl = intent.getStringExtra("Url")
             mTitleName = intent.getStringExtra("titleName")

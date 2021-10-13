@@ -54,6 +54,24 @@ object DateUtils {
         return format.format(d1)
     }
 
+    // 时间
+    fun Gethh(time: Long): String {
+        //    结果为“0”是上午     结果为“1”是下午
+        //    val ca = GregorianCalendar()
+        //    println(ca.get(GregorianCalendar.AM_PM));
+        val format = SimpleDateFormat("HH")
+        val d1 = Date(time)
+        return format.format(d1)
+    }
+
+    // 获取上午、下午
+    //    结果为“0”是上午     结果为“1”是下午
+    fun getAmPm(time: Long): String {
+        val hh = Gethh(time).toInt()
+        val ampm = if (hh > 12) "下午" else "上午"
+        return ampm
+    }
+
     fun GetFriendlyTime(time: String?): String {
         if (time == null) {
             return ""
@@ -167,7 +185,7 @@ object DateUtils {
     fun isTimeRange(
         startHour: String?,
         s: String?,
-        e: String?
+        e: String?,
     ): Boolean {
         val df = SimpleDateFormat("HH:mm")
         val now = df.parse(startHour)

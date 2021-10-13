@@ -86,7 +86,7 @@
 
     // 通过一行代码即可实现阴影效果
     implementation 'com.github.Liberuman:ShadowDrawable:0.1'
-    // 识别图片中的颜色
+    // 自动识别图片颜色（识别图片中的颜色）
     implementation 'com.android.support:palette-v7:28.+'
 
     
