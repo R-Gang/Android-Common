@@ -668,7 +668,7 @@ fun getString(bytes: ByteArray?): String {
  * @param s
  * @return
  */
-fun getString(s: String): String {
+fun getEmoji2String(s: String): String {
     val length = s.length
     var context = ""
     //循环遍历字符串，将字符串拆分为一个一个字符
@@ -715,7 +715,7 @@ fun getEmoji(str: String): String {
         val s2 = s1.substring(1, s1.length - 1)
         var s3: String
         try {
-            s3 = (s2.toInt(16) as Char).toString()
+            s3 = (s2.toInt(16).toChar()).toString()
             string = string.replace(s1, s3)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -723,7 +723,6 @@ fun getEmoji(str: String): String {
     }
     return string
 }
-
 
 /**
  * 检查图片类型
