@@ -27,7 +27,6 @@
         <attr name="speed" />
     </declare-styleable>
 
-
     <!--着色器-->
     <declare-styleable name="ColorWheel">
         <!-- 背景圆的半径 -->
@@ -52,5 +51,12 @@
         <attr name="flash_duration" format="dimension" />
     </declare-styleable>
 
+    <!--不规则圆角-->
+    <declare-styleable name="SquircleImageView">
+        <!-- 不规则圆角边框颜色 -->
+        <attr name="siv_border_color" format="color" />
+        <!-- 不规则圆角边框宽度 -->
+        <attr name="siv_border_width" format="dimension" />
+    </declare-styleable>
 
 </resources>

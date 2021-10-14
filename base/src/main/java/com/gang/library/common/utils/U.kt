@@ -593,7 +593,14 @@ fun getReplaceTrim(s: String): String {
 /**
  * dp
  */
-fun dp(dp: Float): Int {
+fun dp(dp: Float): Float {
+    return dp * BaseApplication.appContext.resources.displayMetrics.density
+}
+
+/**
+ * dp
+ */
+fun dp(dp: Int): Int {
     return (dp * BaseApplication.appContext.resources.displayMetrics.density).roundToInt()
 }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import com.gang.library.R
 import com.gang.library.common.utils.dp
 import org.jetbrains.anko.dip
 
@@ -14,55 +15,74 @@ import org.jetbrains.anko.dip
  * @CreateDate: 2021/10/11 10:59
  */
 class SquircleImageView : AppCompatImageView {
+
+    private var borderWidth //不规则圆角边框宽度
+            = dip(1)
+    private var borderColor //不规则圆角边框颜色
+            = 0x20000000
+
+    // 资源部分
     private var clipPath: Path? = null
-    private val borderPath = Path()
     private var clipPaint: Paint? = null
+
+    // 边框部分
+    private val borderPath = Path()
     private var borderPaint: Paint? = null
 
-    constructor(context: Context?) : super(context!!) {
-        init()
-    }
+    constructor(context: Context?) : super(context!!) {}
 
     constructor(context: Context?, attrs: AttributeSet?) : super(
         context!!, attrs
     ) {
-        init()
+        init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context!!, attrs, defStyleAttr
     ) {
-        init()
+        init(attrs)
     }
 
-    private fun init() {
+    private fun init(attrs: AttributeSet?) {
         // Why not clipToOutline? Because clipping isn't supported for arbitrary paths ¯\_(ツ)_/¯
         setLayerType(
             LAYER_TYPE_HARDWARE,
             null
-        ) // important so that CLEAR xfermode doesn't put a hole through the entire window
+        )
+        // important so that CLEAR xfermode doesn't put a hole through the entire window
         clipPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        clipPaint!!.color = -0x1000000
-        clipPaint!!.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        clipPaint?.color = -0x1000000
+        clipPaint?.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+
+        val types = context.obtainStyledAttributes(attrs, R.styleable.SquircleImageView)
+        try {
+            //不规则圆角边框宽度
+            borderWidth =
+                types.getDimensionPixelOffset(R.styleable.SquircleImageView_siv_border_width, 1)
+            //不规则圆角边框颜色
+            borderColor = types.getColor(R.styleable.SquircleImageView_siv_border_color, Color.TRANSPARENT)
+        } finally {
+            types.recycle() //TypeArray用完需要recycle
+        }
         borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        borderPaint!!.color = 0x20000000
+        borderPaint?.color = borderColor
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         clipPath = Path()
-        clipPath!!.moveTo(0.0f, 100.0f)
-        clipPath!!.cubicTo(0.0f, 33.0f, 33.0f, 0.0f, 100.0f, 0.0f)
-        clipPath!!.cubicTo(167.0f, 0.0f, 200.0f, 33.0f, 200.0f, 100.0f)
-        clipPath!!.cubicTo(200.0f, 167.0f, 167.0f, 200.0f, 100.0f, 200.0f)
-        clipPath!!.cubicTo(33.0f, 200.0f, 0.0f, 167.0f, 0.0f, 100.0f)
-        clipPath!!.close()
+        clipPath?.moveTo(0.0f, 100.0f)
+        clipPath?.cubicTo(0.0f, 33.0f, 33.0f, 0.0f, 100.0f, 0.0f)
+        clipPath?.cubicTo(167.0f, 0.0f, 200.0f, 33.0f, 200.0f, 100.0f)
+        clipPath?.cubicTo(200.0f, 167.0f, 167.0f, 200.0f, 100.0f, 200.0f)
+        clipPath?.cubicTo(33.0f, 200.0f, 0.0f, 167.0f, 0.0f, 100.0f)
+        clipPath?.close()
         val m = Matrix()
         m.setScale(w / 200f, h / 200f, 0f, 0f)
-        clipPath!!.transform(m)
-        //m.setScale((w - dp(1f)).toFloat() / w, (w - dp(1f)).toFloat() / h, w / 2f, h / 2f) // 黑框
-        clipPath!!.transform(m, borderPath)
-        clipPath!!.toggleInverseFillType()
+        clipPath?.transform(m)
+        m.setScale((w - dp(borderWidth)).toFloat() / w, (w - dp(borderWidth)).toFloat() / h, w / 2f, h / 2f) // 边框
+        clipPath?.transform(m, borderPath)
+        clipPath?.toggleInverseFillType()
         borderPath.toggleInverseFillType()
     }
 
