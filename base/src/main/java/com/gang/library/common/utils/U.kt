@@ -39,7 +39,6 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
-import kotlin.math.roundToInt
 
 /**
  *
@@ -63,7 +62,9 @@ private var toast: Toast? = null
  * @param msg
  */
 fun showToast(msg: String?) {
-    showToast(msg, Toast.LENGTH_SHORT)
+    if (Config.isShowLog) {
+        showToast(msg, Toast.LENGTH_SHORT)
+    }
 }
 
 /**
@@ -73,13 +74,15 @@ fun showToast(msg: String?) {
  * @param duration Toast.LENGTH_LONG
  */
 fun showToast(msg: String?, duration: Int) {
-    if (toast == null) {
-        toast = Toast.makeText(BaseApplication.appContext, msg, duration)
-        toast?.setGravity(Gravity.CENTER, 0, 0)
-    } else {
-        toast?.setText(msg)
+    if (Config.isShowLog) {
+        if (toast == null) {
+            toast = Toast.makeText(BaseApplication.appContext, msg, duration)
+            toast?.setGravity(Gravity.CENTER, 0, 0)
+        } else {
+            toast?.setText(msg)
+        }
+        toast?.show()
     }
-    toast?.show()
 }
 
 // 自定义Toast

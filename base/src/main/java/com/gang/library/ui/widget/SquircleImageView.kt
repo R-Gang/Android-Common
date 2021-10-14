@@ -28,7 +28,9 @@ class SquircleImageView : AppCompatImageView {
     private val borderPath = Path()
     private var borderPaint: Paint? = null
 
-    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context?) : super(context!!) {
+        init(null)
+    }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(
         context!!, attrs
