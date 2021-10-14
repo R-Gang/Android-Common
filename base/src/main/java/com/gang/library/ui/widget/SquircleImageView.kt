@@ -5,7 +5,6 @@ import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.gang.library.R
-import com.gang.library.common.utils.dp
 import org.jetbrains.anko.dip
 
 /**
@@ -60,7 +59,8 @@ class SquircleImageView : AppCompatImageView {
             borderWidth =
                 types.getDimensionPixelOffset(R.styleable.SquircleImageView_siv_border_width, 1)
             //不规则圆角边框颜色
-            borderColor = types.getColor(R.styleable.SquircleImageView_siv_border_color, Color.TRANSPARENT)
+            borderColor =
+                types.getColor(R.styleable.SquircleImageView_siv_border_color, Color.TRANSPARENT)
         } finally {
             types.recycle() //TypeArray用完需要recycle
         }
@@ -80,7 +80,10 @@ class SquircleImageView : AppCompatImageView {
         val m = Matrix()
         m.setScale(w / 200f, h / 200f, 0f, 0f)
         clipPath?.transform(m)
-        m.setScale((w - dp(borderWidth)).toFloat() / w, (w - dp(borderWidth)).toFloat() / h, w / 2f, h / 2f) // 边框
+        m.setScale((w - dip(borderWidth)).toFloat() / w,
+            (w - dip(borderWidth)).toFloat() / h,
+            w / 2f,
+            h / 2f) // 边框
         clipPath?.transform(m, borderPath)
         clipPath?.toggleInverseFillType()
         borderPath.toggleInverseFillType()
@@ -89,8 +92,8 @@ class SquircleImageView : AppCompatImageView {
     override fun dispatchDraw(canvas: Canvas) {
         super.dispatchDraw(canvas)
         if (clipPath != null) {
-            canvas.drawPath(borderPath, borderPaint!!)
-            canvas.drawPath(clipPath!!, clipPaint!!)
+            borderPaint?.let { canvas.drawPath(borderPath, it) }
+            clipPaint?.let { canvas.drawPath(clipPath!!, it) }
         }
     }
 }

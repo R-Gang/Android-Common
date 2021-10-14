@@ -26,14 +26,14 @@ class AppManager private constructor() {
         if (activityStack == null) {
             activityStack = Stack()
         }
-        activityStack!!.add(activity)
+        activityStack?.add(activity)
     }
 
     /**
      * 获取当前Activity（堆栈中最后一个压入的）
      */
     fun currentActivity(): Activity? {
-        return activityStack!!.lastElement()
+        return activityStack?.lastElement()
     }
 
     /**
@@ -48,7 +48,7 @@ class AppManager private constructor() {
      * 结束指定的Activity
      */
     fun finishActivity(activity: Activity) {
-        activityStack!!.remove(activity)
+        activityStack?.remove(activity)
         activity.finish()
     }
 
@@ -70,10 +70,10 @@ class AppManager private constructor() {
     fun finishAllActivity() {
         for (i in activityStack!!.indices) {
             if (null != activityStack!![i]) {
-                activityStack!![i]!!.finish()
+                activityStack!![i]?.finish()
             }
         }
-        activityStack!!.clear()
+        activityStack?.clear()
     }
 
     /**
@@ -92,6 +92,7 @@ class AppManager private constructor() {
     companion object {
         // Activity栈
         private var activityStack: Stack<Activity>? = null
+
         // 单例模式
         private var instance: AppManager? = null
 
