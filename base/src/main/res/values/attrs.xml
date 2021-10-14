@@ -51,7 +51,7 @@
         <attr name="flash_duration" format="dimension" />
     </declare-styleable>
 
-    <!--不规则圆角-->
+    <!--不规则圆角（平滑圆角）-->
     <declare-styleable name="SquircleImageView">
         <!-- 不规则圆角边框颜色 -->
         <attr name="siv_border_color" format="color" />
