@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -15,6 +16,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
+import com.gang.library.common.user.Config
 import com.gang.library.common.utils.FileUtils.getDataColumn
 import com.gang.library.common.utils.FileUtils.isDownloadsDocument
 import com.gang.library.common.utils.FileUtils.isExternalStorageDocument
@@ -258,3 +260,6 @@ fun getRealFilePathFromUri(
     }
     return data
 }
+
+//全局字体
+val typefaceAll: Typeface by lazy { Typeface.createFromAsset(BaseApplication.appContext.assets, Config.typefaceAll) }

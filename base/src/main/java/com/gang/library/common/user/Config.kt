@@ -47,4 +47,10 @@ object Config {
     var ossBucket = ""
     var ENDPOINT = "http://oss-cn-beijing.aliyuncs.com/"
     var OSS_URL = "https://$ossBucket.oss-cn-beijing.aliyuncs.com/"
+
+    // 设置全局字体("HYXinRenWenSongW.ttf")
+    var typefaceAll = ""
+
+    // 是否开启全局页面管理(默认开启)
+    var activityEnabled = true
 }

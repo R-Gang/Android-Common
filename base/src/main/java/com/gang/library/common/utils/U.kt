@@ -117,6 +117,16 @@ fun hideKeyboard(activity: Activity) {
 }
 
 /**
+ * 显示键盘
+ *
+ */
+fun showKeyBoard(view: View) {
+    val imm = BaseApplication.appContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    view.requestFocus()
+    imm.showSoftInput(view, 0);
+}
+
+/**
  * map转为字符串
  *
  * @param map

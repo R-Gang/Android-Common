@@ -13,6 +13,7 @@ import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
 import com.gang.library.common.EventBus
+import com.gang.library.common.user.Config
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.common.utils.notch.callback.NotchCallback
@@ -43,7 +44,9 @@ abstract class BaseActivity : BasePermissionActivity() {
 
         StatusBarUtil.setTranslucentForImageView(this, 0, null)
 
-        AppManager.appManager?.addActivity(this)
+        if (Config.activityEnabled) {
+            AppManager.appManager?.addActivity(this)
+        }
         CrashHandler.instance?.init(this) //初始化全局异常管理
         initData()
         initView(savedInstanceState)

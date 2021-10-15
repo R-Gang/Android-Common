@@ -91,7 +91,7 @@ class AppManager private constructor() {
 
     companion object {
         // Activity栈
-        private var activityStack: Stack<Activity>? = null
+        var activityStack: Stack<Activity>? = null
 
         // 单例模式
         private var instance: AppManager? = null

@@ -8,7 +8,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnKeyListener
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -16,6 +15,7 @@ import com.gang.library.R
 import com.gang.library.common.utils.flash
 import com.gang.library.common.utils.gone
 import com.gang.library.common.utils.show
+import com.gang.library.common.utils.showKeyBoard
 import kotlinx.android.synthetic.main.phone_code.view.*
 import java.util.*
 
@@ -35,8 +35,6 @@ import java.util.*
 class PhoneCodeFill : RelativeLayout {
 
     private val codes = arrayListOf<String>()
-    private var imm: InputMethodManager? = null
-
 
     var color_default = R.drawable.rect_c6_f2_solid
     var color_focus = R.drawable.rect_c11_ff58_solid
@@ -74,7 +72,6 @@ class PhoneCodeFill : RelativeLayout {
     }
 
     private fun loadView() {
-        imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         var view: View = getView()
         initEvent()
     }
@@ -217,11 +214,18 @@ class PhoneCodeFill : RelativeLayout {
     /**
      * 显示键盘
      */
-    fun showSoftInput() {
+    fun showSoftInputFlash() {
         //显示软键盘
-        if (imm != null && et_code != null) {
-            et_code.postDelayed({ imm?.showSoftInput(et_code, 0) }, 200)
+        if (et_code != null) {
+            et_code.postDelayed({ showKeyBoard(et_code) }, 200)
         }
+        defaultFlash()
+    }
+
+    /**
+     * 默认动画
+     */
+    fun defaultFlash(){
         // 默认第一个显示闪烁
         v_line1.show()
         flash(v_line1, flashDuration.toLong())
