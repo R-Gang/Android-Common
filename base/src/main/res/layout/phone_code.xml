@@ -18,7 +18,7 @@
             android:background="@drawable/rect_c11_ff58_solid"
             android:orientation="vertical">
 
-            <EditText
+            <TextView
                 android:id="@+id/tv_code1"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
@@ -49,7 +49,7 @@
             android:background="@drawable/rect_c6_f2_solid"
             android:orientation="vertical">
 
-            <EditText
+            <TextView
                 android:id="@+id/tv_code2"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
@@ -81,7 +81,7 @@
             android:background="@drawable/rect_c6_f2_solid"
             android:orientation="vertical">
 
-            <EditText
+            <TextView
                 android:id="@+id/tv_code3"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
@@ -112,7 +112,7 @@
             android:background="@drawable/rect_c6_f2_solid"
             android:orientation="vertical">
 
-            <EditText
+            <TextView
                 android:id="@+id/tv_code4"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"

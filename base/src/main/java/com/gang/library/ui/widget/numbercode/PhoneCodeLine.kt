@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gang.library.R
+import com.gang.library.common.utils.showKeyBoard
 import kotlinx.android.synthetic.main.phone_code.view.*
 import java.util.*
 
@@ -31,8 +32,19 @@ import java.util.*
  */
 class PhoneCodeLine : RelativeLayout {
 
+    private var vLine1: View? = null
+    private var vLine2: View? = null
+    private var vLine3: View? = null
+    private var vLine4: View? = null
+
+    private var etCode: EditText? = null
+
+    private var tvCode1: TextView? = null
+    private var tvCode2: TextView? = null
+    private var tvCode3: TextView? = null
+    private var tvCode4: TextView? = null
+
     private val codes: MutableList<String> = ArrayList()
-    private var imm: InputMethodManager? = null
 
     var color_default = Color.parseColor("#999999")
     var color_focus = Color.parseColor("#3F8EED")
@@ -54,23 +66,33 @@ class PhoneCodeLine : RelativeLayout {
     }
 
     private fun loadView() {
-        imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val view: View = LayoutInflater.from(context).inflate(R.layout.phone_code_line, this)
+        val view: View = getView()
+
+        vLine1 = view.findViewById<View>(R.id.v_line1)
+        vLine2 = view.findViewById<View>(R.id.v_line2)
+        vLine3 = view.findViewById<View>(R.id.v_line3)
+        vLine4 = view.findViewById<View>(R.id.v_line4)
+
+        etCode = view.findViewById<EditText>(R.id.et_code)
+        tvCode1 = view.findViewById<TextView>(R.id.tv_code1)
+        tvCode2 = view.findViewById<TextView>(R.id.tv_code2)
+        tvCode3 = view.findViewById<TextView>(R.id.tv_code3)
+        tvCode4 = view.findViewById<TextView>(R.id.tv_code4)
         initEvent()
     }
 
     fun getView(): View {
-        return LayoutInflater.from(context).inflate(R.layout.phone_code, this)
+        return LayoutInflater.from(context).inflate(R.layout.phone_code_line, this)
     }
 
     private fun initEvent() {
         //验证码输入
-        et_code!!.addTextChangedListener(object : TextWatcher {
+        etCode?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
                 if (editable != null && editable.length > 0) {
-                    et_code!!.setText("")
+                    etCode?.setText("")
                     if (codes.size < 4) {
                         codes.add(editable.toString())
                         showCode()
@@ -79,7 +101,7 @@ class PhoneCodeLine : RelativeLayout {
             }
         })
         // 监听验证码删除按键
-        et_code!!.setOnKeyListener(OnKeyListener { view, keyCode, keyEvent ->
+        etCode?.setOnKeyListener(OnKeyListener { view, keyCode, keyEvent ->
             if (keyCode == KeyEvent.KEYCODE_DEL && keyEvent.action == KeyEvent.ACTION_DOWN && codes.size > 0) {
                 codes.removeAt(codes.size - 1)
                 showCode()
@@ -169,29 +191,29 @@ class PhoneCodeLine : RelativeLayout {
      */
     fun showSoftInput() {
         //显示软键盘
-        if (imm != null && et_code != null) {
-            et_code!!.postDelayed({ imm!!.showSoftInput(et_code, 0) }, 200)
+        if (et_code != null) {
+            et_code.postDelayed({ showKeyBoard(et_code) }, 200)
         }
     }
 
-    fun getetCode(): EditText {
-        return getView().et_code
+    fun getetCode(): EditText? {
+        return etCode
     }
 
-    fun getetCode1(): EditText {
-        return getView().tv_code1
+    fun getetCode1(): TextView? {
+        return tvCode1
     }
 
-    fun getetCode2(): EditText {
-        return getView().tv_code2
+    fun getetCode2(): TextView? {
+        return tvCode2
     }
 
-    fun getetCode3(): EditText {
-        return getView().tv_code3
+    fun getetCode3(): TextView? {
+        return tvCode3
     }
 
-    fun getetCode4(): EditText {
-        return getView().tv_code4
+    fun getetCode4(): TextView? {
+        return tvCode4
     }
 
     // 验证码输入错误清空

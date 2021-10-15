@@ -12,10 +12,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gang.library.R
-import com.gang.library.common.utils.flash
-import com.gang.library.common.utils.gone
-import com.gang.library.common.utils.show
-import com.gang.library.common.utils.showKeyBoard
+import com.gang.library.common.utils.*
 import kotlinx.android.synthetic.main.phone_code.view.*
 import java.util.*
 
@@ -34,6 +31,18 @@ import java.util.*
 
 class PhoneCodeFill : RelativeLayout {
 
+    private var vLine1: View? = null
+    private var vLine2: View? = null
+    private var vLine3: View? = null
+    private var vLine4: View? = null
+
+    private var etCode: EditText? = null
+
+    private var tvCode1: TextView? = null
+    private var tvCode2: TextView? = null
+    private var tvCode3: TextView? = null
+    private var tvCode4: TextView? = null
+
     private val codes = arrayListOf<String>()
 
     var color_default = R.drawable.rect_c6_f2_solid
@@ -42,9 +51,7 @@ class PhoneCodeFill : RelativeLayout {
     var vLine4Bg = resources.getDrawable(R.drawable.edit_cursor_color3)
     var flashDuration = 500
 
-    constructor(context: Context) : this(context, null) {
-        loadView()
-    }
+    constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         loadView()
@@ -72,7 +79,17 @@ class PhoneCodeFill : RelativeLayout {
     }
 
     private fun loadView() {
-        var view: View = getView()
+        val view = getView()
+        vLine1 = view.findViewById<View>(R.id.v_line1)
+        vLine2 = view.findViewById<View>(R.id.v_line2)
+        vLine3 = view.findViewById<View>(R.id.v_line3)
+        vLine4 = view.findViewById<View>(R.id.v_line4)
+
+        etCode = view.findViewById<EditText>(R.id.et_code)
+        tvCode1 = view.findViewById<TextView>(R.id.tv_code1)
+        tvCode2 = view.findViewById<TextView>(R.id.tv_code2)
+        tvCode3 = view.findViewById<TextView>(R.id.tv_code3)
+        tvCode4 = view.findViewById<TextView>(R.id.tv_code4)
         initEvent()
     }
 
@@ -82,12 +99,12 @@ class PhoneCodeFill : RelativeLayout {
 
     private fun initEvent() {
         //验证码输入
-        et_code?.addTextChangedListener(object : TextWatcher {
+        etCode?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
                 if (editable.isNotEmpty()) {
-                    et_code.setText("")
+                    etCode?.setText("")
                     if (codes.size < 4) {
                         codes.add(editable.toString())
                         showCode()
@@ -96,7 +113,7 @@ class PhoneCodeFill : RelativeLayout {
             }
         })
         // 监听验证码删除按键
-        et_code!!.setOnKeyListener(OnKeyListener { view, keyCode, keyEvent ->
+        etCode?.setOnKeyListener(OnKeyListener { view, keyCode, keyEvent ->
             if (keyCode == KeyEvent.KEYCODE_DEL && keyEvent.action == KeyEvent.ACTION_DOWN && codes.size > 0) {
                 codes.removeAt(codes.size - 1)
                 showCode()
@@ -127,10 +144,10 @@ class PhoneCodeFill : RelativeLayout {
             code4 = codes[3]
         }
 
-        tv_code1?.setText(code1, TextView.BufferType.NORMAL)
-        tv_code2?.setText(code2, TextView.BufferType.NORMAL)
-        tv_code3?.setText(code3, TextView.BufferType.NORMAL)
-        tv_code4?.setText(code4, TextView.BufferType.NORMAL)
+        tvCode1?.setText(code1, TextView.BufferType.NORMAL)
+        tvCode2?.setText(code2, TextView.BufferType.NORMAL)
+        tvCode3?.setText(code3, TextView.BufferType.NORMAL)
+        tvCode4?.setText(code4, TextView.BufferType.NORMAL)
         setColor() //设置高亮颜色
         callBack() //回调
     }
@@ -145,44 +162,42 @@ class PhoneCodeFill : RelativeLayout {
         v3.setBackgroundResource(color_default)
         v4.setBackgroundResource(color_default)
 
-        v_line1.gone()
-        v_line2.gone()
-        v_line3.gone()
-        v_line4.gone()
+        vLine1?.gone()
+        vLine2?.gone()
+        vLine3?.gone()
+        vLine4?.gone()
 
         if (codes.size == 0) {
             v1.setBackgroundResource(color_focus)
 
-            v_line1.show()
-            flash(v_line1, flashDuration.toLong())
+            vLine1?.show()
+            vLine1?.let { flash(it, flashDuration.toLong()) }
         }
         if (codes.size == 1) {
             v2.setBackgroundResource(color_focus)
 
-            v_line2.show()
-            flash(v_line2, flashDuration.toLong())
+            vLine2?.show()
+            vLine2?.let { flash(it, flashDuration.toLong()) }
 
         }
         if (codes.size == 2) {
             v3.setBackgroundResource(color_focus)
 
-            v_line3.show()
-            flash(v_line3, flashDuration.toLong())
+            vLine3?.show()
+            vLine3?.let { flash(it, flashDuration.toLong()) }
 
         }
         if (codes.size >= 3) {
             v4.setBackgroundResource(color_focus)
             tv_code4.setTextColor(code4Color)
-            v_line4.background = vLine4Bg
+            vLine4?.background = vLine4Bg
 
             if (tv_code4.text.isNotEmpty()) {
-                v_line4.gone()
+                vLine4?.gone()
             } else {
-                v_line4.show()
-                flash(v_line4, flashDuration.toLong())
+                vLine4?.show()
+                vLine4?.let { flash(it, flashDuration.toLong()) }
             }
-
-
         }
     }
 
@@ -225,30 +240,30 @@ class PhoneCodeFill : RelativeLayout {
     /**
      * 默认动画
      */
-    fun defaultFlash(){
+    fun defaultFlash() {
         // 默认第一个显示闪烁
-        v_line1.show()
-        flash(v_line1, flashDuration.toLong())
+        vLine1?.show()
+        vLine1?.let { flash(it, flashDuration.toLong()) }
     }
 
-    fun getetCode(): EditText {
-        return getView().et_code
+    fun getetCode(): EditText? {
+        return etCode
     }
 
-    fun getetCode1(): EditText {
-        return getView().tv_code1
+    fun getetCode1(): TextView? {
+        return tvCode1
     }
 
-    fun getetCode2(): EditText {
-        return getView().tv_code2
+    fun getetCode2(): TextView? {
+        return tvCode2
     }
 
-    fun getetCode3(): EditText {
-        return getView().tv_code3
+    fun getetCode3(): TextView? {
+        return tvCode3
     }
 
-    fun getetCode4(): EditText {
-        return getView().tv_code4
+    fun getetCode4(): TextView? {
+        return tvCode4
     }
 
     // 验证码输入错误清空
