@@ -783,6 +783,7 @@ fun setSpannable(
             click.updateDrawState(ds)
         }
     }, start, end, flags)
+    //设置相应点击事件
     textView.movementMethod = LinkMovementMethod.getInstance()
     textView.text = spanUser
 }

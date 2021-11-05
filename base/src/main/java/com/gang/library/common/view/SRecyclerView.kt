@@ -81,7 +81,14 @@ class SRecyclerView : FrameLayout {
     }
 
     /**
-     * `带动画
+     * 不带动画(这个方法是自己去控制移动的距离，单位应该是像素。)
+     */
+    fun scrollToBy(x: Int = 0, y: Int) {
+        recycView.scrollBy(x, y)
+    }
+
+    /**
+     * 带动画
      */
     fun smoothScrollToPosition(position: Int, state: RecyclerView.State) {
         layoutManager.smoothScrollToPosition(recycView, state, position)

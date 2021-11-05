@@ -78,6 +78,8 @@ dependencies {
 
     // okhttp
     implementation 'com.lzy.net:okhttputils:1.8.1' // 可以单独使用，不需要依赖下方的扩展包
+    // okgo
+    implementation 'com.lzy.net:okgo:3.0.4'
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
 
@@ -99,7 +101,7 @@ dependencies {
     implementation 'com.klinkerapps:android-smsmms:5.1.0'
 
     //aliyun
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.2'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.5'
 
     // 版本更新
     implementation 'com.qianwen:update-app:3.5.2'

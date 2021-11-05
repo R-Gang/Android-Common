@@ -6,7 +6,13 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
+        //如果需要使用华为推送HMS，则需要加上此句
+        maven { url 'http://developer.huawei.com/repo' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/' // 阿里云推送需要
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.1"
@@ -28,8 +34,9 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'http://developer.huawei.com/repo' } //如果需要使用华为推送HMS，则需要加上此句
         maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/' // 阿里云推送需要
         }
     }
 }

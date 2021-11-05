@@ -53,4 +53,6 @@ object Config {
 
     // 是否开启全局页面管理(默认开启)
     var activityEnabled = true
+    // 开启版本更新功能
+    var isOpenVersionUpdate = false
 }

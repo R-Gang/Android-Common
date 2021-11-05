@@ -3,6 +3,7 @@ package com.gang.library.common.user
 import android.app.Activity
 import android.view.View
 import com.gang.library.bean.UserEntity
+import com.gang.library.common.utils.getPreferences
 import com.gang.library.common.utils.savePreferences
 import com.gang.library.ui.interfaces.Setter
 import org.greenrobot.eventbus.EventBus
@@ -36,6 +37,11 @@ enum class UserManager {
 
     fun isLogin(): Boolean {
         return (userData.user_id.isNotEmpty() && userData.user_token.isNotEmpty())
+    }
+
+    fun isLogin1(): Boolean {
+        return (getPreferences("user_id", "").toString().isNotEmpty()
+                && getPreferences("user_token", "").toString().isNotEmpty())
     }
 
     fun <T : View?, V> apply(

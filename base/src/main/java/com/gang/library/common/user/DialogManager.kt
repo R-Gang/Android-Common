@@ -13,7 +13,19 @@ enum class DialogManager {
     /**
      * dialog
      */
-    fun init(layout:Int,context: Context):AlertDialog{
+    fun init(layout: Int, context: Context): AlertDialog? {
+        val mBuilder = AlertDialog.Builder(context)
+        mBuilder.setView(layout)
+        val mDialog = mBuilder.create()
+        mDialog.show()
+        mDialog.dismiss()
+        return mDialog
+    }
+
+    /**
+     * dialog
+     */
+    fun initWindow(layout: Int, context: Context): AlertDialog {
         val mBuilder = AlertDialog.Builder(context)
         val mDialog = mBuilder.create()
         mDialog.show()
@@ -22,7 +34,7 @@ enum class DialogManager {
         //处理无法弹出输入法
         mDialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         //全屏处理
-        mDialog.window!!.decorView.setPadding(0,0,0,0)
+        mDialog.window!!.decorView.setPadding(0, 0, 0, 0)
         val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
