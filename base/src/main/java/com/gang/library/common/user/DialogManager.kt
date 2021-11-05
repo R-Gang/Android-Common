@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.WindowManager
+import com.gang.library.R
 
 enum class DialogManager {
 
@@ -13,8 +14,12 @@ enum class DialogManager {
     /**
      * dialog
      */
-    fun init(layout: Int, context: Context): AlertDialog? {
-        val mBuilder = AlertDialog.Builder(context)
+    fun init(
+        layout: Int,
+        context: Context,
+        themeResId: Int = R.style.DialogNoTheme, // 自己定义样式：不显示标题背景
+    ): AlertDialog? {
+        val mBuilder = AlertDialog.Builder(context, themeResId)
         mBuilder.setView(layout)
         val mDialog = mBuilder.create()
         mDialog.show()
@@ -25,8 +30,12 @@ enum class DialogManager {
     /**
      * dialog
      */
-    fun initWindow(layout: Int, context: Context): AlertDialog {
-        val mBuilder = AlertDialog.Builder(context)
+    fun initWindow(
+        layout: Int,
+        context: Context,
+        themeResId: Int = 0, // 自己定义样式：设0默认样式
+    ): AlertDialog {
+        val mBuilder = AlertDialog.Builder(context, themeResId)
         val mDialog = mBuilder.create()
         mDialog.show()
         mDialog.setContentView(layout)

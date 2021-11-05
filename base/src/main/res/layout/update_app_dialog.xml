@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_top"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_dialog_user_protocol"
+    android:orientation="vertical"
+    android:padding="26dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="发现新版本"
+        android:textColor="#122A4C"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/tv_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:gravity="center"
+        android:text="版本号xxx"
+        android:textColor="#263B59"
+        android:textSize="16sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/tv_update_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1，xxxxxxxx\n2，ooooooooo"
+            android:lineSpacingExtra="@dimen/margin_size_4"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_size_40"
+            android:background="@mipmap/icon_cancel" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_size_40"
+            android:layout_marginLeft="@dimen/margin_size_20"
+            android:background="@mipmap/icon_update" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_up_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_size_40"
+        android:visibility="gone"
+        android:background="@mipmap/icon_update1" />
+
+</LinearLayout>
