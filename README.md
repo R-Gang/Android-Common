@@ -129,6 +129,8 @@
 
 
     // x5 tbs
+    implementation 'com.tencent.tbs:tbssdk:44085'
+    // 安卓短信/彩信发送库
     implementation 'com.klinkerapps:android-smsmms:5.1.0'
 
 

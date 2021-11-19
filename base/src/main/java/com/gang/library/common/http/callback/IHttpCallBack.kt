@@ -19,7 +19,7 @@ open interface IHttpCallBack<T> {
     fun onError(throwable: Throwable?)
 }
 
-class IHttpManager<T> : IHttpCallBack<T> {
+open class IHttpManager<T> : IHttpCallBack<T> {
 
     override fun onSuccess(data: T) {
 

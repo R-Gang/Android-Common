@@ -98,7 +98,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
     // x5 tbs
-    implementation 'com.klinkerapps:android-smsmms:5.1.0'
+    implementation 'com.tencent.tbs:tbssdk:44085'
 
     //aliyun
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.5'

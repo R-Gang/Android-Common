@@ -29,28 +29,6 @@ open class BaseApplication : MultiDexApplication() {
             .configShowBorders(true)
             .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")
 
-
-        val cb = object : QbSdk.PreInitCallback {
-            override fun onViewInitFinished(arg0: Boolean) {
-                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-                Log.e("PreInitCallback", " onViewInitFinished is $arg0")
-            }
-
-            override fun onCoreInitFinished() {}
-        }
-        //x5内核初始化接口
-        QbSdk.initX5Environment(applicationContext, cb)
-
-        // 版本更新
-        if (Config.isOpenVersionUpdate) {
-            // okhttp-utils
-            OkHttpUtils.getInstance()
-                .init(this)
-                .debug(true, "okHttp")
-                .timeout(20 * 1000)
-            OkGo.getInstance().init(this)
-        }
-
     }
 
     //解决NetworkOnMainThreadException异常
@@ -72,6 +50,40 @@ open class BaseApplication : MultiDexApplication() {
                 .penaltyLog() // 打印logcat
                 .penaltyDeath().build()
         )
+    }
+
+    fun preinitX5WebCore() {
+        //预加载x5内核
+        if (!QbSdk.isTbsCoreInited()) {
+            QbSdk.preInit(applicationContext, null) // 设置X5初始化完成的回调接口
+        }
+    }
+
+    fun initX5Qb() {
+        if (Config.isOpenTBSX5QbSdk) {
+            val cb = object : QbSdk.PreInitCallback {
+                override fun onViewInitFinished(arg0: Boolean) {
+                    //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                    Log.e("PreInitCallback", " onViewInitFinished is $arg0")
+                }
+
+                override fun onCoreInitFinished() {}
+            }
+            //x5内核初始化接口
+            QbSdk.initX5Environment(applicationContext, cb)
+        }
+    }
+
+    fun initVersionupdate(){
+        // 版本更新
+        if (Config.isOpenVersionUpdate) {
+            // okhttp-utils
+            OkHttpUtils.getInstance()
+                .init(this)
+                .debug(true, "okHttp")
+                .timeout(20 * 1000)
+            OkGo.getInstance().init(this)
+        }
     }
 
     companion object {

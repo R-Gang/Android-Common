@@ -52,7 +52,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         findViewById()
         fileUrlByIntent
         mTbsReaderView = TbsReaderView(this, this)
-        rl_tbsView!!.addView(
+        rl_tbsView?.addView(
             mTbsReaderView, RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -83,7 +83,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         mWebView.setWebViewClient(object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
-                url: String
+                url: String,
             ): Boolean {
                 view.loadUrl(url)
                 return true
@@ -93,7 +93,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         if (mFileUrl!!.contains(".mp4")) {
             mWebView.loadUrl(mFileUrl)
             mWebView.setVisibility(View.VISIBLE)
-            rl_tbsView!!.visibility = View.GONE
+            rl_tbsView?.visibility = View.GONE
         } else if (isLocalExist) {
             tv_download!!.text = "打开文件"
             tv_download!!.visibility = View.GONE
@@ -171,10 +171,10 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         bundle.putString("filePath", localFile.path)
         bundle.putString("tempPath", Environment.getExternalStorageDirectory().path)
         val parseFormat = parseFormat(mFileName)
-        val result = mTbsReaderView!!.preOpen(parseFormat, false)
+        val result = mTbsReaderView?.preOpen(parseFormat, false) as Boolean
         if (result) {
-            mTbsReaderView!!.visibility = View.VISIBLE
-            mTbsReaderView!!.openFile(bundle)
+            mTbsReaderView?.visibility = View.VISIBLE
+            mTbsReaderView?.openFile(bundle)
         } else {
             showToast("暂不支持")
         }
@@ -293,13 +293,13 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
     override fun onCallBackAction(
         integer: Int,
         o: Any,
-        o1: Any
+        o1: Any,
     ) {
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mTbsReaderView!!.onStop()
+        mTbsReaderView?.onStop()
         if (mDownloadObserver != null) {
             contentResolver.unregisterContentObserver(mDownloadObserver!!)
         }
@@ -313,7 +313,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         ContentObserver(handler) {
         override fun onChange(
             selfChange: Boolean,
-            uri: Uri
+            uri: Uri,
         ) {
             queryDownloadStatus()
         }
@@ -358,7 +358,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         fun actionStart(
             context: Context,
             fileUrl: String?,
-            fileName: String?
+            fileName: String?,
         ) {
             val intent = Intent(context, FileDisplayActivity::class.java)
             intent.putExtra("fileUrl", fileUrl)

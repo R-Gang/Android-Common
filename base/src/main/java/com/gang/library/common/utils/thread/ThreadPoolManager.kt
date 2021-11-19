@@ -1,4 +1,4 @@
-package com.gang.library.common.user
+package com.gang.library.common.utils.thread
 
 import android.util.Log
 import java.util.*

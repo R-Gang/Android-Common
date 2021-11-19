@@ -64,7 +64,7 @@ object SysUtils {
     }
 
     //获取WRITE_EXTERNAL_STORAGE权限 haoruigang on 2018-4-3 15:29:46
-    fun actionStart(context: Context, filePath: String, fileName: String) {
+    fun actionStartX5Web(context: Context, filePath: String, fileName: String) {
         //动态权限申请
         (context as BaseActivity).requestPermission(Config.REQUEST_CODE_WRITE,
             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),

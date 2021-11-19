@@ -55,4 +55,6 @@ object Config {
     var activityEnabled = true
     // 开启版本更新功能
     var isOpenVersionUpdate = false
+    // 使用腾讯浏览器X5内核
+    var isOpenTBSX5QbSdk = false
 }
