@@ -13,6 +13,7 @@ import com.gang.library.common.utils.permissions.PermissionCallBackM
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.activity.FileDisplayActivity
 import com.gang.library.ui.activity.WebViewActivity
+import com.uuzuche.lib_zxing.activity.CaptureActivity
 
 /**
  *
@@ -41,14 +42,14 @@ object SysUtils {
 
     //获取CALL_PHONE权限 haoruigang on 2018-4-3 15:29:46
     fun getCallPhone(context: Context, stuPhone: String) {
-        (context as BaseActivity).requestPermission(Config.RC_CALL_PHONE,
+        (context as BaseActivity).requestPermission(Config.REQUEST_CALL_PHONE,
             arrayOf(Manifest.permission.CALL_PHONE),
             context.getString(R.string.rationale_call_phone),
             object : PermissionCallBackM {
                 @SuppressLint("MissingPermission")
                 override fun onPermissionGrantedM(
                     requestCode: Int,
-                    vararg perms: String?
+                    vararg perms: String?,
                 ) {
                     LogUtils.e(context.toString(), "TODO: CALL_PHONE Granted")
                     context.startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:$stuPhone")))
@@ -56,7 +57,31 @@ object SysUtils {
 
                 override fun onPermissionDeniedM(
                     requestCode: Int,
-                    vararg perms: String?
+                    vararg perms: String?,
+                ) {
+                    LogUtils.e(context.toString(), "TODO: CALL_PHONE Denied")
+                }
+            })
+    }
+
+    //获取CAMERA权限 haoruigang on 2021-11-25 13:50:43
+    fun getScanCamere(context: Context) {
+        (context as BaseActivity).requestPermission(Config.REQUEST_CAMERA,
+            arrayOf(Manifest.permission.CAMERA),
+            context.getString(R.string.rationale_call_camere),
+            object : PermissionCallBackM {
+                @SuppressLint("MissingPermission")
+                override fun onPermissionGrantedM(
+                    requestCode: Int,
+                    vararg perms: String?,
+                ) {
+                    LogUtils.e(context.toString(), "TODO: CAMERA Granted")
+                    context.toActivityForResult<CaptureActivity>(Config.REQUEST_CODE_CAMERE)
+                }
+
+                override fun onPermissionDeniedM(
+                    requestCode: Int,
+                    vararg perms: String?,
                 ) {
                     LogUtils.e(context.toString(), "TODO: CALL_PHONE Denied")
                 }

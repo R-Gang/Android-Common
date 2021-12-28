@@ -9,13 +9,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.os.Build
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.*
+import android.util.Base64
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -25,13 +29,15 @@ import android.widget.TextView
 import android.widget.Toast
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
+import com.gang.library.BaseApplication.Companion.TAG
 import com.gang.library.common.user.Config
 import com.gang.library.common.user.Config.toActivityRequestCode
 import com.gang.library.ui.widget.ToastCustom
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
-import java.io.UnsupportedEncodingException
+import java.io.*
 import java.lang.reflect.Array
+import java.lang.reflect.Method
 import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.util.*
@@ -39,6 +45,7 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.experimental.and
+
 
 /**
  *
@@ -121,7 +128,8 @@ fun hideKeyboard(activity: Activity) {
  *
  */
 fun showKeyBoard(view: View) {
-    val imm = BaseApplication.appContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm =
+        BaseApplication.appContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     view.requestFocus()
     imm.showSoftInput(view, 0);
 }
@@ -173,6 +181,22 @@ var getStatusBarHeight = 0
     }
 
 /**
+ * 判断当前虚拟按键是否显示
+ * ===
+ * 大部分手机来说，基本上是可以实现需求
+ * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
+ */
+fun showNavigationBar(): Boolean {
+    var hasNavigationBar = false
+    val rs: Resources = BaseApplication.appContext.resources
+    val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
+    if (id > 0) {
+        hasNavigationBar = rs.getBoolean(id)
+    }
+    return hasNavigationBar
+}
+
+/**
  * 获取屏幕的密度
  */
 var getDensity = 0
@@ -183,20 +207,124 @@ var getDensity = 0
 
 /**
  * 获得屏幕宽高
- *
+ * ======
+ * 不包含虚拟按键
  * @return
  */
 var screenArray = IntArray(2)
     get() {
-        val wm =
-            BaseApplication.appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val outMetrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(outMetrics)
+        val outMetrics = BaseApplication.appContext.resources.displayMetrics
         val iArray = IntArray(2)
         iArray[0] = outMetrics.widthPixels
         iArray[1] = outMetrics.heightPixels
         return iArray
     }
+
+/**
+ * 获取屏幕原始尺寸宽高度
+ * ======
+ * 包括虚拟功能键高度
+ */
+var screenDpiArray = IntArray(2)
+    get() {
+        val iArray = IntArray(2)
+        val windowManager =
+            BaseApplication.appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val displayMetrics = DisplayMetrics()
+        val c: Class<*>
+        try {
+            c = Class.forName("android.view.Display")
+            val method: Method = c.getMethod("getRealMetrics", DisplayMetrics::class.java)
+            method.invoke(display, displayMetrics)
+            val iArray = IntArray(2)
+            iArray[0] = displayMetrics.widthPixels
+            iArray[1] = displayMetrics.heightPixels
+            return iArray
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return iArray
+    }
+
+/**
+ * 获取设备信息（目前支持几大主流的全面屏手机，亲测华为、小米、oppo、魅族、vivo、三星都可以）
+ *
+ * @return
+ */
+private fun getDeviceInfo(): String {
+    val brand = Build.BRAND
+    if (TextUtils.isEmpty(brand)) return "navigationbar_is_min"
+    return if (brand.equals("HUAWEI", ignoreCase = true) || "HONOR" == brand) {
+        "navigationbar_is_min"
+    } else if (brand.equals("XIAOMI", ignoreCase = true)) {
+        "force_fsg_nav_bar"
+    } else if (brand.equals("VIVO", ignoreCase = true)) {
+        "navigation_gesture_on"
+    } else if (brand.equals("OPPO", ignoreCase = true)) {
+        "navigation_gesture_on"
+    } else if (brand.equals("samsung", ignoreCase = true)) {
+        "navigationbar_hide_bar_enabled"
+    } else {
+        "navigationbar_is_min"
+    }
+}
+
+/**
+ * 判断虚拟导航栏是否显示
+ *
+ * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
+ */
+fun checkNavigationBarShow(): Boolean {
+    var hasNavigationBar = showNavigationBar()
+    try {
+        val systemPropertiesClass = Class.forName("android.os.SystemProperties")
+        val m = systemPropertiesClass.getMethod("get", String::class.java)
+        val navBarOverride = m.invoke(systemPropertiesClass, "qemu.hw.mainkeys") as String
+        //判断是否隐藏了底部虚拟导航
+        var navigationBarIsMin = 0
+        navigationBarIsMin = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Settings.System.getInt(BaseApplication.appContext.contentResolver,
+                getDeviceInfo(), 0)
+        } else {
+            Settings.Global.getInt(BaseApplication.appContext.contentResolver,
+                getDeviceInfo(), 0)
+        }
+        if ("1" == navBarOverride || 1 == navigationBarIsMin) {
+            hasNavigationBar = false
+        } else if ("0" == navBarOverride) {
+            hasNavigationBar = true
+        }
+    } catch (e: java.lang.Exception) {
+    }
+    return hasNavigationBar
+}
+
+/**
+ * 底部导航的高度
+ */
+fun getBottomStatusHeight(): Int {
+    val totalHeight = screenDpiArray[1]
+    val contentHeight = screenArray[1]
+    LogUtil.d(TAG, "--显示虚拟导航了--")
+    return totalHeight - contentHeight
+}
+
+/**
+ * 获取虚拟按键的高度
+ *
+ * @param context
+ * @return
+ */
+fun getNavigationBarHeight(): Int {
+    return if (checkNavigationBarShow()) {
+        getBottomStatusHeight()
+    } else {
+        LogUtil.d(TAG, "--没有虚拟导航 或者虚拟导航隐藏--")
+        0
+    }
+}
+
 
 /**
  * 判断网络是否连接
@@ -278,6 +406,62 @@ fun getPreferences(key: String?, defaultObject: Any): Any? {
         return sp.getLong(key, (defaultObject as Long))
     }
     return null
+}
+
+/**
+ * 存储集合
+ */
+fun savePreferenceHashMap(key: String?, hashmap: HashMap<String?, Int?>?) {
+    val liststr = SceneList2String(hashmap)
+    return savePreferences(key, liststr)
+}
+
+/**
+ * 获取集合
+ */
+fun getPreferenceHashMap(key: String?): HashMap<String?, Int?>? {
+    return String2SceneList(getPreferences(key, "") as String?)
+}
+
+@Throws(IOException::class)
+fun SceneList2String(hashmap: HashMap<String?, Int?>?): String? {
+    // 实例化一个ByteArrayOutputStream对象，用来装载压缩后的字节文件。
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    // 然后将得到的字符数据装载到ObjectOutputStream
+    val objectOutputStream = ObjectOutputStream(
+        byteArrayOutputStream)
+    // writeObject 方法负责写入特定类的对象的状态，以便相应的 readObject 方法可以还原它
+    objectOutputStream.writeObject(hashmap)
+    // 最后，用Base64.encode将字节文件转换成Base64编码保存在String中
+    val SceneListString = String(Base64.encode(
+        byteArrayOutputStream.toByteArray(), Base64.DEFAULT))
+    // 关闭objectOutputStream
+    objectOutputStream.close()
+    return SceneListString
+}
+
+@Throws(StreamCorruptedException::class, IOException::class, ClassNotFoundException::class)
+fun String2SceneList(SceneListString: String?): HashMap<String?, Int?> {
+    val mobileBytes = Base64.decode(SceneListString!!.toByteArray(), Base64.DEFAULT)
+    val byteArrayInputStream = ByteArrayInputStream(
+        mobileBytes)
+    val objectInputStream = ObjectInputStream(
+        byteArrayInputStream)
+    val SceneList = objectInputStream
+        .readObject() as HashMap<String?, Int?>
+    objectInputStream.close()
+    return SceneList
+}
+
+/**
+ *  清空本地缓存
+ */
+fun clearPreferences() {
+    val sharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(BaseApplication.appContext)
+    val editor = sharedPreferences.edit()
+    editor.clear()
+    editor.apply()
 }
 
 /**
@@ -884,10 +1068,13 @@ fun Activity.toActivityAnimation(intent: Intent, vararg views: Pair<View?, Strin
 /**
  * 防连点toActivityForResult
  */
-inline fun <reified T : Activity> Activity.toActivityForResult(vararg params: kotlin.Pair<String, Any?>) {
+inline fun <reified T : Activity> Activity.toActivityForResult(
+    requestCode: Int = toActivityRequestCode,
+    vararg params: kotlin.Pair<String, Any?>,
+) {
     if (System.currentTimeMillis() - first > 500L) {
         first = System.currentTimeMillis()
-        startActivityForResult<T>(toActivityRequestCode, *params)
+        startActivityForResult<T>(requestCode, *params)
     }
 }
 

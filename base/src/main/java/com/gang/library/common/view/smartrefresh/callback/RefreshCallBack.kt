@@ -1,4 +1,4 @@
-package com.gang.library.common.view.smartrefresh
+package com.gang.library.common.view.smartrefresh.callback
 
 /**
  *

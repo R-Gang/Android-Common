@@ -147,6 +147,19 @@ abstract class BaseActivity : BasePermissionActivity() {
     /********************* 子类实现  */ // 获取布局文件
     abstract val layoutId: Int
 
+
+    /**
+     * 初始化数据
+     */
+    abstract fun initData()
+
+    /**
+     * findViewById
+     */
+    fun <T : View?> findViewId(v:Int): T {
+        return findViewById<T>(v)
+    }
+
     /**
      * 初始化View
      *
@@ -161,11 +174,6 @@ abstract class BaseActivity : BasePermissionActivity() {
     open fun onNotchCreate(activity: Activity) {
 
     }
-
-    /**
-     * 初始化数据
-     */
-    abstract fun initData()
 
     /**
      * 初始化点击事件

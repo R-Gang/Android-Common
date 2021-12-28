@@ -8,7 +8,7 @@ import java.util.*
 /**
  *
  * @ProjectName:    gang
- * @Package:        com.gang.app.common.utils.permissions
+ * @Package:        com.gang.library.common.utils
  * @ClassName:      DateUtils
  * @Description:     java类作用描述
  * @Author:         haoruigang

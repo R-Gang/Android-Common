@@ -3,6 +3,7 @@ package com.gang.library.common.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import com.google.zxing.BarcodeFormat
@@ -27,9 +28,34 @@ object BitmapUtils {
         return BitmapFactory.decodeFile(path, options)
     }
 
+    /**
+     * 根据给定的宽和高进行拉伸
+     *
+     * @param origin    原图
+     * @param newWidth  新图的宽
+     * @param newHeight 新图的高
+     * @return new Bitmap
+     */
+    fun scaleBitmap(origin: Bitmap?, newWidth: Int, newHeight: Int): Bitmap? {
+        if (origin == null) {
+            return null
+        }
+        val height = origin.height
+        val width = origin.width
+        val scaleWidth = newWidth.toFloat() / width
+        val scaleHeight = newHeight.toFloat() / height
+        val matrix = Matrix()
+        matrix.postScale(scaleWidth, scaleHeight) // 使用后乘
+        val newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false)
+        if (!origin.isRecycled) {
+            origin.recycle()
+        }
+        return newBM
+    }
+
     fun calculateInSampleSize(
         options: BitmapFactory.Options,
-        reqWidth: Int, reqHeight: Int
+        reqWidth: Int, reqHeight: Int,
     ): Int { // Raw height and width of image
         val height = options.outHeight
         val width = options.outWidth

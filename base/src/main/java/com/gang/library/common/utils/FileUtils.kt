@@ -1,9 +1,13 @@
 package com.gang.library.common.utils
 
 import android.annotation.SuppressLint
+import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.Context
 import android.database.Cursor
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.icu.math.BigDecimal
 import android.media.ExifInterface
 import android.net.Uri
@@ -14,6 +18,7 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import androidx.annotation.NonNull
+import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
 import java.io.*
@@ -104,17 +109,158 @@ object FileUtils {
     }
 
     /**
-     * 获取assets下的网页
+     * 创建文件夹
+     *
+     * @param fileName 文件夹名字
+     * @return 文件夹路径
      */
-    fun getAssetFile(url: String): String {
-        return "file:///android_asset/$url"
+    fun createNewFilePath(fileName: String): String {
+        val file =
+            File(Environment.getExternalStorageDirectory().toString() + File.separator + fileName)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        return file.toString()
     }
 
+    /**
+     * 创建文件夹
+     *
+     * @param filename
+     * @return
+     */
+    fun createDir(
+        filename: String,
+        directory_path: String,
+    ): String {
+        val state = Environment.getExternalStorageState()
+        val rootDir =
+            if (state == Environment.MEDIA_MOUNTED) Environment.getExternalStorageDirectory() else BaseApplication.appContext.cacheDir
+        var path: File? = null
+        path = if (!TextUtils.isEmpty(directory_path)) { // 自定义保存目录
+            File(rootDir.absolutePath + directory_path)
+        } else {
+            File(rootDir.absolutePath + "/PictureSelector")
+        }
+        if (!path.exists()) // 若不存在，创建目录，可以在应用启动的时候创建
+        {
+            path.mkdirs()
+        }
+        return "$path/$filename"
+    }
 
     /**
      * TAG for log messages.
      */
     const val TAG = "PictureFileUtils"
+
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     * @author paulburke
+     */
+    fun getContentColumn(
+        uri: Uri?, column: String, selection: String?,
+        selectionArgs: Array<String>?,
+    ): String? {
+        var cursor: Cursor? = null
+        val projection = arrayOf(
+            column
+        )
+        try {
+            cursor = BaseApplication.appContext.contentResolver.query(
+                uri!!, projection, selection, selectionArgs,
+                null
+            )
+            if (cursor != null && cursor.moveToFirst()) {
+                val column_index = cursor.getColumnIndexOrThrow(column)
+                return cursor.getString(column_index)
+            }
+        } catch (ex: IllegalArgumentException) {
+            Log.i(
+                TAG,
+                String.format(
+                    Locale.getDefault(),
+                    "getDataColumn: _data - [%s]",
+                    ex.message
+                )
+            )
+        } finally {
+            cursor?.close()
+        }
+        return null
+    }
+
+
+    /**
+     * 根据Uri返回文件绝对路径-(默认通过_data查询-查询手机存储的图片）
+     * 兼容了file:///开头的 和 content://开头的情况
+     */
+    fun getFilePathContents(
+        context: Context,
+        uri: Uri?,
+        mediaStore: String = MediaStore.Images.ImageColumns.DATA,
+    ): String? {
+        if (null == uri) return null
+        val scheme = uri.scheme
+        var data: String? = null
+        if (scheme == null) {
+            data = uri.path
+        } else if (ContentResolver.SCHEME_FILE.equals(scheme, ignoreCase = true)) {
+            data = uri.path
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme, ignoreCase = true)) {
+            val cursor =
+                context.contentResolver.query(
+                    uri,
+                    arrayOf(mediaStore),
+                    null,
+                    null,
+                    null
+                )
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    //根据_data查找
+                    val index = cursor.getColumnIndex(mediaStore)
+                    if (index > -1) {
+                        data = cursor.getString(index)
+                    }
+                }
+                cursor.close()
+            }
+            // getContentColumn(uri, mediaStore, null, null)
+        }
+        return data
+    }
+
+
+    fun getPhotoCacheDir(file: File): File {
+        val cacheDir = BaseApplication.appContext.cacheDir
+        val file_name = file.name
+        if (cacheDir != null) {
+            val mCacheDir =
+                File(cacheDir, DEFAULT_CACHE_DIR)
+            return if (!mCacheDir.mkdirs() && (!mCacheDir.exists() || !mCacheDir.isDirectory)) {
+                file
+            } else {
+                var fileName = ""
+                fileName = if (file_name.endsWith(".webp")) {
+                    System.currentTimeMillis().toString() + ".webp"
+                } else {
+                    System.currentTimeMillis().toString() + ".png"
+                }
+                File(mCacheDir, fileName)
+            }
+        }
+        if (Log.isLoggable(TAG, Log.ERROR)) {
+            Log.e(TAG, "default disk cache dir is null")
+        }
+        return file
+    }
 
     /**
      * @param uri The Uri to check.
@@ -152,84 +298,11 @@ object FileUtils {
     }
 
     /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
+     * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
      *
-     * @param uri           The Uri to query.
-     * @param selection     (Optional) Filter used in the query.
-     * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a file path.
-     * @author paulburke
+     * @param uri
      */
-    fun getDataColumn(
-        uri: Uri?, selection: String?,
-        selectionArgs: Array<String>?,
-    ): String? {
-        var cursor: Cursor? = null
-        val column = "_data"
-        val projection = arrayOf(
-            column
-        )
-        try {
-            cursor = BaseApplication.appContext.contentResolver.query(
-                uri!!, projection, selection, selectionArgs,
-                null
-            )
-            if (cursor != null && cursor.moveToFirst()) {
-                val column_index = cursor.getColumnIndexOrThrow(column)
-                return cursor.getString(column_index)
-            }
-        } catch (ex: IllegalArgumentException) {
-            Log.i(
-                TAG,
-                String.format(
-                    Locale.getDefault(),
-                    "getDataColumn: _data - [%s]",
-                    ex.message
-                )
-            )
-        } finally {
-            cursor?.close()
-        }
-        return null
-    }
-
-    fun getPhotoCacheDir(file: File): File {
-        val cacheDir = BaseApplication.appContext.cacheDir
-        val file_name = file.name
-        if (cacheDir != null) {
-            val mCacheDir =
-                File(cacheDir, DEFAULT_CACHE_DIR)
-            return if (!mCacheDir.mkdirs() && (!mCacheDir.exists() || !mCacheDir.isDirectory)) {
-                file
-            } else {
-                var fileName = ""
-                fileName = if (file_name.endsWith(".webp")) {
-                    System.currentTimeMillis().toString() + ".webp"
-                } else {
-                    System.currentTimeMillis().toString() + ".png"
-                }
-                File(mCacheDir, fileName)
-            }
-        }
-        if (Log.isLoggable(TAG, Log.ERROR)) {
-            Log.e(TAG, "default disk cache dir is null")
-        }
-        return file
-    }
-
-    /**
-     * Get a file path from a Uri. This will get the the path for Storage Access
-     * Framework Documents, as well as the _data field for the MediaStore and
-     * other file-based ContentProviders.<br></br>
-     * <br></br>
-     * Callers should check whether the path is local before assuming it
-     * represents a local file.
-     *
-     * @param uri     The Uri to query.
-     * @author paulburke
-     */
-    @SuppressLint("NewApi")
+    @SuppressLint("ObsoleteSdkInt")
     fun getPath(uri: Uri): String? {
         val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
         // DocumentProvider
@@ -248,7 +321,7 @@ object FileUtils {
                     Uri.parse("content://downloads/public_downloads"),
                     java.lang.Long.valueOf(id)
                 )
-                return getDataColumn(contentUri, null, null)
+                return getContentColumn(contentUri, "", null, null)
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":").toTypedArray()
@@ -265,8 +338,9 @@ object FileUtils {
                 val selectionArgs = arrayOf(
                     split[1]
                 )
-                return getDataColumn(
+                return getContentColumn(
                     contentUri,
+                    "",
                     selection,
                     selectionArgs
                 )
@@ -278,7 +352,7 @@ object FileUtils {
         ) { // Return the remote address
             return if (isGooglePhotosUri(uri)) {
                 uri.lastPathSegment
-            } else getDataColumn(uri, null, null)
+            } else getContentColumn(uri, "", null, null)
         } else if ("file".equals(uri.scheme, ignoreCase = true)) {
             return uri.path
         }
@@ -376,112 +450,39 @@ object FileUtils {
         )
     }
 
-    fun saveBitmapFile(bitmap: Bitmap, file: File?) {
+    /**
+     * 保存图片到本地
+     */
+    fun saveBitmap(name: String, bm: Bitmap): Boolean {
+        val fileName = createNewFilePath(name)
+        val f = File(fileName, name)
+        return saveBitmapFile(bm, f)
+    }
+
+    fun saveBitmapFile(bitmap: Bitmap, file: File?): Boolean {
+        var isSave = false
         try {
             val bos =
                 BufferedOutputStream(FileOutputStream(file))
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
             bos.flush()
             bos.close()
+            isSave = true
         } catch (e: IOException) {
+            LogUtils.d(e.message)
             e.printStackTrace()
         }
+        return isSave
     }
 
     /**
-     * 转换图片成圆形
-     *
-     * @param bitmap 传入Bitmap对象
-     * @return
+     * 将本地图片资源转成bitmap
      */
-    fun toRoundBitmap(bitmap: Bitmap): Bitmap {
-        var width = bitmap.width
-        var height = bitmap.height
-        val roundPx: Float
-        val left: Float
-        val top: Float
-        val right: Float
-        val bottom: Float
-        val dst_left: Float
-        val dst_top: Float
-        val dst_right: Float
-        val dst_bottom: Float
-        if (width <= height) {
-            roundPx = width / 2.toFloat()
-            left = 0f
-            top = 0f
-            right = width.toFloat()
-            bottom = width.toFloat()
-            height = width
-            dst_left = 0f
-            dst_top = 0f
-            dst_right = width.toFloat()
-            dst_bottom = width.toFloat()
-        } else {
-            roundPx = height / 2.toFloat()
-            val clip = (width - height) / 2.toFloat()
-            left = clip
-            right = width - clip
-            top = 0f
-            bottom = height.toFloat()
-            width = height
-            dst_left = 0f
-            dst_top = 0f
-            dst_right = height.toFloat()
-            dst_bottom = height.toFloat()
-        }
-        val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(output)
-        val paint = Paint()
-        val src =
-            Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-        val dst = Rect(
-            dst_left.toInt(),
-            dst_top.toInt(),
-            dst_right.toInt(),
-            dst_bottom.toInt()
-        )
-        val rectF = RectF(dst)
-        paint.isAntiAlias = true // 设置画笔无锯齿
-        canvas.drawARGB(0, 0, 0, 0) // 填充整个Canvas
-        // 以下有两种方法画圆,drawRounRect和drawCircle
-        canvas.drawRoundRect(
-            rectF,
-            roundPx,
-            roundPx,
-            paint
-        ) // 画圆角矩形，第一个参数为图形显示区域，第二个参数和第三个参数分别是水平圆角半径和垂直圆角半径。
-        // canvas.drawCircle(roundPx, roundPx, roundPx, paint);
-        paint.xfermode =
-            PorterDuffXfermode(PorterDuff.Mode.SRC_IN) // 设置两张图片相交时的模式,参考http://trylovecatch.iteye.com/blog/1189452
-        canvas.drawBitmap(bitmap, src, dst, paint) // 以Mode.SRC_IN模式合并bitmap和已经draw了的Circle
-        return output
-    }
-
-    /**
-     * 创建文件夹
-     *
-     * @param filename
-     * @return
-     */
-    fun createDir(
-        filename: String,
-        directory_path: String,
-    ): String {
-        val state = Environment.getExternalStorageState()
-        val rootDir =
-            if (state == Environment.MEDIA_MOUNTED) Environment.getExternalStorageDirectory() else BaseApplication.appContext.cacheDir
-        var path: File? = null
-        path = if (!TextUtils.isEmpty(directory_path)) { // 自定义保存目录
-            File(rootDir.absolutePath + directory_path)
-        } else {
-            File(rootDir.absolutePath + "/PictureSelector")
-        }
-        if (!path.exists()) // 若不存在，创建目录，可以在应用启动的时候创建
-        {
-            path.mkdirs()
-        }
-        return "$path/$filename"
+    fun getBitmapByLocalRes(path: String): Bitmap? {
+        val fis = FileInputStream(path)
+        val bitmap = BitmapFactory.decodeStream(fis)
+        return if (bitmap == null) null
+        else return bitmap
     }
 
     /**
@@ -537,7 +538,7 @@ object FileUtils {
         }
 
     /**
-     * set empty PictureSelector Cache
+     * cacheDir
      *
      */
     fun deleteCacheDirFile() {
@@ -546,67 +547,34 @@ object FileUtils {
             File(BaseApplication.appContext.cacheDir.toString() + "/picture_cache")
         val lubanDir =
             File(BaseApplication.appContext.cacheDir.toString() + "/luban_disk_cache")
-        if (cutDir != null) {
-            val files = cutDir.listFiles()
-            for (file in files) {
-                if (file.isFile) {
-                    file.delete()
-                }
-            }
-        }
-        if (compressDir != null) {
-            val files = compressDir.listFiles()
-            if (files != null) {
-                for (file in files) {
-                    if (file.isFile) {
-                        file.delete()
-                    }
-                }
-            }
-        }
-        if (lubanDir != null) {
-            val files = lubanDir.listFiles()
-            if (files != null) {
-                for (file in files) {
-                    if (file.isFile) {
-                        file.delete()
-                    }
-                }
-            }
-        }
+
+        deleteDirFile(cutDir)
+        deleteDirFile(compressDir)
+        deleteDirFile(lubanDir)
     }
 
     /**
-     * set empty PictureSelector Cache
-     *
-     * @param mContext
+     * externalCacheDir
      */
     fun deleteExternalCacheDirFile() {
+
         val cutDir = BaseApplication.appContext.externalCacheDir
         val compressDir =
             File(BaseApplication.appContext.externalCacheDir.toString() + "/picture_cache")
         val lubanDir =
             File(BaseApplication.appContext.externalCacheDir.toString() + "/luban_disk_cache")
-        if (cutDir != null) {
-            val files = cutDir.listFiles()
-            for (file in files) {
-                if (file.isFile) {
-                    file.delete()
-                }
-            }
-        }
-        if (compressDir != null) {
-            val files = compressDir.listFiles()
-            if (files != null) {
-                for (file in files) {
-                    if (file.isFile) {
-                        file.delete()
-                    }
-                }
-            }
-        }
-        if (lubanDir != null) {
-            val files = lubanDir.listFiles()
+
+        deleteDirFile(cutDir)
+        deleteDirFile(compressDir)
+        deleteDirFile(lubanDir)
+    }
+
+    /**
+     * 删除指定目录下所以文件
+     */
+    fun deleteDirFile(dirFile: File?) {
+        if (dirFile != null) {
+            val files = dirFile.listFiles()
             if (files != null) {
                 for (file in files) {
                     if (file.isFile) {
@@ -618,7 +586,7 @@ object FileUtils {
     }
 
     /**
-     * delete file
+     * delete file 删除文件
      *
      * @param path
      */
@@ -626,7 +594,7 @@ object FileUtils {
         try {
             if (!TextUtils.isEmpty(path)) {
                 val file = File(path)
-                if (file != null) {
+                if (file.exists()) {
                     return file.delete()
                 }
             }
@@ -666,6 +634,32 @@ object FileUtils {
             return false
         }
         return true
+    }
+
+
+    // 判断SD卡是否存在
+    fun isExistSDCard(): Boolean {
+        return Environment.getExternalStorageState() ==
+                Environment.MEDIA_MOUNTED
+    }
+
+
+    private const val MAIN_SOFT_FOLDER_NAME = "MAIN_SOFT0"
+    private const val CACHE_FOLDER_NAME = "CACHE0"
+    fun getImageCachePath(): String //给图片一个存储路径
+    {
+        if (!isExistSDCard()) {
+            return ""
+        }
+        val sdRoot =
+            Environment.getExternalStorageDirectory().absolutePath
+        val result = sdRoot +
+                "/" + MAIN_SOFT_FOLDER_NAME + "/" + CACHE_FOLDER_NAME
+        return if (File(result).exists() && File(result).isDirectory) {
+            result
+        } else {
+            sdRoot
+        }
     }
 
     // 遍历文件夹下所有文件
@@ -725,6 +719,12 @@ object FileUtils {
             }
         }
     }
+
+    /**
+     * 文件转成byte数组
+     */
+    @JvmStatic
+    fun file2Byte(file: File) = file.readBytes()
 
     /**
      *  申请软著代码复制删除注释和空行

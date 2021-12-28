@@ -128,7 +128,9 @@
     implementation 'com.leo618:zip:0.0.1'
 
 
-    // x5 tbs
+    // 查看网络发文件
+    implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+    // x5 tbs 
     implementation 'com.tencent.tbs:tbssdk:44085'
     // 安卓短信/彩信发送库
     implementation 'com.klinkerapps:android-smsmms:5.1.0'
@@ -159,6 +161,12 @@
 
     // 多种样式的进度条 – ProgressView
     implementation 'com.white:progressview:latest.release@aar'
+
+    // Android 炫酷的多重水波纹
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0'
+    //androidx
+    implementation 'com.scwang.wave:MultiWaveHeader:1.0.0-andx'
+
 
 
     // 滚轮控件
@@ -200,6 +208,7 @@
     // }
 
 
+    
     // 大图浏览
     implementation 'com.bm.photoview:library:1.4.1'
     // 拍照/选择图片
@@ -207,14 +216,20 @@
     // 选择图库
     implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
-    // mediapicker  这个库picture_library:v1.4.1 包含了上面的库
+    // 图片选择
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
+    // 图片、视频、音频 选择
     implementation('com.github.LuckSiege.PictureSelector:picture_library:v2.2.3') {
     // exclude group: 'com.github.bumptech.glide' //通过排除依赖冲突 
     // }
 
 
-    // easypermissions 动态获取权限
-    implementation 'pub.devrel:easypermissions:1.2.0'
+    // easypermissions 动态获取权限 Android Support Library
+    implementation 'pub.devrel:easypermissions:2.0.1'
+    // For developers using AndroidX in their applications
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    // 一行代码搞定Android 6.0动态权限授权、权限管理
+    implementation 'com.github.dfqin:grantor:2.5'
 
 
     // 一种粗暴快速的 Android 全屏幕适配方案
@@ -234,3 +249,7 @@
     implementation 'me.codeboy.android:align-text-view:2.3.2'
     // calligraphy（高效加载字体包）`
     implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
+
+
+    // LitePal for Android SQLite 数据库
+    implementation 'org.litepal.guolindev:core:3.2.3'

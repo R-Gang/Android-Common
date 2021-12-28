@@ -3,7 +3,7 @@ package com.gang.library.common.utils.version
 import com.vector.update_app.service.DownloadService
 import java.io.File
 
-class DownloadCallback : DownloadService.DownloadCallback {
+open class DownloadCallback : DownloadService.DownloadCallback {
     /**
      * 开始
      */

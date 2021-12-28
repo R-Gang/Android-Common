@@ -4,6 +4,8 @@ import android.app.Activity
 import android.text.TextUtils
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.http.progress.MyProgressDialog
+import com.gang.library.common.utils.isNetConnected
+import com.gang.library.common.utils.showToast
 import com.google.gson.Gson
 import com.lzy.okhttputils.callback.AbsCallback
 import okhttp3.Call
@@ -90,8 +92,16 @@ abstract class HttpCallBack<T> : AbsCallback<Any?>, IHttpCallBack<T?> {
         e: Exception?,
     ) {
         LogUtils.e("error ---response:$response $e")
-        super.onError(call, response, e)
+        dismiss()
+        if (!isNetConnected()) {
+            showToast("NetWork Error")
+        } else if (response?.code() == 503) {
+            showToast("服务器重启中...")
+        } else {
+            showToast("网络错误")
+        }
         onError(e)
+        super.onError(call, response, e)
     }
 
     companion object {

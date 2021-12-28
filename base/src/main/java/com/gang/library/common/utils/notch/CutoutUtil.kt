@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Point
 import android.os.Build
-import android.view.Display
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -19,6 +18,7 @@ import com.gang.library.common.utils.notch.callback.NotchCallback
  */
 object CutoutUtil {
     private var sAllowDisplayToCutout: Boolean? = null
+
     /**
      * 是否为允许全屏界面显示内容到刘海区域的刘海屏机型（与AndroidManifest中配置对应）
      */
@@ -122,10 +122,10 @@ object CutoutUtil {
 
     // Google刘海屏适配 >= 28才能调用到
     @TargetApi(28)
-    fun getNotchParams(activity: Activity, callback: NotchCallback) {
+    fun getNotchParams(activity: Activity, callback: NotchCallback): Boolean {
         val decorView = activity.window.decorView
+        var isNotch = false
         decorView.post(Runnable {
-            var isNotch = false
             val rootWindowInsets = decorView.rootWindowInsets
             if (rootWindowInsets == null) {
                 LogUtils.e("TAG", "rootWindowInsets为空了")
@@ -163,11 +163,13 @@ object CutoutUtil {
             }
             callback.Notch(isNotch)
         })
+        return isNotch
     }
 
 
     // 第三种适配
     private var mIsAllScreenDevice = false
+
     @TargetApi(28)
     fun isAllScreenDevice(activity: Activity, callback: NotchCallback) {
         //是否是全面屏低于 API 21的，都不会是全面屏

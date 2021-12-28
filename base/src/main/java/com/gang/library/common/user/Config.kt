@@ -18,13 +18,19 @@ import com.gang.library.BuildConfig
 object Config {
 
     //CALL_PHONE权限
-    const val RC_CALL_PHONE = 100
+    const val REQUEST_CALL_PHONE = 100
     const val REQUEST_CODE_WRITE = 101
+    const val REQUEST_CAMERA = 102
 
     /**
      * startActivityForResult requestCode
      */
-    const val toActivityRequestCode=0x000002
+    const val toActivityRequestCode=0x000001
+
+    /**
+     * 扫描跳转Activity RequestCode
+     */
+    const val REQUEST_CODE_CAMERE =0x000002
 
     // 文件类型
     const val TYPE_ALL = 0

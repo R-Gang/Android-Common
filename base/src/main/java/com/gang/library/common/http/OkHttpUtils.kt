@@ -10,8 +10,8 @@ import com.lzy.okhttputils.model.HttpParams
 
 /**
  *
- * @ProjectName:    ChangFenZaiXian
- * @Package:        com.changfenzaixian.app.common.http
+ * @ProjectName:    gang
+ * @Package:        com.gang.library.common.http
  * @ClassName:      OkHttpUtils
  * @Description:     java类作用描述
  * @Author:         haoruigang

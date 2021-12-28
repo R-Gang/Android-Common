@@ -9,6 +9,7 @@ import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.user.Config
 import com.lzy.okgo.OkGo
 import com.tencent.smtt.sdk.QbSdk
+import com.uuzuche.lib_zxing.activity.ZXingLibrary
 import com.zhy.http.okhttp.OkHttpUtils
 
 
@@ -17,10 +18,9 @@ open class BaseApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
-        init()
     }
 
-    private fun init() { //
+    open fun init() { //
 
         // 初始化Logger 是否开启日志
         LogUtils.getLogConfig()
@@ -86,8 +86,13 @@ open class BaseApplication : MultiDexApplication() {
         }
     }
 
+    fun initDisplayOpinion(){
+        // 二维码扫描
+        ZXingLibrary.initDisplayOpinion(applicationContext)
+    }
+
     companion object {
-        private const val TAG = "BaseApplication"
+        const val TAG = "BaseApplication"
 
         /**
          * 获取系统上下文
