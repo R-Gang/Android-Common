@@ -15,11 +15,13 @@
 
 常用的github依赖：
 
-    // 基本库
+    // 基本库 androidx
     implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.android.material:material:1.1.0@aar'
     implementation 'androidx.cardview:cardview:1.0.0@aar'
+    implementation 'com.google.android.material:material:1.1.0@aar' 
+    或
+    implementation 'com.android.support:design:28.0.0'
 
     
     // Dex处理
@@ -197,7 +199,7 @@
     // 版本更新
     implementation 'com.qianwen:update-app:3.5.2'
     // 版本更新用的okhttp-utils,okgo
-    implementation 'com.qianwen:okhttp-utils:3.8.0'
+    // implementation 'com.qianwen:okhttp-utils:3.8.0'
 
 
     // aliyun
@@ -231,7 +233,6 @@
     // 一行代码搞定Android 6.0动态权限授权、权限管理
     implementation 'com.github.dfqin:grantor:2.5'
 
-
     // 一种粗暴快速的 Android 全屏幕适配方案
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
 
@@ -247,7 +248,7 @@
 
     // Android TextView设置两端对齐，不区分中英文
     implementation 'me.codeboy.android:align-text-view:2.3.2'
-    // calligraphy（高效加载字体包）`
+    // calligraphy（高效加载字体包）
     implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
 
 

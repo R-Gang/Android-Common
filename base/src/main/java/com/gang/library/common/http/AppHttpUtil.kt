@@ -1,16 +1,20 @@
 package com.gang.library.common.http
 
+import com.apkfuns.logutils.LogUtils
+import com.gang.library.common.utils.isNetConnected
+import com.lzy.okhttputils.callback.FileCallback
+import com.lzy.okhttputils.callback.StringCallback
+import com.lzy.okhttputils.request.BaseRequest
 import com.vector.update_app.HttpManager
-import com.zhy.http.okhttp.OkHttpUtils
-import com.zhy.http.okhttp.callback.FileCallBack
-import com.zhy.http.okhttp.callback.StringCallback
 import okhttp3.Call
-import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONException
 import java.io.File
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 /**
- * Created by Vector
+ * Created by haoruigang
  * on 2017/6/19 0019.
  */
 class AppHttpUtil : HttpManager {
@@ -24,21 +28,50 @@ class AppHttpUtil : HttpManager {
     override fun asyncGet(
         url: String,
         params: Map<String, String>,
-        callBack: HttpManager.Callback
+        callBack: HttpManager.Callback,
     ) {
-        OkHttpUtils.get()
-            .url(url)
-            .params(params)
-            .build()
-            .execute(object : StringCallback() {
-                override fun onError(call: Call, response: Response, e: Exception, id: Int) {
+        OkHttpUtils.instance.getOkHttpJsonRequest("app版本更新",
+            url,
+            params,
+            object : StringCallback() {
+
+                override fun onSuccess(t: String?, call: Call?, response: Response?) {
+                    LogUtils.json("接口返回数据\n$t")
+                    callBack.onResponse(t)
+                }
+
+                override fun onError(call: Call?, response: Response?, e: java.lang.Exception?) {
+                    super.onError(call, response, e)
                     callBack.onError(validateError(e, response))
                 }
 
-                override fun onResponse(response: String, id: Int) {
-                    callBack.onResponse(response)
-                }
             })
+
+    }
+
+    protected fun validateError(error: java.lang.Exception?, response: Response?): String {
+        if (error != null) {
+            if (!isNetConnected()) {
+                return "无网络，请联网重试"
+            } else if (error is SocketTimeoutException) {
+                return "网络连接超时，请稍候重试"
+            } else if (error is JSONException) {
+                return "json转化异常"
+            } else if (error is ConnectException) {
+                return "服务器网络异常或宕机，请稍候重试"
+            }
+        }
+        if (response != null) {
+            val code = response.code()
+            return if (code >= 500) {
+                "服务器异常，请稍候重试"
+            } else if (code < 500 && code >= 400) {
+                "接口异常，请稍候重试"
+            } else {
+                String.format("未知异常 code = %d，请稍候重试", code)
+            }
+        }
+        return "未知异常，请稍候重试"
     }
 
     /**
@@ -51,20 +84,23 @@ class AppHttpUtil : HttpManager {
     override fun asyncPost(
         url: String,
         params: Map<String, String>,
-        callBack: HttpManager.Callback
+        callBack: HttpManager.Callback,
     ) {
-        OkHttpUtils.post()
-            .url(url)
-            .params(params)
-            .build()
-            .execute(object : StringCallback() {
-                override fun onError(call: Call, response: Response, e: Exception, id: Int) {
+        OkHttpUtils.instance.postOkHttpJsonRequest("app版本更新",
+            url,
+            params,
+            object : StringCallback() {
+
+                override fun onSuccess(t: String?, call: Call?, response: Response?) {
+                    LogUtils.json("接口返回数据\n$t")
+                    callBack.onResponse(t)
+                }
+
+                override fun onError(call: Call?, response: Response?, e: java.lang.Exception?) {
+                    super.onError(call, response, e)
                     callBack.onError(validateError(e, response))
                 }
 
-                override fun onResponse(response: String, id: Int) {
-                    callBack.onResponse(response)
-                }
             })
     }
 
@@ -80,27 +116,32 @@ class AppHttpUtil : HttpManager {
         url: String,
         path: String,
         fileName: String,
-        callback: HttpManager.FileCallback
+        callback: HttpManager.FileCallback,
     ) {
-        OkHttpUtils.get()
-            .url(url)
-            .build()
-            .execute(object : FileCallBack(path, fileName) {
-                override fun inProgress(progress: Float, total: Long, id: Int) {
-                    callback.onProgress(progress, total)
+        OkHttpUtils.instance.getOkHttpJsonRequest("app版本下载", url,
+            hashMapOf(), object : FileCallback(path, fileName) {
+                override fun downloadProgress(
+                    currentSize: Long,
+                    totalSize: Long,
+                    progress: Float,
+                    networkSpeed: Long,
+                ) {
+                    super.downloadProgress(currentSize, totalSize, progress, networkSpeed)
+                    callback.onProgress(progress, totalSize)
                 }
 
-                override fun onError(call: Call, response: Response, e: Exception, id: Int) {
+                override fun onError(call: Call?, response: Response?, e: java.lang.Exception?) {
+                    super.onError(call, response, e)
                     callback.onError(validateError(e, response))
                 }
 
-                override fun onResponse(response: File, id: Int) {
-                    callback.onResponse(response)
+                override fun onBefore(request: BaseRequest<out BaseRequest<*>>?) {
+                    super.onBefore(request)
+                    callback.onBefore()
                 }
 
-                override fun onBefore(request: Request, id: Int) {
-                    super.onBefore(request, id)
-                    callback.onBefore()
+                override fun onSuccess(file: File?, call: Call?, response: Response?) {
+                    callback.onResponse(file)
                 }
             })
     }

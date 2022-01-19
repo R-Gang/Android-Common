@@ -7,6 +7,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
@@ -35,14 +36,18 @@ abstract class BaseActivity : BasePermissionActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutId)
+        if (Config.setContentView) {
+            setContentView(layoutId)
+        }
         mContext = this
 
         if (!EventBus.isRegistered(this)) {
             EventBus.register(this) //注册EventBus
         }
 
-        StatusBarUtil.setTranslucentForImageView(this, 0, null)
+        if (Config.statusBarEnabled) {
+            StatusBarUtil.setTranslucentForImageView(this, 0, null)
+        }
 
         if (Config.activityEnabled) {
             AppManager.appManager?.addActivity(this)
@@ -86,6 +91,27 @@ abstract class BaseActivity : BasePermissionActivity() {
     open fun dark() {
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    }
+
+    /**
+     * 隐藏导航栏和状态栏通过系统上滑或者下滑拉出导航栏后会自动隐藏，
+     * =====
+     * decorView 传入自动隐藏的view
+     * ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
+     * ViewGroup decorChild = (ViewGroup) decorView.getChildAt(0);
+     */
+    open fun hideSystemUI(decorView: ViewGroup) {
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                // 状态栏颜色自适应
+                or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                //使用下面三个参数，可以使内容显示在system bar的下面，防止system bar显示或
+                //隐藏时，Activity的大小被resize。
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // 隐藏导航栏和状态栏
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 
     // 隐藏导航栏和状态栏通过系统上滑或者下滑拉出导航栏后会自动隐藏，
@@ -156,7 +182,7 @@ abstract class BaseActivity : BasePermissionActivity() {
     /**
      * findViewById
      */
-    fun <T : View?> findViewId(v:Int): T {
+    fun <T : View?> findViewId(v: Int): T {
         return findViewById<T>(v)
     }
 

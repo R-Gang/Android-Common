@@ -7,10 +7,11 @@ import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.user.Config
-import com.lzy.okgo.OkGo
+import com.lzy.okhttputils.OkHttpUtils
 import com.tencent.smtt.sdk.QbSdk
 import com.uuzuche.lib_zxing.activity.ZXingLibrary
-import com.zhy.http.okhttp.OkHttpUtils
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
 
 open class BaseApplication : MultiDexApplication() {
@@ -74,19 +75,23 @@ open class BaseApplication : MultiDexApplication() {
         }
     }
 
-    fun initVersionupdate(){
+    fun initVersionupdate() {
         // 版本更新
         if (Config.isOpenVersionUpdate) {
             // okhttp-utils
-            OkHttpUtils.getInstance()
-                .init(this)
-                .debug(true, "okHttp")
-                .timeout(20 * 1000)
-            OkGo.getInstance().init(this)
+            timeout(20 * 1000).debug("okHttp", true)
         }
     }
 
-    fun initDisplayOpinion(){
+    fun timeout(timeout: Long): OkHttpUtils {
+        OkHttpClient.Builder()
+            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+            .readTimeout(timeout, TimeUnit.MILLISECONDS)
+            .writeTimeout(timeout, TimeUnit.MILLISECONDS)
+        return OkHttpUtils.getInstance()
+    }
+
+    fun initDisplayOpinion() {
         // 二维码扫描
         ZXingLibrary.initDisplayOpinion(applicationContext)
     }

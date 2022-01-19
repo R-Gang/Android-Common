@@ -1,10 +1,10 @@
 package com.gang.library.common.http
 
 import com.apkfuns.logutils.LogUtils
-import com.gang.library.common.http.callback.HttpCallBack
 import com.gang.library.common.utils.getPreferences
 import com.gang.library.common.utils.transMap2String
 import com.lzy.okhttputils.OkHttpUtils
+import com.lzy.okhttputils.callback.AbsCallback
 import com.lzy.okhttputils.model.HttpHeaders
 import com.lzy.okhttputils.model.HttpParams
 
@@ -35,7 +35,7 @@ class OkHttpUtils {
         tag: String?,
         url: String,
         map: Map<String, String>?,
-        callBack: HttpCallBack<*>?
+        callBack: AbsCallback<*>?,
     ) {
         getHeaderJsonRequest(tag, url, map as HashMap<String, String>?, null, null, callBack)
     }
@@ -51,7 +51,7 @@ class OkHttpUtils {
         tag: String?,
         url: String,
         map: Map<String, String>?,
-        callBack: HttpCallBack<*>?
+        callBack: AbsCallback<*>?,
     ) {
         postHeaderJsonRequest(tag, url, map as HashMap<String, String>?, null, null, callBack)
     }
@@ -69,41 +69,30 @@ class OkHttpUtils {
         map: HashMap<String, String>?,
         headers: HttpHeaders?,
         httpParams: HttpParams?,
-        callBack: HttpCallBack<*>?
+        callBack: AbsCallback<*>?,
     ) {
         if (map != null) {
-            try {
-                LogUtils.e("get请求:$url,参数---${transMap2String(map)}")
+            LogUtils.e(tag + "get请求:$url,参数---${transMap2String(map)}")
 
-                val params = HashMap<String, String>()
-                params.putAll(map) // 不加密的参数
-                val access_token = getPreferences("access_token", "")
+            val params = HashMap<String, String>()
+            params.putAll(map) // 不加密的参数
 
-                var header = HttpHeaders()
-                if (headers == null) {
-                    header.put("Content-Type", "application/x-www-form-urlencoded")
-                    header.put("Authorization", "Bearer $access_token")
-                    header.put("Accept", "application/json")
-                } else {
-                    header = headers
+            OkHttpHandlerData(headers, httpParams, object : HandlerParams {
+                override fun handlerData(header: HttpHeaders, httpParam: HttpParams) {
+                    try {
+                        OkHttpUtils.get(url)
+                            .headers(header)
+                            .params(params)
+                            .params(httpParam)
+                            .execute(callBack)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
-
-                var httpParam = HttpParams()
-                if (httpParams != null) {
-                    httpParam = httpParams
-                }
-
-                OkHttpUtils.get(url)
-                    .headers(header)
-                    .params(params)
-                    .params(httpParam)
-                    .execute(callBack)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            })
         } else {
             OkHttpUtils.get(url)
-                .execute<Any>(callBack)
+                .execute(callBack)
         }
     }
 
@@ -120,42 +109,66 @@ class OkHttpUtils {
         map: HashMap<String, String>?,
         headers: HttpHeaders?,
         httpParams: HttpParams?,
-        callBack: HttpCallBack<*>?
+        callBack: AbsCallback<*>?,
     ) {
         if (map != null) {
             try {
-                LogUtils.e("post请求:$url,参数---${transMap2String(map)}")
+                LogUtils.e(tag + "post请求:$url,参数---${transMap2String(map)}")
 
                 val params = HashMap<String, String>()
                 params.putAll(map) // 不加密的参数
-                val access_token = getPreferences("access_token", "")
 
-                var header = HttpHeaders()
-                if (headers == null) {
-                    header.put("Content-Type", "application/x-www-form-urlencoded")
-                    header.put("Authorization", "Bearer $access_token")
-                    header.put("Accept", "application/json")
-                } else {
-                    header = headers
-                }
-
-                var httpParam = HttpParams()
-                if (httpParams != null) {
-                    httpParam = httpParams
-                }
-
-                OkHttpUtils.post(url)
-                    .headers(header)
-                    .params(params)
-                    .params(httpParam)
-                    .execute(callBack)
+                OkHttpHandlerData(headers, httpParams, object : HandlerParams {
+                    override fun handlerData(header: HttpHeaders, httpParam: HttpParams) {
+                        try {
+                            OkHttpUtils.post(url)
+                                .headers(header)
+                                .params(params)
+                                .params(httpParam)
+                                .execute(callBack)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                })
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         } else {
             OkHttpUtils.post(url)
-                .execute<Any>(callBack)
+                .execute(callBack)
         }
+    }
+
+    /**
+     * 参数处理
+     */
+    fun OkHttpHandlerData(
+        headers: HttpHeaders?,
+        httpParams: HttpParams?,
+        callBack: HandlerParams?,
+    ) {
+        val access_token = getPreferences("access_token", "")
+
+        var header = HttpHeaders()
+        if (headers == null) {
+            header.put("Content-Type", "application/x-www-form-urlencoded")
+            header.put("Authorization", "Bearer $access_token")
+            header.put("Accept", "application/json")
+        } else {
+            header = headers
+        }
+
+        var httpParam = HttpParams()
+        if (httpParams != null) {
+            httpParam = httpParams
+        }
+
+        callBack?.handlerData(header, httpParam)
+    }
+
+    interface HandlerParams {
+        fun handlerData(header: HttpHeaders, httpParam: HttpParams)
     }
 
     companion object {

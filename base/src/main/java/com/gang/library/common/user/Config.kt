@@ -57,8 +57,12 @@ object Config {
     // 设置全局字体("HYXinRenWenSongW.ttf")
     var typefaceAll = ""
 
+    // 是否开启设置页面(默认开启)
+    var setContentView = true
     // 是否开启全局页面管理(默认开启)
     var activityEnabled = true
+    // 是否开启沉浸式状态栏(默认开启)
+    var statusBarEnabled = true
     // 开启版本更新功能
     var isOpenVersionUpdate = false
     // 使用腾讯浏览器X5内核
