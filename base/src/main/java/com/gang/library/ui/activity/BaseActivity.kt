@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
@@ -18,7 +19,6 @@ import com.gang.library.common.user.Config
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.common.utils.notch.callback.NotchCallback
-import com.gang.library.common.utils.permissions.BasePermissionActivity
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.base_title_bar.*
 import org.greenrobot.eventbus.Subscribe
@@ -28,11 +28,13 @@ import java.util.*
 /**
  * Created by haoruigang on 2018-4-3 09:51:22 继承权限父类
  */
-abstract class BaseActivity : BasePermissionActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     var pageIndex = 1
     var pageSize = "15"
     lateinit var mContext: Context
+
+    protected var mNotchScreen: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +43,10 @@ abstract class BaseActivity : BasePermissionActivity() {
         }
         mContext = this
 
-        if (!EventBus.isRegistered(this)) {
-            EventBus.register(this) //注册EventBus
+        if (Config.eventBusEnabled) {
+            if (!EventBus.isRegistered(this)) {
+                EventBus.register(this) //注册EventBus
+            }
         }
 
         if (Config.statusBarEnabled) {
@@ -53,8 +57,8 @@ abstract class BaseActivity : BasePermissionActivity() {
             AppManager.appManager?.addActivity(this)
         }
         CrashHandler.instance?.init(this) //初始化全局异常管理
-        initData()
         initView(savedInstanceState)
+        initData()
         onClick()
         Notch()
     }
@@ -198,7 +202,7 @@ abstract class BaseActivity : BasePermissionActivity() {
      * 刘海屏适配
      */
     open fun onNotchCreate(activity: Activity) {
-
+        this.mNotchScreen = true // 是全面屏
     }
 
     /**
@@ -226,11 +230,15 @@ abstract class BaseActivity : BasePermissionActivity() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        if (EventBus.isRegistered(this)) {
-            EventBus.unregister(this) //反注册EventBus
+        if (Config.eventBusEnabled) {
+            if (EventBus.isRegistered(this)) {
+                EventBus.unregister(this) //反注册EventBus
+            }
         }
-        if (Util.isOnMainThread() && !this.isFinishing) {
-            Glide.with(applicationContext).pauseRequests()
+        if (Config.glideEnabled) {
+            if (Util.isOnMainThread() && !this.isFinishing) {
+                Glide.with(applicationContext).pauseRequests()
+            }
         }
     }
 

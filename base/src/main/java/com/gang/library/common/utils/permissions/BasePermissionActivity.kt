@@ -1,17 +1,16 @@
 package com.gang.library.common.utils.permissions
 
 import android.R
-import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import com.gang.library.common.utils.permissions.easyPermission.EasyPermission
+import com.gang.library.ui.activity.BaseActivity
 
 /**
  *
  * @ProjectName:    gang
  * @Package:        com.gang.app.common.utils.permissions.easyPermission
  * @ClassName:      BasePermissionActivity
- * @Description:     java类作用描述
+ * @Description:    动态请求权限
  * @Author:         haoruigang
  * @CreateDate:     2020/8/3 16:34
  * @UpdateUser:     更新者：
@@ -19,29 +18,31 @@ import com.gang.library.common.utils.permissions.easyPermission.EasyPermission
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-abstract class BasePermissionActivity : AppCompatActivity(), EasyPermission.PermissionCallback {
+abstract class BasePermissionActivity : BaseActivity(), EasyPermission.PermissionCallback {
     private var mRequestCode = 0
     private lateinit var mPermissions: Array<String>
     private var mPermissionCallBack: PermissionCallBackM? = null
+
     //rationale: 申请授权理由
     fun requestPermission(
         requestCode: Int, permissions: Array<String>, rationale: String?,
-        permissionCallback: PermissionCallBackM?
+        permissionCallback: PermissionCallBackM?,
     ) {
         mRequestCode = requestCode
         mPermissionCallBack = permissionCallback
         mPermissions = permissions
         EasyPermission.with(this)
             .addRequestCode(requestCode)
-            .permissions(*permissions) //.nagativeButtonText(android.R.string.ok)
-//.positveButtonText(android.R.string.cancel)
+            .permissions(*permissions)
+            //.nagativeButtonText(android.R.string.ok)
+            //.positveButtonText(android.R.string.cancel)
             .rationale(rationale)
             .request()
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String?>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
@@ -50,7 +51,7 @@ abstract class BasePermissionActivity : AppCompatActivity(), EasyPermission.Perm
     public override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
-        data: Intent?
+        data: Intent?,
     ) {
         super.onActivityResult(requestCode, resultCode, data)
         /*
@@ -70,14 +71,14 @@ abstract class BasePermissionActivity : AppCompatActivity(), EasyPermission.Perm
 
     override fun onEasyPermissionDenied(
         requestCode: Int,
-        vararg perms: String?
+        vararg perms: String?,
     ) { //rationale: Never Ask Again后的提示信息
         if (EasyPermission.checkDeniedPermissionsNeverAskAgain(
                 this,
                 "授权啊,不授权没法用啊," + "去设置里授权大哥",
                 R.string.ok,
                 R.string.cancel,
-                DialogInterface.OnClickListener { dialog, which ->
+                { dialog, which ->
                     mPermissionCallBack?.onPermissionDeniedM(
                         requestCode, *perms
                     )

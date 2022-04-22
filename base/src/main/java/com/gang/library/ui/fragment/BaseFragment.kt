@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.fragment.app.Fragment
 import com.gang.library.common.EventBus
+import com.gang.library.common.user.Config
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.common.utils.notch.callback.NotchCallback
@@ -23,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
  *
  * @author haoruigang 继承权限父类
  */
-abstract class BaseFragment : BasePermissionFragment() {
+abstract class BaseFragment : Fragment() {
 
     lateinit var mActivity: BaseActivity
     var mContext: Context? = null
@@ -50,11 +52,15 @@ abstract class BaseFragment : BasePermissionFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(layoutId, container, false)
         if (!EventBus.isRegistered(this)) {
             EventBus.register(this) //注册EventBus
         }
-        return view
+        if (Config.setContentView) {
+            val view = inflater.inflate(layoutId, container, false)
+            return view
+        } else {
+            return super.onCreateView(inflater, container, savedInstanceState)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

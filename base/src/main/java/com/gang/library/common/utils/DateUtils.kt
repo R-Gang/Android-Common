@@ -319,4 +319,21 @@ object DateUtils {
         val today = getTomorrow()
         return today + 24 * 60 * 60
     }
+
+    /**
+     * 将秒数转化为时分秒格式
+     * 01:45:30
+     * @param time
+     * @return
+     */
+    fun getVideoFormat(time: Long): String {
+        val temp = time.toInt()
+        val hh = temp / 3600
+        val mm = temp % 3600 / 60
+        val ss = temp % 3600 % 60
+        return (if (hh < 10) "0$hh" else hh).toString() + ":" +
+                (if (mm < 10) "0$mm" else mm) + ":" +
+                if (ss < 10) "0$ss" else ss
+    }
+
 }

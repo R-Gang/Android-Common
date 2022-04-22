@@ -87,7 +87,7 @@ object FileUtils {
     ): File? {
         val state = Environment.getExternalStorageState()
         val rootDir =
-            if (state == Environment.MEDIA_MOUNTED) Environment.getExternalStorageDirectory() else BaseApplication.appContext.cacheDir
+            if (state == Environment.MEDIA_MOUNTED) Environment.getExternalStorageDirectory() else initAndroidCommon().cacheDir
         val folderDir = File(rootDir.absolutePath + parentPath)
         if (!folderDir.exists() && folderDir.mkdirs()) {
         }
@@ -135,7 +135,7 @@ object FileUtils {
     ): String {
         val state = Environment.getExternalStorageState()
         val rootDir =
-            if (state == Environment.MEDIA_MOUNTED) Environment.getExternalStorageDirectory() else BaseApplication.appContext.cacheDir
+            if (state == Environment.MEDIA_MOUNTED) Environment.getExternalStorageDirectory() else initAndroidCommon().cacheDir
         var path: File? = null
         path = if (!TextUtils.isEmpty(directory_path)) { // 自定义保存目录
             File(rootDir.absolutePath + directory_path)
@@ -173,7 +173,7 @@ object FileUtils {
             column
         )
         try {
-            cursor = BaseApplication.appContext.contentResolver.query(
+            cursor = initAndroidCommon().contentResolver.query(
                 uri!!, projection, selection, selectionArgs,
                 null
             )
@@ -239,7 +239,7 @@ object FileUtils {
 
 
     fun getPhotoCacheDir(file: File): File {
-        val cacheDir = BaseApplication.appContext.cacheDir
+        val cacheDir = initAndroidCommon().cacheDir
         val file_name = file.name
         if (cacheDir != null) {
             val mCacheDir =
@@ -306,7 +306,7 @@ object FileUtils {
     fun getPath(uri: Uri): String? {
         val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
         // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(BaseApplication.appContext, uri)) {
+        if (isKitKat && DocumentsContract.isDocumentUri(initAndroidCommon(), uri)) {
             if (isExternalStorageDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":").toTypedArray()
@@ -542,11 +542,11 @@ object FileUtils {
      *
      */
     fun deleteCacheDirFile() {
-        val cutDir = BaseApplication.appContext.cacheDir
+        val cutDir = initAndroidCommon().cacheDir
         val compressDir =
-            File(BaseApplication.appContext.cacheDir.toString() + "/picture_cache")
+            File(initAndroidCommon().cacheDir.toString() + "/picture_cache")
         val lubanDir =
-            File(BaseApplication.appContext.cacheDir.toString() + "/luban_disk_cache")
+            File(initAndroidCommon().cacheDir.toString() + "/luban_disk_cache")
 
         deleteDirFile(cutDir)
         deleteDirFile(compressDir)
@@ -558,11 +558,11 @@ object FileUtils {
      */
     fun deleteExternalCacheDirFile() {
 
-        val cutDir = BaseApplication.appContext.externalCacheDir
+        val cutDir = initAndroidCommon().externalCacheDir
         val compressDir =
-            File(BaseApplication.appContext.externalCacheDir.toString() + "/picture_cache")
+            File(initAndroidCommon().externalCacheDir.toString() + "/picture_cache")
         val lubanDir =
-            File(BaseApplication.appContext.externalCacheDir.toString() + "/luban_disk_cache")
+            File(initAndroidCommon().externalCacheDir.toString() + "/luban_disk_cache")
 
         deleteDirFile(cutDir)
         deleteDirFile(compressDir)
@@ -612,9 +612,9 @@ object FileUtils {
         var cachePath: String? = null
         cachePath =
             if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() || !Environment.isExternalStorageRemovable()) {
-                BaseApplication.appContext.externalCacheDir!!.path
+                initAndroidCommon().externalCacheDir!!.path
             } else {
-                BaseApplication.appContext.cacheDir.path
+                initAndroidCommon().cacheDir.path
             }
         return cachePath
     }
@@ -755,9 +755,9 @@ object FileUtils {
      */
     @Throws(java.lang.Exception::class)
     fun getTotalCacheSize(): String {
-        var cacheSize: Long = getFolderSize(BaseApplication.appContext.cacheDir)
+        var cacheSize: Long = getFolderSize(initAndroidCommon().cacheDir)
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            cacheSize += BaseApplication.appContext.externalCacheDir?.let { getFolderSize(it) }!!
+            cacheSize += initAndroidCommon().externalCacheDir?.let { getFolderSize(it) }!!
         }
         return getFormatSize(cacheSize)
     }
@@ -768,9 +768,9 @@ object FileUtils {
      *
      */
     fun clearAllCache() {
-        deleteDir(BaseApplication.appContext.cacheDir)
+        deleteDir(initAndroidCommon().cacheDir)
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            deleteDir(BaseApplication.appContext.externalCacheDir)
+            deleteDir(initAndroidCommon().externalCacheDir)
         }
     }
 

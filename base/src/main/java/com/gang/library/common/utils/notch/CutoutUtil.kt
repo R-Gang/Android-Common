@@ -149,9 +149,8 @@ object CutoutUtil {
                 "TAG",
                 "安全区域距离屏幕底部的距离 SafeInsetBottom:" + displayCutout.safeInsetBottom
             )
-            val rects =
-                displayCutout.boundingRects
-            isNotch = if (rects == null || rects.size == 0) {
+            val rects = displayCutout.boundingRects
+            isNotch = if (rects.size == 0) {
                 LogUtils.e("TAG", "不是刘海屏")
                 false
             } else {
@@ -178,7 +177,7 @@ object CutoutUtil {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             mIsAllScreenDevice = false
         } else {
-            val windowManager = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val windowManager = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
             if (windowManager != null) {
                 val display = windowManager.defaultDisplay
                 val point = Point()

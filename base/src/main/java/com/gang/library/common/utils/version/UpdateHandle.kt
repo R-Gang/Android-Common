@@ -68,7 +68,7 @@ class UpdateHandle(updateCallback: UpdateCallback) :
             mActivity: Activity,
             updateApp: UpdateAppBean,
             updateAppManager: UpdateAppManager,
-        ) {
+        ) : AlertDialog?{
             val targetSize = updateApp.targetSize
             val updateLog = updateApp.updateLog
             var msg: String? = ""
@@ -123,6 +123,7 @@ class UpdateHandle(updateCallback: UpdateCallback) :
 
                 dialog.dismiss()
             }
+            return dialog
         }
     }
 

@@ -17,9 +17,11 @@ import com.gang.library.BuildConfig
  */
 object Config {
 
-    //CALL_PHONE权限
+    // CALL_PHONE 权限
     const val REQUEST_CALL_PHONE = 100
-    const val REQUEST_CODE_WRITE = 101
+    // READ_WRITE 权限
+    const val REQUEST_CODE_READ_WRITE = 101
+    // CAMERA 权限
     const val REQUEST_CAMERA = 102
 
     /**
@@ -63,6 +65,10 @@ object Config {
     var activityEnabled = true
     // 是否开启沉浸式状态栏(默认开启)
     var statusBarEnabled = true
+    // 是否开启EventBus(默认关闭)
+    var eventBusEnabled = false
+    // 是否开启Glide(默认关闭)
+    var glideEnabled = false
     // 开启版本更新功能
     var isOpenVersionUpdate = false
     // 使用腾讯浏览器X5内核

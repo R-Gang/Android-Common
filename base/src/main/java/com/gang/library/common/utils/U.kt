@@ -61,6 +61,10 @@ import kotlin.experimental.and
  * @Version:        1.0
  */
 
+fun initAndroidCommon(content: Context = BaseApplication.appContext): Context {
+    return content
+}
+
 private var toast: Toast? = null
 
 /**
@@ -83,7 +87,7 @@ fun showToast(msg: String?) {
 fun showToast(msg: String?, duration: Int) {
     if (Config.isShowLog) {
         if (toast == null) {
-            toast = Toast.makeText(BaseApplication.appContext, msg, duration)
+            toast = Toast.makeText(initAndroidCommon(), msg, duration)
             toast?.setGravity(Gravity.CENTER, 0, 0)
         } else {
             toast?.setText(msg)
@@ -94,7 +98,7 @@ fun showToast(msg: String?, duration: Int) {
 
 // 自定义Toast
 fun toastCustom(content: String) {
-    ToastCustom.showToast(BaseApplication.appContext, content)
+    ToastCustom.showToast(initAndroidCommon(), content)
 }
 
 /**
@@ -104,7 +108,7 @@ fun toastCustom(content: String) {
  */
 fun hideSoftKeyboard(argEditText: EditText) {
     val imm =
-        (BaseApplication.appContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        (initAndroidCommon().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
     imm.hideSoftInputFromWindow(argEditText.windowToken, 0)
 }
 
@@ -129,7 +133,7 @@ fun hideKeyboard(activity: Activity) {
  */
 fun showKeyBoard(view: View) {
     val imm =
-        BaseApplication.appContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        initAndroidCommon().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     view.requestFocus()
     imm.showSoftInput(view, 0);
 }
@@ -159,8 +163,8 @@ fun transMap2String(map: Map<*, *>): String {
 fun getVersionName(): String? {
     return try {
         val packageInfo: PackageInfo =
-            BaseApplication.appContext.packageManager.getPackageInfo(
-                BaseApplication.appContext.packageName,
+            initAndroidCommon().packageManager.getPackageInfo(
+                initAndroidCommon().packageName,
                 PackageManager.GET_CONFIGURATIONS
             )
         packageInfo.versionName
@@ -175,10 +179,21 @@ fun getVersionName(): String? {
  */
 var getStatusBarHeight = 0
     get() {
-        val resources = BaseApplication.appContext.resources
+        val resources = initAndroidCommon().resources
         val resourceId = resources?.getIdentifier("status_bar_height", "dimen", "android")
         return resources?.getDimensionPixelSize(resourceId!!)!!
     }
+
+/**
+ * 获取虚拟导航栏(NavigationBar)的高度，可能未显示
+ */
+fun getNavigationBarHeight(context: Context): Int {
+    var result = 0
+    val resources = context.resources
+    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    if (resourceId > 0) result = resources.getDimensionPixelSize(resourceId)
+    return result
+}
 
 /**
  * 判断当前虚拟按键是否显示
@@ -188,7 +203,7 @@ var getStatusBarHeight = 0
  */
 fun showNavigationBar(): Boolean {
     var hasNavigationBar = false
-    val rs: Resources = BaseApplication.appContext.resources
+    val rs: Resources = initAndroidCommon().resources
     val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
     if (id > 0) {
         hasNavigationBar = rs.getBoolean(id)
@@ -201,7 +216,7 @@ fun showNavigationBar(): Boolean {
  */
 var getDensity = 0
     get() {
-        val displayMetrics = BaseApplication.appContext.resources?.displayMetrics
+        val displayMetrics = initAndroidCommon().resources?.displayMetrics
         return displayMetrics?.densityDpi!!
     }
 
@@ -213,7 +228,7 @@ var getDensity = 0
  */
 var screenArray = IntArray(2)
     get() {
-        val outMetrics = BaseApplication.appContext.resources.displayMetrics
+        val outMetrics = initAndroidCommon().resources.displayMetrics
         val iArray = IntArray(2)
         iArray[0] = outMetrics.widthPixels
         iArray[1] = outMetrics.heightPixels
@@ -229,7 +244,7 @@ var screenDpiArray = IntArray(2)
     get() {
         val iArray = IntArray(2)
         val windowManager =
-            BaseApplication.appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            initAndroidCommon().getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = windowManager.defaultDisplay
         val displayMetrics = DisplayMetrics()
         val c: Class<*>
@@ -284,10 +299,10 @@ fun checkNavigationBarShow(): Boolean {
         //判断是否隐藏了底部虚拟导航
         var navigationBarIsMin = 0
         navigationBarIsMin = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Settings.System.getInt(BaseApplication.appContext.contentResolver,
+            Settings.System.getInt(initAndroidCommon().contentResolver,
                 getDeviceInfo(), 0)
         } else {
-            Settings.Global.getInt(BaseApplication.appContext.contentResolver,
+            Settings.Global.getInt(initAndroidCommon().contentResolver,
                 getDeviceInfo(), 0)
         }
         if ("1" == navBarOverride || 1 == navigationBarIsMin) {
@@ -333,7 +348,7 @@ fun getNavigationBarHeight(): Int {
  * @return
  */
 fun isNetConnected(): Boolean {
-    val connectivity = BaseApplication.appContext
+    val connectivity = initAndroidCommon()
         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val info = connectivity.activeNetworkInfo
     if (null != info && info.isConnected) {
@@ -347,7 +362,7 @@ fun isNetConnected(): Boolean {
  */
 fun isWifiConnected(): Boolean {
     val cm =
-        BaseApplication.appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        initAndroidCommon().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
 }
 
@@ -371,7 +386,7 @@ fun openNetSetting(activity: Activity) {
  */
 fun savePreferences(key: String?, value: Any?) {
     val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(BaseApplication.appContext)
+        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
     val editor = sharedPreferences.edit()
     when (value) {
         is String -> editor.putString(key, value as String?)
@@ -393,7 +408,7 @@ fun savePreferences(key: String?, value: Any?) {
 fun getPreferences(key: String?, defaultObject: Any): Any? {
     val type = defaultObject.javaClass.simpleName
     val sp =
-        PreferenceManager.getDefaultSharedPreferences(BaseApplication.appContext)
+        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
     if ("String" == type) {
         return sp.getString(key, defaultObject as String)
     } else if ("Integer" == type) {
@@ -458,7 +473,7 @@ fun String2SceneList(SceneListString: String?): HashMap<String?, Int?> {
  */
 fun clearPreferences() {
     val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(BaseApplication.appContext)
+        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
     val editor = sharedPreferences.edit()
     editor.clear()
     editor.apply()
@@ -798,7 +813,7 @@ fun dip2px(dpValue: Int): Int {
  * dp转px
  */
 fun dip2px(dpValue: Float): Int {
-    val scale = BaseApplication.appContext.resources.displayMetrics.density
+    val scale = initAndroidCommon().resources.displayMetrics.density
     return (dpValue * scale + 0.5f).toInt()
 }
 
@@ -806,7 +821,7 @@ fun dip2px(dpValue: Float): Int {
  * px转dp
  */
 fun px2dip(pxValue: Float): Int {
-    val scale = BaseApplication.appContext.resources.displayMetrics.density
+    val scale = initAndroidCommon().resources.displayMetrics.density
     return (pxValue / scale + 0.5f).toInt()
 }
 
@@ -814,7 +829,7 @@ fun px2dip(pxValue: Float): Int {
  * px转sp
  */
 fun px2sp(spValue: Float): Int {
-    val fontScale = BaseApplication.appContext.resources.displayMetrics.scaledDensity
+    val fontScale = initAndroidCommon().resources.displayMetrics.scaledDensity
     return (spValue / fontScale + 0.5f).toInt()
 }
 
@@ -822,7 +837,7 @@ fun px2sp(spValue: Float): Int {
  * sp转px
  */
 fun sp2px(spValue: Float): Int {
-    val fontScale = BaseApplication.appContext.resources.displayMetrics.scaledDensity
+    val fontScale = initAndroidCommon().resources.displayMetrics.scaledDensity
     return (spValue * fontScale + 0.5f).toInt()
 }
 

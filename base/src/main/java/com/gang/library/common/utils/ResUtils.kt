@@ -35,12 +35,12 @@ import java.io.UnsupportedEncodingException
  * @return
  */
 fun getString(@StringRes id: Int, obj: Array<Any?>): String {
-    val string: String = BaseApplication.appContext.resources.getString(id)
+    val string: String = initAndroidCommon().resources.getString(id)
     return if (obj.isNotEmpty()) String.format(string, *obj) else string
 }
 
 fun getStrings(@ArrayRes id: Int): Array<String> {
-    return BaseApplication.appContext.resources.getStringArray(id)
+    return initAndroidCommon().resources.getStringArray(id)
 }
 
 /**
@@ -178,6 +178,6 @@ fun toRoundBitmap(bitmap: Bitmap): Bitmap {
 
 //全局字体
 val typefaceAll: Typeface by lazy {
-    Typeface.createFromAsset(BaseApplication.appContext.assets,
+    Typeface.createFromAsset(initAndroidCommon().assets,
         Config.typefaceAll)
 }

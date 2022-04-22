@@ -32,7 +32,8 @@
     implementation 'com.apkfuns.logutils:library:1.7.5'
     // logger
     implementation 'com.orhanobut:logger:2.1.1'
-
+    // AndroidUtilCode 强大易用的安卓工具类库
+    implementation 'com.blankj:utilcode:1.13.10'
 
     // BRVAH（强大而灵活的RecyclerView Adapter）
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.36'
@@ -154,12 +155,17 @@
 
     // 图表
     implementation 'org.xclcharts:lib:2.4'
-
+    implementation 'com.github.EnthuDai:SimpleChart-Kotlin:1.0.8'
 
     // LoadingDialog
     implementation 'com.github.ForgetAll:LoadingDialog:v1.1.2'
     // PopupWindow
     implementation 'com.github.zyyoona7:EasyPopup:1.1.2'
+        for AndroidX:
+    implementation 'com.labo.kaji:relativepopupwindow:0.4.1'
+        for legacy Support Library:
+    implementation 'com.labo.kaji:relativepopupwindow:0.3.1'
+
 
     // 多种样式的进度条 – ProgressView
     implementation 'com.white:progressview:latest.release@aar'

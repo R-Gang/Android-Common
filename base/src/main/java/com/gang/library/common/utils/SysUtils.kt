@@ -9,10 +9,9 @@ import android.widget.Toast
 import com.apkfuns.logutils.LogUtils
 import com.gang.library.R
 import com.gang.library.common.user.Config
+import com.gang.library.common.utils.permissions.BasePermissionActivity
 import com.gang.library.common.utils.permissions.PermissionCallBackM
-import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.activity.FileDisplayActivity
-import com.gang.library.ui.activity.WebViewActivity
 import com.uuzuche.lib_zxing.activity.CaptureActivity
 
 /**
@@ -42,7 +41,7 @@ object SysUtils {
 
     //获取CALL_PHONE权限 haoruigang on 2018-4-3 15:29:46
     fun getCallPhone(context: Context, stuPhone: String) {
-        (context as BaseActivity).requestPermission(Config.REQUEST_CALL_PHONE,
+        (context as BasePermissionActivity).requestPermission(Config.REQUEST_CALL_PHONE,
             arrayOf(Manifest.permission.CALL_PHONE),
             context.getString(R.string.rationale_call_phone),
             object : PermissionCallBackM {
@@ -66,7 +65,7 @@ object SysUtils {
 
     //获取CAMERA权限 haoruigang on 2021-11-25 13:50:43
     fun getScanCamere(context: Context) {
-        (context as BaseActivity).requestPermission(Config.REQUEST_CAMERA,
+        (context as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
             arrayOf(Manifest.permission.CAMERA),
             context.getString(R.string.rationale_call_camere),
             object : PermissionCallBackM {
@@ -88,11 +87,14 @@ object SysUtils {
             })
     }
 
-    //获取WRITE_EXTERNAL_STORAGE权限 haoruigang on 2018-4-3 15:29:46
-    fun actionStartX5Web(context: Context, filePath: String, fileName: String) {
+    //获取READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE权限 haoruigang on 2018-4-3 15:29:46
+    fun getRead_Write(context: Context, filePath: String, fileName: String) {
         //动态权限申请
-        (context as BaseActivity).requestPermission(Config.REQUEST_CODE_WRITE,
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        (context as BasePermissionActivity).requestPermission(Config.REQUEST_CODE_READ_WRITE,
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
             context.getString(R.string.rationale_file),
             object : PermissionCallBackM {
                 override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
@@ -105,21 +107,19 @@ object SysUtils {
             })
     }
 
-    //获取WRITE_EXTERNAL_STORAGE权限 haoruigang on 2018-4-3 15:29:46
-    fun actionStartWeb(context: Context, filePath: String, fileName: String) {
+    //获取权限 haoruigang on 2018-4-3 15:29:46
+    fun requestPermission(
+        context: Context,
+        requestCode: Int, permissions: Array<String>, rationale: String?,
+        permissionCallback: PermissionCallBackM?,
+    ) {
         //动态权限申请
-        (context as BaseActivity).requestPermission(Config.REQUEST_CODE_WRITE,
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            context.getString(R.string.rationale_file),
-            object : PermissionCallBackM {
-                override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
-                    WebViewActivity.actionStart(context, filePath, fileName)
-                }
-
-                override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
-                    LogUtils.e("TODO: WRITE_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT)
-                }
-            })
+        (context as BasePermissionActivity).requestPermission(
+            requestCode,
+            permissions,
+            rationale,
+            permissionCallback
+        )
     }
 
 }
