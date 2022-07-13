@@ -14,7 +14,6 @@ import com.gang.library.common.user.Config
 import com.gang.library.common.utils.notch.CutoutUtil
 import com.gang.library.common.utils.notch.callback.CutoutAdapt
 import com.gang.library.common.utils.notch.callback.NotchCallback
-import com.gang.library.common.utils.permissions.BasePermissionFragment
 import com.gang.library.ui.activity.BaseActivity
 import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe
@@ -52,8 +51,10 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        if (!EventBus.isRegistered(this)) {
-            EventBus.register(this) //注册EventBus
+        if (Config.eventBusEnabled) {
+            if (!EventBus.isRegistered(this)) {
+                EventBus.register(this) //注册EventBus
+            }
         }
         if (Config.setContentView) {
             val view = inflater.inflate(layoutId, container, false)
@@ -66,7 +67,9 @@ abstract class BaseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        StatusBarUtil.setTranslucentForImageView(mActivity, 0, null)
+        if (Config.statusBarEnabled) {
+            StatusBarUtil.setTranslucentForImageView(mActivity, 0, null)
+        }
 
         initData()
         initView(view, savedInstanceState)
@@ -143,8 +146,10 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (EventBus.isRegistered(this)) {
-            EventBus.unregister(this) //反注册EventBus
+        if (Config.eventBusEnabled) {
+            if (EventBus.isRegistered(this)) {
+                EventBus.unregister(this) //反注册EventBus
+            }
         }
     }
 
