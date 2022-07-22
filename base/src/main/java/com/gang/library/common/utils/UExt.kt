@@ -27,7 +27,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication
 import com.gang.library.BaseApplication.Companion.TAG
 import com.gang.library.common.user.Config
@@ -64,6 +63,242 @@ import kotlin.experimental.and
 fun initAndroidCommon(content: Context = BaseApplication.appContext): Context {
     return content
 }
+
+
+
+/**
+ * 获取屏幕的密度
+ */
+inline val densityDpi
+    get() = Resources.getSystem().displayMetrics.densityDpi
+
+inline val density
+    get() = Resources.getSystem().displayMetrics.density
+
+/**
+ * 屏幕宽高
+ */
+inline val screenWidth
+    get() = Resources.getSystem().displayMetrics.widthPixels
+
+inline val screenHeight
+    get() = Resources.getSystem().displayMetrics.heightPixels
+
+/**
+ * 获得屏幕宽高
+ * ======
+ * 不包含虚拟按键
+ * @return
+ */
+var screenArray = IntArray(2)
+    get() {
+        val outMetrics = initAndroidCommon().resources.displayMetrics
+        val iArray = IntArray(2)
+        iArray[0] = outMetrics.widthPixels
+        iArray[1] = outMetrics.heightPixels
+        return iArray
+    }
+
+/**
+ * 获取屏幕原始尺寸宽高度
+ * ======
+ * 包括虚拟功能键高度
+ */
+var screenDpiArray = IntArray(2)
+    get() {
+        val iArray = IntArray(2)
+        val windowManager =
+            initAndroidCommon().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val displayMetrics = DisplayMetrics()
+        val c: Class<*>
+        try {
+            c = Class.forName("android.view.Display")
+            val method: Method = c.getMethod("getRealMetrics", DisplayMetrics::class.java)
+            method.invoke(display, displayMetrics)
+            val iArray = IntArray(2)
+            iArray[0] = displayMetrics.widthPixels
+            iArray[1] = displayMetrics.heightPixels
+            return iArray
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return iArray
+    }
+
+/**
+ * 状态栏宽高
+ */
+inline val statusBarWidth
+    get() = Resources.getSystem().getIdentifier("status_bar_width", "dimen", "android").let {
+        Resources.getSystem().getDimensionPixelSize(it)
+    }
+
+inline val statusBarHeight
+    get() = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android").let {
+        var height = Resources.getSystem().getDimensionPixelSize(it)
+        if (height <= 0) {
+            height = try {
+                val clazz = Class.forName("com.android.internal.R\$dimen")
+                val obj = clazz.newInstance()
+                val h = clazz.getField("status_bar_height")[obj].toString().toInt()
+                Resources.getSystem().getDimensionPixelSize(h)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                0
+            }
+        }
+        height
+    }
+
+/**
+ * 获取虚拟导航栏(NavigationBar)的高度，可能未显示
+ */
+fun getNavigationBarHeight(context: Context): Int {
+    var result = 0
+    val resources = context.resources
+    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    if (resourceId > 0) result = resources.getDimensionPixelSize(resourceId)
+    return result
+}
+
+/**
+ * 判断当前虚拟按键是否显示
+ * ===
+ * 大部分手机来说，基本上是可以实现需求
+ * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
+ */
+fun showNavigationBar(): Boolean {
+    var hasNavigationBar = false
+    val rs: Resources = initAndroidCommon().resources
+    val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
+    if (id > 0) {
+        hasNavigationBar = rs.getBoolean(id)
+    }
+    return hasNavigationBar
+}
+
+/**
+ * 判断虚拟导航栏是否显示
+ *
+ * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
+ */
+fun checkNavigationBarShow(): Boolean {
+    var hasNavigationBar = showNavigationBar()
+    try {
+        val systemPropertiesClass = Class.forName("android.os.SystemProperties")
+        val m = systemPropertiesClass.getMethod("get", String::class.java)
+        val navBarOverride = m.invoke(systemPropertiesClass, "qemu.hw.mainkeys") as String
+        //判断是否隐藏了底部虚拟导航
+        var navigationBarIsMin = 0
+        navigationBarIsMin = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Settings.System.getInt(initAndroidCommon().contentResolver,
+                getDeviceInfo(), 0)
+        } else {
+            Settings.Global.getInt(initAndroidCommon().contentResolver,
+                getDeviceInfo(), 0)
+        }
+        if ("1" == navBarOverride || 1 == navigationBarIsMin) {
+            hasNavigationBar = false
+        } else if ("0" == navBarOverride) {
+            hasNavigationBar = true
+        }
+    } catch (e: java.lang.Exception) {
+    }
+    return hasNavigationBar
+}
+
+/**
+ * 底部导航的高度
+ */
+fun getBottomStatusHeight(): Int {
+    val totalHeight = screenDpiArray[1]
+    val contentHeight = screenArray[1]
+    LogUtils.d(TAG, "--显示虚拟导航了--")
+    return totalHeight - contentHeight
+}
+
+/**
+ * 获取虚拟按键的高度
+ *
+ * @param context
+ * @return
+ */
+fun getNavigationBarHeight(): Int {
+    return if (checkNavigationBarShow()) {
+        getBottomStatusHeight()
+    } else {
+        LogUtils.d(TAG, "--没有虚拟导航 或者虚拟导航隐藏--")
+        0
+    }
+}
+
+
+
+/**
+ * 获取设备信息（目前支持几大主流的全面屏手机，亲测华为、小米、oppo、魅族、vivo、三星都可以）
+ *
+ * @return
+ */
+fun getDeviceInfo(): String {
+    val brand = Build.BRAND
+    if (TextUtils.isEmpty(brand)) return "navigationbar_is_min"
+    return if (brand.equals("HUAWEI", ignoreCase = true) || "HONOR" == brand) {
+        "navigationbar_is_min"
+    } else if (brand.equals("XIAOMI", ignoreCase = true)) {
+        "force_fsg_nav_bar"
+    } else if (brand.equals("VIVO", ignoreCase = true)) {
+        "navigation_gesture_on"
+    } else if (brand.equals("OPPO", ignoreCase = true)) {
+        "navigation_gesture_on"
+    } else if (brand.equals("samsung", ignoreCase = true)) {
+        "navigationbar_hide_bar_enabled"
+    } else {
+        "navigationbar_is_min"
+    }
+}
+
+
+
+/**
+ * 判断网络是否连接
+ *
+ * @param context
+ * @return
+ */
+fun isNetConnected(): Boolean {
+    val connectivity = initAndroidCommon()
+        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val info = connectivity.activeNetworkInfo
+    if (null != info && info.isConnected) {
+        return info.state == NetworkInfo.State.CONNECTED
+    }
+    return false
+}
+
+/**
+ * 判断是否是wifi连接
+ */
+fun isWifiConnected(): Boolean {
+    val cm =
+        initAndroidCommon().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return cm.activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
+}
+
+/**
+ * 打开网络设置界面
+ */
+fun openNetSetting(activity: Activity) {
+    val intent = Intent("/")
+    val cm =
+        ComponentName("com.android.settings", "com.android.settings.WirelessSettings")
+    intent.component = cm
+    intent.action = "android.intent.action.VIEW"
+    activity.startActivityForResult(intent, 0)
+}
+
+
+
 
 private var toast: Toast? = null
 
@@ -175,216 +410,12 @@ fun getVersionName(): String? {
 }
 
 /**
- * 状态栏高度
- */
-var getStatusBarHeight = 0
-    get() {
-        val resources = initAndroidCommon().resources
-        val resourceId = resources?.getIdentifier("status_bar_height", "dimen", "android")
-        return resources?.getDimensionPixelSize(resourceId!!)!!
-    }
-
-/**
- * 获取虚拟导航栏(NavigationBar)的高度，可能未显示
- */
-fun getNavigationBarHeight(context: Context): Int {
-    var result = 0
-    val resources = context.resources
-    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    if (resourceId > 0) result = resources.getDimensionPixelSize(resourceId)
-    return result
-}
-
-/**
- * 判断当前虚拟按键是否显示
- * ===
- * 大部分手机来说，基本上是可以实现需求
- * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
- */
-fun showNavigationBar(): Boolean {
-    var hasNavigationBar = false
-    val rs: Resources = initAndroidCommon().resources
-    val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
-    if (id > 0) {
-        hasNavigationBar = rs.getBoolean(id)
-    }
-    return hasNavigationBar
-}
-
-/**
- * 获取屏幕的密度
- */
-var getDensity = 0
-    get() {
-        val displayMetrics = initAndroidCommon().resources?.displayMetrics
-        return displayMetrics?.densityDpi!!
-    }
-
-/**
- * 获得屏幕宽高
- * ======
- * 不包含虚拟按键
- * @return
- */
-var screenArray = IntArray(2)
-    get() {
-        val outMetrics = initAndroidCommon().resources.displayMetrics
-        val iArray = IntArray(2)
-        iArray[0] = outMetrics.widthPixels
-        iArray[1] = outMetrics.heightPixels
-        return iArray
-    }
-
-/**
- * 获取屏幕原始尺寸宽高度
- * ======
- * 包括虚拟功能键高度
- */
-var screenDpiArray = IntArray(2)
-    get() {
-        val iArray = IntArray(2)
-        val windowManager =
-            initAndroidCommon().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val display = windowManager.defaultDisplay
-        val displayMetrics = DisplayMetrics()
-        val c: Class<*>
-        try {
-            c = Class.forName("android.view.Display")
-            val method: Method = c.getMethod("getRealMetrics", DisplayMetrics::class.java)
-            method.invoke(display, displayMetrics)
-            val iArray = IntArray(2)
-            iArray[0] = displayMetrics.widthPixels
-            iArray[1] = displayMetrics.heightPixels
-            return iArray
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-        return iArray
-    }
-
-/**
- * 获取设备信息（目前支持几大主流的全面屏手机，亲测华为、小米、oppo、魅族、vivo、三星都可以）
- *
- * @return
- */
-private fun getDeviceInfo(): String {
-    val brand = Build.BRAND
-    if (TextUtils.isEmpty(brand)) return "navigationbar_is_min"
-    return if (brand.equals("HUAWEI", ignoreCase = true) || "HONOR" == brand) {
-        "navigationbar_is_min"
-    } else if (brand.equals("XIAOMI", ignoreCase = true)) {
-        "force_fsg_nav_bar"
-    } else if (brand.equals("VIVO", ignoreCase = true)) {
-        "navigation_gesture_on"
-    } else if (brand.equals("OPPO", ignoreCase = true)) {
-        "navigation_gesture_on"
-    } else if (brand.equals("samsung", ignoreCase = true)) {
-        "navigationbar_hide_bar_enabled"
-    } else {
-        "navigationbar_is_min"
-    }
-}
-
-/**
- * 判断虚拟导航栏是否显示
- *
- * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
- */
-fun checkNavigationBarShow(): Boolean {
-    var hasNavigationBar = showNavigationBar()
-    try {
-        val systemPropertiesClass = Class.forName("android.os.SystemProperties")
-        val m = systemPropertiesClass.getMethod("get", String::class.java)
-        val navBarOverride = m.invoke(systemPropertiesClass, "qemu.hw.mainkeys") as String
-        //判断是否隐藏了底部虚拟导航
-        var navigationBarIsMin = 0
-        navigationBarIsMin = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Settings.System.getInt(initAndroidCommon().contentResolver,
-                getDeviceInfo(), 0)
-        } else {
-            Settings.Global.getInt(initAndroidCommon().contentResolver,
-                getDeviceInfo(), 0)
-        }
-        if ("1" == navBarOverride || 1 == navigationBarIsMin) {
-            hasNavigationBar = false
-        } else if ("0" == navBarOverride) {
-            hasNavigationBar = true
-        }
-    } catch (e: java.lang.Exception) {
-    }
-    return hasNavigationBar
-}
-
-/**
- * 底部导航的高度
- */
-fun getBottomStatusHeight(): Int {
-    val totalHeight = screenDpiArray[1]
-    val contentHeight = screenArray[1]
-    LogUtil.d(TAG, "--显示虚拟导航了--")
-    return totalHeight - contentHeight
-}
-
-/**
- * 获取虚拟按键的高度
- *
- * @param context
- * @return
- */
-fun getNavigationBarHeight(): Int {
-    return if (checkNavigationBarShow()) {
-        getBottomStatusHeight()
-    } else {
-        LogUtil.d(TAG, "--没有虚拟导航 或者虚拟导航隐藏--")
-        0
-    }
-}
-
-
-/**
- * 判断网络是否连接
- *
- * @param context
- * @return
- */
-fun isNetConnected(): Boolean {
-    val connectivity = initAndroidCommon()
-        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val info = connectivity.activeNetworkInfo
-    if (null != info && info.isConnected) {
-        return info.state == NetworkInfo.State.CONNECTED
-    }
-    return false
-}
-
-/**
- * 判断是否是wifi连接
- */
-fun isWifiConnected(): Boolean {
-    val cm =
-        initAndroidCommon().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return cm.activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
-}
-
-/**
- * 打开网络设置界面
- */
-fun openNetSetting(activity: Activity) {
-    val intent = Intent("/")
-    val cm =
-        ComponentName("com.android.settings", "com.android.settings.WirelessSettings")
-    intent.component = cm
-    intent.action = "android.intent.action.VIEW"
-    activity.startActivityForResult(intent, 0)
-}
-
-/**
  * SharePreference本地存储
  *
  * @param key
  * @param value
  */
-fun savePreferences(key: String?, value: Any?) {
+fun putSpValue(key: String?, value: Any?) {
     val sharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
     val editor = sharedPreferences.edit()
@@ -405,7 +436,7 @@ fun savePreferences(key: String?, value: Any?) {
  * @param defaultObject
  * @return
  */
-fun getPreferences(key: String?, defaultObject: Any): Any? {
+fun getSpValue(key: String?, defaultObject: Any): Any? {
     val type = defaultObject.javaClass.simpleName
     val sp =
         PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
@@ -426,16 +457,16 @@ fun getPreferences(key: String?, defaultObject: Any): Any? {
 /**
  * 存储集合
  */
-fun savePreferenceHashMap(key: String?, hashmap: HashMap<String?, Int?>?) {
+fun putValueHashMap(key: String?, hashmap: HashMap<String?, Int?>?) {
     val liststr = SceneList2String(hashmap)
-    return savePreferences(key, liststr)
+    return putSpValue(key, liststr)
 }
 
 /**
  * 获取集合
  */
-fun getPreferenceHashMap(key: String?): HashMap<String?, Int?>? {
-    return String2SceneList(getPreferences(key, "") as String?)
+fun getSpValueHashMap(key: String?): HashMap<String?, Int?>? {
+    return String2SceneList(getSpValue(key, "") as String?)
 }
 
 @Throws(IOException::class)
@@ -471,7 +502,7 @@ fun String2SceneList(SceneListString: String?): HashMap<String?, Int?> {
 /**
  *  清空本地缓存
  */
-fun clearPreferences() {
+fun clearSpValues() {
     val sharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
     val editor = sharedPreferences.edit()
@@ -604,7 +635,7 @@ fun isPhoneNum(phone: String): Boolean {
         val p = Pattern.compile(regex)
         val m: Matcher = p.matcher(phone)
         val isMatch: Boolean = m.matches()
-        LogUtils.e("isPhone: 是否正则匹配$isMatch")
+        LogUtils.e(TAG, "isPhone: 是否正则匹配$isMatch")
         isMatch
     }
 }

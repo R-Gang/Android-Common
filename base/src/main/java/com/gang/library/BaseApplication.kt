@@ -5,13 +5,11 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
 import androidx.multidex.MultiDexApplication
-import com.apkfuns.logutils.LogUtils
 import com.gang.library.common.user.Config
-import com.lzy.okhttputils.OkHttpUtils
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.tencent.smtt.sdk.QbSdk
 import com.uuzuche.lib_zxing.activity.ZXingLibrary
-import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
 
 
 open class BaseApplication : MultiDexApplication() {
@@ -22,13 +20,11 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     open fun init() { //
-
-        // 初始化Logger 是否开启日志
-        LogUtils.getLogConfig()
-            .configAllowLog(Config.isShowLog)
-            .configTagPrefix(resources.getString(R.string.app_name))
-            .configShowBorders(true)
-            .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")
+        Logger.addLogAdapter(object : AndroidLogAdapter() {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return Config.isShowLog
+            }
+        })
 
     }
 
@@ -73,22 +69,6 @@ open class BaseApplication : MultiDexApplication() {
             //x5内核初始化接口
             QbSdk.initX5Environment(applicationContext, cb)
         }
-    }
-
-    fun initVersionupdate() {
-        // 版本更新
-        if (Config.isOpenVersionUpdate) {
-            // okhttp-utils
-            timeout(20 * 1000).debug("okHttp", true)
-        }
-    }
-
-    fun timeout(timeout: Long): OkHttpUtils {
-        OkHttpClient.Builder()
-            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
-            .readTimeout(timeout, TimeUnit.MILLISECONDS)
-            .writeTimeout(timeout, TimeUnit.MILLISECONDS)
-        return OkHttpUtils.getInstance()
     }
 
     fun initDisplayOpinion() {

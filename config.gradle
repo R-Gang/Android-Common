@@ -4,11 +4,16 @@ ext {
             minSdkVersion         : 26,
             targetSdkVersion      : 29,
 
-            retrofit2ConverterGson: "2.4.0"
+            retrofit2ConverterGson: "2.9.0"
 
     ]
 
     dependencies = [
+
+            "anko-commons"         : "org.jetbrains.anko:anko-commons:$anko_version",
+            "anko-sdk25"           : "org.jetbrains.anko:anko-sdk25:$anko_version",
+            "anko-sdk25-coroutines": "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version",
+
             "retrofit"      : "com.squareup.retrofit2:retrofit:${android["retrofit2ConverterGson"]}",
             "converter-gson": "com.squareup.retrofit2:converter-gson:${android["retrofit2ConverterGson"]}",
             "adapter-rxjava2": "com.squareup.retrofit2:adapter-rxjava2:${android["retrofit2ConverterGson"]}"

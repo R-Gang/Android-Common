@@ -19,7 +19,7 @@
     implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.cardview:cardview:1.0.0@aar'
-    implementation 'com.google.android.material:material:1.1.0@aar' 
+    implementation 'com.google.android.material:material:1.4.0@aar' 
     或
     implementation 'com.android.support:design:28.0.0'
 
@@ -31,7 +31,7 @@
     // 日志工具类
     implementation 'com.apkfuns.logutils:library:1.7.5'
     // logger
-    implementation 'com.orhanobut:logger:2.1.1'
+    implementation 'com.orhanobut:logger:2.2.0'
     // AndroidUtilCode 强大易用的安卓工具类库
     implementation 'com.blankj:utilcode:1.13.10'
 

@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull
 class BaseTitleBar @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
-    defInt: Int = 0
+    defInt: Int = 0,
 ) : FrameLayout(context, attributeSet, defInt) {
     private val mView = View.inflate(context, R.layout.base_title_bar, null)
     private val bgView = mView.findViewById<Toolbar>(R.id.my_toolbar)
@@ -37,6 +37,18 @@ class BaseTitleBar @JvmOverloads constructor(
     private val rightText = mView.findViewById<TextView>(R.id.tv_title_right)
     private val tvTitle = mView.findViewById<TextView>(R.id.tv_title)
     private val vLine = mView.findViewById<View>(R.id.title_line)
+
+    fun getBgView() = bgView
+    fun getLeftView() = leftView
+    fun getLeftIv() = leftIv
+    fun getLeftRoundIv() = leftRoundIv
+    fun getLeftText() = leftText
+    fun getRightView() = rightView
+    fun getRightIv() = rightIv
+    fun getRightRoundIv() = rightRoundIv
+    fun getRightText() = rightText
+    fun getTitle() = tvTitle
+    fun getVLine() = vLine
 
     init {
         val param1 = rightView.layoutParams as RelativeLayout.LayoutParams
@@ -113,22 +125,17 @@ class BaseTitleBar @JvmOverloads constructor(
         vLine.gone()
     }
 
-    fun getRightIv() = rightIv
-
-    fun getTitle() = tvTitle
-
-    fun getRightText() = rightText
-
-    fun setLeftIvScaleType(type: ImageView.ScaleType = ImageView.ScaleType.CENTER_INSIDE) {
+    fun setLeftIvScaleType(type: ImageView.ScaleType = ImageView.ScaleType.CENTER_INSIDE): BaseTitleBar {
         leftIv.scaleType = type
+        return this
     }
 
     fun setRightFinishBtn(
         text: String,
         @ColorRes colorRes: Int = 0,
         @DrawableRes bgResId: Int,
-        textSize: Float
-    ) {
+        textSize: Float,
+    ): BaseTitleBar {
         val param = rightText.layoutParams as RelativeLayout.LayoutParams
         param.rightMargin = dip2px(20f)
         param.height = dip2px(24f)
@@ -141,20 +148,24 @@ class BaseTitleBar @JvmOverloads constructor(
         rightText.gravity = Gravity.CENTER
         rightText.setPadding(dip2px(17f), 0, dip2px(17f), 0)
         rightText.setBackgroundResource(bgResId)
+        return this
     }
 
-    fun setBoldTitle() {
+    fun setBoldTitle(): BaseTitleBar {
         tvTitle.setTypeface(null, Typeface.BOLD)
+        return this
     }
 
-    fun setBoldRightText() {
+    fun setBoldRightText(): BaseTitleBar {
         rightText.setTypeface(null, Typeface.BOLD)
+        return this
     }
 
-    fun setTooBarHeight(height: Float) {
+    fun setTooBarHeight(height: Float): BaseTitleBar {
         val param = bgView.layoutParams as AppBarLayout.LayoutParams
         param.height = dip2px(height)
         bgView.layoutParams = param
+        return this
     }
 
 

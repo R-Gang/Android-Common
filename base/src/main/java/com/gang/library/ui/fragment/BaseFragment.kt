@@ -71,8 +71,8 @@ abstract class BaseFragment : Fragment() {
             StatusBarUtil.setTranslucentForImageView(mActivity, 0, null)
         }
 
+        initView(savedInstanceState)
         initData()
-        initView(view, savedInstanceState)
         onClick()
         Notch()
     }
@@ -127,10 +127,9 @@ abstract class BaseFragment : Fragment() {
     /**
      * 初始化View
      *
-     * @param view
      * @param savedInstanceState
      */
-    abstract fun initView(view: View?, savedInstanceState: Bundle?)
+    abstract fun initView(savedInstanceState: Bundle?)
 
     /**
      * 刘海屏适配

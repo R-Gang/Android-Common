@@ -18,8 +18,6 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import androidx.annotation.NonNull
-import com.apkfuns.logutils.LogUtils
-import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
 import java.io.*
 import java.nio.channels.FileChannel
@@ -469,7 +467,7 @@ object FileUtils {
             bos.close()
             isSave = true
         } catch (e: IOException) {
-            LogUtils.d(e.message)
+            LogUtils.d(TAG, e.message)
             e.printStackTrace()
         }
         return isSave

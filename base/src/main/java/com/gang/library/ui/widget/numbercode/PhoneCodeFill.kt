@@ -1,6 +1,7 @@
 package com.gang.library.ui.widget.numbercode
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -11,10 +12,13 @@ import android.view.View.OnKeyListener
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.gang.library.R
-import com.gang.library.common.utils.*
+import com.gang.library.common.utils.flash
+import com.gang.library.common.utils.gone
+import com.gang.library.common.utils.show
+import com.gang.library.common.utils.showKeyBoard
 import kotlinx.android.synthetic.main.phone_code.view.*
-import java.util.*
 
 /**
  *
@@ -48,14 +52,14 @@ class PhoneCodeFill : RelativeLayout {
     var color_default = R.drawable.rect_c6_f2_solid
     var color_focus = R.drawable.rect_c11_ff58_solid
     var code4Color = R.color.color_f
-    var vLine4Bg = resources.getDrawable(R.drawable.edit_cursor_color3)
+    var vLine4Bg: Drawable?
     var flashDuration = 500
 
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         loadView()
-
+        vLine4Bg = ContextCompat.getDrawable(context, R.drawable.edit_cursor_color3)
         val types = context.obtainStyledAttributes(attrs, R.styleable.PhoneCodeView)
         try {
             // 默认颜色
@@ -67,7 +71,8 @@ class PhoneCodeFill : RelativeLayout {
                     R.drawable.rect_c11_ff58_solid)
             // 第四个颜色
             code4Color =
-                types.getColor(R.styleable.PhoneCodeView_code4_color, R.color.color_f)
+                types.getColor(R.styleable.PhoneCodeView_code4_color,
+                    context.getColor(R.color.color_f))
             // 第四个光标背景
             vLine4Bg = types.getDrawable(R.styleable.PhoneCodeView_vline4_bg)
             // 光标闪烁频率

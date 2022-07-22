@@ -9,8 +9,8 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.apkfuns.logutils.LogUtils
 import com.gang.library.BaseApplication.Companion.appContext
+import com.gang.library.common.utils.LogUtils
 import com.gang.library.common.utils.notch.callback.NotchCallback
 
 /**

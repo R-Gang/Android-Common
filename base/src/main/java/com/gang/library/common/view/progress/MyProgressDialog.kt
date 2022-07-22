@@ -1,4 +1,4 @@
-package com.gang.library.common.http.progress
+package com.gang.kotlin.okhttp.progress
 
 import android.app.Activity
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog
@@ -6,15 +6,11 @@ import com.xiasuhuei321.loadingdialog.view.LoadingDialog
 /**
  *
  * @ProjectName:    gang
- * @Package:        com.gang.app.common.http.callback
+ * @Package:        com.gang.kotlin.okhttp.progress
  * @ClassName:      IHttpCallBack
  * @Description:    全局dialog
  * @Author:         haoruigang
  * @CreateDate:     2020/8/3 15:56
- * @UpdateUser:     更新者：
- * @UpdateDate:     2020/8/3 15:56
- * @UpdateRemark:   更新说明：
- * @Version:        1.0
  */
 class MyProgressDialog : LoadingDialog {
 
@@ -27,7 +23,7 @@ class MyProgressDialog : LoadingDialog {
      * @param isDismiss
      */
     constructor(activity: Activity, isDismiss: Boolean) : super(activity) {
-        MyProgressDialog.isDismiss = isDismiss
+        Companion.isDismiss = isDismiss
         this.activity = activity
         init()
     }

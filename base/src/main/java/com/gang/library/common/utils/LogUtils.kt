@@ -17,7 +17,6 @@ package com.gang.library.common.utils
 
 import android.content.Context
 import android.util.Log
-import com.gang.library.common.utils.LogUtil
 import java.util.*
 
 // TODO: Auto-generated Javadoc
@@ -29,7 +28,7 @@ import java.util.*
  * @version v1.0
  * @date：2017-11-19 11:09:05
  */
-object LogUtil {
+object LogUtils {
     /**
      * debug开关.
      */
@@ -355,7 +354,7 @@ object LogUtil {
         var caller = "<unknown>"
         for (i in 2 until trace.size) {
             val clazz: Class<*> = trace[i].javaClass
-            if (clazz != LogUtil::class.java) {
+            if (clazz != LogUtils::class.java) {
                 var callingClass = trace[i].className
                 callingClass = callingClass.substring(callingClass.lastIndexOf('.') + 1)
                 callingClass = callingClass.substring(callingClass.lastIndexOf('$') + 1)

@@ -6,8 +6,6 @@ import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.apkfuns.logutils.LogUtils
-import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
 import java.io.BufferedReader
 import java.io.IOException

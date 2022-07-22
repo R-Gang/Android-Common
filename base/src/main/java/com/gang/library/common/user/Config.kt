@@ -57,7 +57,7 @@ object Config {
     var OSS_URL = "https://$ossBucket.oss-cn-beijing.aliyuncs.com/"
 
     // 设置全局字体("HYXinRenWenSongW.ttf")
-    var typefaceAll = ""
+    var typefaceAll = "HYXinRenWenSongW.ttf"
 
     // 是否开启设置页面(默认开启)
     var setContentView = true
