@@ -6,24 +6,22 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
 import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
-import com.gang.library.common.http.progress.MyProgressDialog
 import com.gang.library.common.user.UserManager
-import com.gang.library.common.utils.NotifiUtil
+import com.gang.library.common.utils.NotifiUtil.Companion.OpenNotificationSetting
 import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -49,11 +47,19 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         window.setFormat(PixelFormat.TRANSLUCENT)
         dark()
 
+        // 添加底部按钮
+        radioButtons.add(ll_home_btn)
+        radioButtons.add(ll_my_btn)
+
         radioButtons.forEach { it.setOnClickListener(this) }
         setChioceItem(position)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //判断是否需要开启通知栏功能
-            NotifiUtil.OpenNotificationSetting(this, null, "")
+            OpenNotificationSetting(this, null, "")
         }
+
+    }
+
+    override fun initData() {
 
     }
 
@@ -67,12 +73,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         // 此处写界面视图元素下移代码，否则可能会被刘海遮挡
 //        StatusBarUtil.setTransparent(activity);
-    }
-
-    override fun initData() {
-        // 添加底部按钮
-        radioButtons.add(ll_home_btn)
-        radioButtons.add(ll_my_btn)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -148,7 +148,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onEvent(any: Any) {
         (any as ToUIEvent).apply {
             if (tag == ToUIEvent.MESSAGE_EVENT) {
-                LogUtils.e("MainActivity===eventbus 演示")
+                Logger.e("MainActivity===eventbus 演示")
                 showToast(obj.toString())
             }
         }

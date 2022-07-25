@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.activity.PickerActivity">
 
-    <Button
+    <com.gang.library.ui.widget.SquircleImageView
         android:id="@+id/showPickerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="地址选择弹框" />
-
-    <TextView
-        android:id="@+id/userAgreement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_size_5"
-        android:layout_toEndOf="@id/showPickerView"
-        android:gravity="center"
-        android:text="同意用户协议、隐私政策、儿童守护协议和儿童个人信息保护规则"
-        android:textColor="#ff717171"
-        android:textSize="13sp" />
+        android:layout_width="@dimen/margin_size_80"
+        android:layout_height="@dimen/margin_size_80"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/laopo"
+        app:siv_border_color="@color/red"
+        app:siv_border_width="@dimen/margin_size_2" />
 
     <com.gang.library.ui.widget.numbercode.PhoneCodeFill
         android:id="@+id/number_code_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/v_line1"
-        android:layout_marginTop="@dimen/margin_size_62"
+        android:layout_below="@id/showPickerView"
+        android:layout_marginTop="@dimen/margin_size_12"
         android:inputType="number"
-        app:code4_color="@color/color_f"
-        app:vline4_bg="@drawable/edit_cursor_color3"
-        app:flash_duration="200dp"
         android:paddingTop="@dimen/margin_size_10"
         android:paddingBottom="@dimen/margin_size_10"
-        android:text="" />
+        android:text=""
+        app:code4_color="@color/color_f"
+        app:flash_duration="200dp"
+        app:vline4_bg="@drawable/edit_cursor_color3" />
+
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="简单模式,加载默认二维码扫描界面" />
 
 </LinearLayout>

@@ -3,10 +3,10 @@ package com.gang.app.common.user
 import android.app.Activity
 import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
-import com.apkfuns.logutils.LogUtils
+import com.gang.library.common.view.progress.MyProgressDialog
 import com.gang.library.bean.UserEntity
-import com.gang.library.common.http.progress.MyProgressDialog
-import com.gang.library.common.utils.MD5
+import com.gang.library.common.utils.getSpValue
+import com.orhanobut.logger.Logger
 
 /**
  *
@@ -27,34 +27,53 @@ enum class UserManager {
 
     var userData = UserEntity()
 
+    fun isLogin(): Boolean {
+        return userData.user_id.isNotEmpty() && userData.user_token.isNotEmpty()
+    }
+
+    fun isLogin1(): Boolean {
+        return (getSpValue("user_id", "").toString().isNotEmpty()
+                && getSpValue("user_token", "").toString().isNotEmpty())
+    }
+
     private val mPushService = PushServiceFactory.getCloudPushService()
-    open fun xgPush() {
-        val account: String? = MD5(userData.user_id)
+
+    open fun alibabaPush(account: String?, pushAccount: PushAccountCallBack) {
+        // val account: String? = MD5(userData.user_id)
         mPushService.bindAccount(account, object : CommonCallback {
             override fun onSuccess(s: String) {
-                LogUtils.d("AlibabaPush1", s + "推送注册成功，设备token为：" + account)
+                Logger.d("AlibabaPush1\t$s\t推送注册成功，设备token为：$account")
+                pushAccount.onSuccess(s)
             }
 
             override fun onFailed(errorCode: String, errorMsg: String) {
-                LogUtils.d("AlibabaPush1", "推送注册失败，错误码：$errorMsg,错误信息：$errorMsg")
+                Logger.d("AlibabaPush1\t\t推送注册失败，错误码：$errorMsg,错误信息：$errorMsg")
+                pushAccount.onFailed(errorCode, errorMsg)
             }
         })
     }
 
-    open fun xgUnPush(activity: Activity) {
+    open fun alibabaUnPush(activity: Activity, pushAccount: PushAccountCallBack) {
         // 1.获取设备Token
-        val account: String? = MD5(userData.user_id)
         val dialog = MyProgressDialog(activity, true)
         dialog.show()
         mPushService.unbindAccount(object : CommonCallback {
             override fun onSuccess(s: String) {
 //                logout(activity, dialog)
-                LogUtils.d("AlibabaPush2", "推送注销成功$s")
+                Logger.d("AlibabaPush2\t$s\t推送注销成功")
+                pushAccount.onSuccess(s)
             }
 
             override fun onFailed(errorCode: String, errorMsg: String) {
-                LogUtils.d("AlibabaPush2", "推送注销失败 errCode = $errorCode , msg = $errorMsg")
+                Logger.d("AlibabaPush2\t\t推送注销失败 errCode = $errorCode , msg = $errorMsg")
+                pushAccount.onFailed(errorCode, errorMsg)
             }
         })
+    }
+
+    interface PushAccountCallBack {
+        fun onSuccess(s: String)
+
+        fun onFailed(errorCode: String, errorMsg: String)
     }
 }

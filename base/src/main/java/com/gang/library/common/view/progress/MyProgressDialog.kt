@@ -1,4 +1,4 @@
-package com.gang.kotlin.okhttp.progress
+package com.gang.library.common.view.progress
 
 import android.app.Activity
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog

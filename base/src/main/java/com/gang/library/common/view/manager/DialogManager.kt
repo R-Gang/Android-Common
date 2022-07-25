@@ -1,4 +1,4 @@
-package com.gang.library.common.user
+package com.gang.library.common.view.manager
 
 import android.app.AlertDialog
 import android.content.Context

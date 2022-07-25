@@ -1,54 +1,85 @@
 package com.gang.app.ui.activity
 
-import android.graphics.Color
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.text.TextPaint
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import com.gang.app.R
-import com.gang.library.common.utils.ClickableSpans
-import com.gang.library.common.utils.setSpannable
-import com.gang.library.common.utils.showToast
+import com.gang.library.common.user.Config
+import com.gang.library.common.utils.LogUtils
+import com.gang.library.common.utils.SysUtils.getScanCamere
+import com.gang.library.common.utils.permissions.BasePermissionActivity
+import com.gang.library.common.utils.typefaceAll
+import com.gang.library.common.utils.vClick
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
+import com.uuzuche.lib_zxing.activity.CodeUtils
 import kotlinx.android.synthetic.main.activity_picker.*
 
 /**
  * 1.地址选择器底部弹框
  * 2.页面选择器
+ * 3.获取四位验证码
+ * 4.不规则圆角（平滑圆角）
  */
-class PickerActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_picker)
-        initView()
-        showPickerView.setOnClickListener {  }
-    }
+class PickerActivity : BasePermissionActivity() {
 
-    private fun initView() { // 城市弹出选择器
-        setSpannable(userAgreement, 2, 18, object : ClickableSpans {
-            override fun clickable(widget: View) {
-                showToast("点击了用户协议")
-            }
+    override val layoutId: Int
+        get() = R.layout.activity_picker
 
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.color = Color.parseColor("#697CAD")
-            }
-        })
-
+    override fun initView(savedInstanceState: Bundle?) {
         mNumberCodeView = findViewById<View>(R.id.number_code_view) as PhoneCodeFill
-        mNumberCodeView.showSoftInput()
+        mNumberCodeView.showSoftInputFlash()
+        mNumberCodeView.getetCode1()?.typeface = typefaceAll
+        mNumberCodeView.getetCode2()?.typeface = typefaceAll
+        mNumberCodeView.getetCode3()?.typeface = typefaceAll
+        mNumberCodeView.getetCode4()?.typeface = typefaceAll
         mNumberCodeView.setOnInputListener(object : PhoneCodeFill.OnInputListener {
             override fun onSucess(code: String?) {
                 //TODO: 例如底部【下一步】按钮可点击
                 mInputCode = code
+                LogUtils.d("mInputCode", mInputCode)
+
+                mNumberCodeView.clearCode() // 验证码输入错误清空
             }
 
             override fun onInput() {
                 //TODO:例如底部【下一步】按钮不可点击
             }
         })
+
+    }
+
+    override fun initData() {
+
+    }
+
+    override fun onClick() {
+        super.onClick()
+
+        btn_scan.vClick {
+            // 简单模式,加载默认二维码扫描界面
+            getScanCamere(this)
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == Config.REQUEST_CODE_CAMERE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                val bundle = data.extras ?: return
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    val result = bundle.getString(CodeUtils.RESULT_STRING)
+                    Toast.makeText(this, "解析结果:$result", Toast.LENGTH_LONG).show()
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     companion object {
@@ -57,7 +88,6 @@ class PickerActivity : AppCompatActivity() {
         private var cname: String? = null
         private var dname: String? = null
 
-        private var countDownTimer: CountDownTimer? = null
         lateinit var mNumberCodeView: PhoneCodeFill
 
         var phoneNum = ""

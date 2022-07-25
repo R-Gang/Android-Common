@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/userAgreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="同意用户协议、隐私政策、儿童守护协议和儿童个人信息保护规则"
+        android:textColor="#ff717171"
+        android:textSize="13sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userAgreement"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="超链接" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="背景色" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="字体色" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv3"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="36号字体" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv4"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="BIBI" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv5"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="删除线" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv6"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="下划线" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv7"
+        android:transitionName="ivIcon"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:text="图片" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv8"
+        android:layout_marginTop="@dimen/margin_size_15"
+        android:transitionName="tvName"
+        android:text="组合运用啊" />
+
+</RelativeLayout>

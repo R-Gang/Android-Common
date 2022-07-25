@@ -1,4 +1,4 @@
-# kotlin 基础库
+# kotlin 常用类基础库
 
 引入方式：
 
@@ -192,7 +192,7 @@
     // okgo
     implementation 'com.lzy.net:okgo:3.0.4'
     // Gson
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.9'
     // retrofit 引入示例:
     implementation rootProject.ext.dependencies["converter-gson"]
     // Rxjava

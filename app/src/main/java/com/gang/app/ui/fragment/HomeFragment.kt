@@ -4,18 +4,23 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.apkfuns.logutils.LogUtils
 import com.gang.app.R
 import com.gang.app.ui.activity.HttpApiActivity
 import com.gang.app.ui.activity.PickerActivity
+import com.gang.app.ui.activity.SpannableActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
+import com.gang.library.common.utils.px2dip
+import com.gang.library.common.utils.toActivityAnimation
 import com.gang.library.common.view.manager.LayoutManager
 import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
+import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
+import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -32,11 +37,17 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
 
     override val layoutId: Int = R.layout.fragment_home
 
-    override fun initView(view: View?, savedInstanceState: Bundle?) {
+    override fun initView(savedInstanceState: Bundle?) {
 
         // 目前kotlin-android-extensions暂时还不支持跨模块
-        view?.findViewById<RelativeLayout>(R.id.rl_back_button)?.visibility = View.GONE
-        view?.findViewById<TextView>(R.id.tv_title)?.text = resources.getString(R.string.app_name)
+        view?.findViewById<BaseTitleBar>(R.id.myBoolbar)?.apply {
+            goneLeftView()
+            goneLine()
+            setTitle(resources.getString(R.string.app_name), R.color.black)
+            setBoldTitle()
+            getTitle().textSize = px2dip(54f).toFloat()
+            setTooBarHeight(px2dip(125f).toFloat())
+        }
 
         refresh_layout.setRefreshHeader(ClassicsHeader(activity))
         refresh_layout.setOnRefreshListener {
@@ -61,7 +72,7 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         color_wheel.setOnColorChangedListener(object : ColorWheel.OnColorChangedListener {
             override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
 //                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
-                LogUtils.d(Color.argb(a, r, g, b))
+                Logger.d(Color.argb(a, r, g, b))
             }
 
             override fun onColorPick(a: Int, r: Int, g: Int, b: Int) {
@@ -71,7 +82,7 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
                 val hsv = FloatArray(3)
                 Color.colorToHSV(c, hsv)
 
-                LogUtils.d(Color.argb(a, r, g, b))
+                Logger.d(Color.argb(a, r, g, b))
             }
         })
     }
@@ -83,6 +94,20 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
             }
             1 -> {
                 startActivity(Intent(mActivity, PickerActivity::class.java))
+            }
+            2 -> {
+                // 带动画跳转
+                val ivIcon =
+                    android.util.Pair.create(view?.findViewById<ImageView>(R.id.iv_icon) as View,
+                        "ivIcon")
+                val tvName =
+                    android.util.Pair.create(view.findViewById<ImageView>(R.id.tv_name) as View,
+                        "tvName")
+                activity?.toActivityAnimation(Intent(mActivity, SpannableActivity::class.java),
+                    ivIcon,
+                    tvName)
+            }
+            3 -> {
             }
         }
     }

@@ -13,29 +13,6 @@ package com.gang.app.common.user
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-class Constants {
-
-    companion object {
-
-        val BASE_VERSION = "https://gitee.com/ganghan/version-update/raw/master/"
-        var VERSION_PATH = BASE_VERSION + "mrgg_version_update.txt"
-
-        val REQUEST_CODE_WRITE: Int = 9090
-
-        // 是否测试服
-        var isTest = true
-
-        //
-        private val BASE_API =
-            if (isTest) "http://jt.xiakehai.net" else ""
-
-        // 发送手机验证码
-        var SENDVCODE = "$BASE_API/api/system/sendVcode.do"
-
-        // 客户端基本配置
-        val CLIENT_CONFIG = "$BASE_API/api/system/client_config/get.do"
-
-
-    }
+object Constants {
 
 }

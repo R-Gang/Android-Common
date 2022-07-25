@@ -2,8 +2,8 @@ package com.gang.app.common.user
 
 /**
  *
- * @ProjectName:    ChangFenZaiXian
- * @Package:        com.changfenzaixian.app.common.user
+ * @ProjectName:    gang
+ * @Package:        com.gang.app.common.user
  * @ClassName:      ToUIEvent
  * @Description:    通知管理类
  * @Author:         haoruigang

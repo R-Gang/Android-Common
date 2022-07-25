@@ -2,43 +2,61 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gang.app">
 
+    <!-- （Android 11-第三方应用无法拉起适配）qq、微信、微博、支付宝 白名单 -->
+    <!--    <queries>-->
+    <!--        <package android:name="com.tencent.mm" />-->
+    <!--        <package android:name="com.tencent.mobileqq" />-->
+    <!--        <package android:name="com.sina.weibo" />-->
+    <!--        <package android:name="com.eg.android.AlipayGphone" />-->
+    <!--    </queries>-->
+
+    <!--强制使用  小于minSdkVersion值是设置
+    <uses-sdk tools:overrideLibrary="com.gang.library" />-->
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <!-- 解决Android 项目在运行在Android9.0上面的时候  闪退 报错如下-->
+        <!--        <uses-library-->
+        <!--            android:name="org.apache.http.legacy"-->
+        <!--            android:required="false" />-->
+
         <activity android:name=".ui.activity.PickerActivity" />
-        <activity android:name=".ui.activity.UpdateAppActivity" />
         <activity android:name=".ui.activity.HttpApiActivity" />
+        <activity android:name=".ui.activity.SpannableActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- 设备打开默认启动APP
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />-->
+
             </intent-filter>
         </activity>
 
-
-        <!-- 阿里云推送 -->
+        <!-- 阿里云推送 华为厂商通道 -->
         <meta-data
-            android:name="com.alibaba.app.appkey"
-            android:value="appkey" />
-        <meta-data
-            android:name="com.alibaba.app.appsecret"
-            android:value="appsecret" />
-
+            android:name="com.huawei.hms.client.appid"
+            android:value="${HwAppid}" />
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
             android:name=".data.MyMessageReceiver"
-            android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
+            android:exported="false">
+            <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
             <intent-filter>
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
             </intent-filter>

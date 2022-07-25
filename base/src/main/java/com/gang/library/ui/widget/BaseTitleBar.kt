@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -162,7 +163,7 @@ class BaseTitleBar @JvmOverloads constructor(
     }
 
     fun setTooBarHeight(height: Float): BaseTitleBar {
-        val param = bgView.layoutParams as AppBarLayout.LayoutParams
+        val param = bgView.layoutParams as ViewGroup.LayoutParams
         param.height = dip2px(height)
         bgView.layoutParams = param
         return this

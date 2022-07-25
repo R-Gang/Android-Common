@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/transparent20</item>
         <item name="colorAccent">@color/col_02</item>
+        <!--允许内容过度 toActivityAnimation 需要-->
+        <item name="android:windowContentTransitions">true</item>
+        <!--全局禁用掉系统Activity切换的动画 使用自定义动画是打开-->
+        <!--<item name="android:windowAnimationStyle">@style/notAnimation</item>-->
+        <!--底部虚拟按键背景颜色-->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

@@ -1,25 +1,32 @@
 package com.gang.app
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Log
-import anet.channel.util.Utils
+import androidx.core.content.ContextCompat
+import com.alibaba.sdk.android.push.CloudPushService
 import com.alibaba.sdk.android.push.CommonCallback
+import com.alibaba.sdk.android.push.huawei.HuaWeiRegister
+import com.alibaba.sdk.android.push.noonesdk.PushInitConfig
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
+import com.alibaba.sdk.android.push.register.MiPushRegister
 import com.gang.app.common.user.Configs
 import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
-import com.lzy.okgo.OkGo
+import com.gang.library.common.utils.LogUtils
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
-import com.zhy.http.okhttp.OkHttpUtils
 
 
 class MyApplication : BaseApplication() {
@@ -37,24 +44,25 @@ class MyApplication : BaseApplication() {
         Config.ENDPOINT = "http://oss-cn-beijing.aliyuncs.com/"
         Config.OSS_URL = "https://$ossBucket.oss-cn-beijing.aliyuncs.com/"
 
+        // 设置全局字体("HYXinRenWenSongW.ttf")
+        Config.typefaceAll = "HYXinRenWenSongW.ttf"
+
+        // 是否开启全局页面管理(默认开启)
+        Config.activityEnabled = true
+        // 开启版本更新功能(默认关闭)
+        Config.isOpenVersionUpdate = false
+
         super.onCreate()
 
         init()
     }
 
-    private fun init() {
+    override fun init() {
+        super.init()
 
         struct()
-
-        // 版本更新
-        if (Configs.isOpenVersionUpdate) {
-            // okhttp-utils
-            OkHttpUtils.getInstance()
-                .init(this)
-                .debug(true, "okHttp")
-                .timeout(20 * 1000)
-            OkGo.getInstance().init(this)
-        }
+        preinitX5WebCore()//预加载x5内核
+        initDisplayOpinion()//初始化ZXing扫描
 
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
@@ -93,8 +101,14 @@ class MyApplication : BaseApplication() {
     private fun initCloudChannel(applicationContext: Context) {
         // 创建notificaiton channel
         createNotificationChannel()
-        PushServiceFactory.init(applicationContext)
+        val config = PushInitConfig.Builder()
+            .application(this)
+//            .appKey("阿里云appkey")
+//            .appSecret("阿里云appSecret")
+            .build()
+        PushServiceFactory.init(config)
         val pushService = PushServiceFactory.getCloudPushService()
+        pushService.setLogLevel(if (Config.isShowLog) CloudPushService.LOG_DEBUG else CloudPushService.LOG_OFF);
         pushService.register(applicationContext, object : CommonCallback {
             override fun onSuccess(response: String) {
                 Log.i(TAG, "init cloudchannel success")
@@ -107,6 +121,26 @@ class MyApplication : BaseApplication() {
                 )
             }
         })
+
+        // 默认使用广播的方式接收推送，设置之后会改为使用服务接收推送
+        // pushService.setPushIntentService(MyMessageIntentService::class.java)
+
+        // 设置图标可忽略
+        val drawable: Drawable? = ContextCompat.getDrawable(appContext, R.mipmap.laopo)
+        if (drawable != null) {
+            val bitmap = (drawable as BitmapDrawable).bitmap
+            // 设置通知栏图标
+            pushService.setNotificationLargeIcon(bitmap)
+            // 设置状态栏图标
+            pushService.setNotificationSmallIcon(R.mipmap.laopo);
+            LogUtils.i(TAG, "Set notification largeIcon res id to R.mipmap.icon_app_logo")
+        }
+
+//        // 注册方法会自动判断是否支持小米系统推送，如不支持会跳过注册。
+        MiPushRegister.register(appContext, "小米AppId", "小米AppKey")
+//        // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
+        HuaWeiRegister.register(appContext as Application?)
+
     }
 
 
@@ -114,12 +148,12 @@ class MyApplication : BaseApplication() {
 
         fun createNotificationChannel(): NotificationManager {
             val mNotificationManager =
-                Utils.getAppContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                appContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 // 通知渠道的id
-                val id: String = Utils.getAppContext().getPackageName()
+                val id = "1" //默认1,可设置(1-100)
                 // 用户可以看到的通知渠道的名字.
-                val name: CharSequence = Utils.getAppContext().getString(R.string.app_name)
+                val name: CharSequence = appContext.getString(R.string.app_name)
                 // 用户可以看到的通知渠道的描述
                 val description = "notification description"
                 val importance = NotificationManager.IMPORTANCE_HIGH

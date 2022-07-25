@@ -17,7 +17,7 @@ class ItemFragment : BaseFragment() {
     override val layoutId: Int
         get() = R.layout.fragment_item_list
 
-    override fun initView(view: View?, savedInstanceState: Bundle?) {
+    override fun initView(savedInstanceState: Bundle?) {
     }
 
     override fun initData() {
