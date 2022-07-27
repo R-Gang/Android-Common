@@ -49,8 +49,6 @@ class MyApplication : BaseApplication() {
 
         // 是否开启全局页面管理(默认开启)
         Config.activityEnabled = true
-        // 开启版本更新功能(默认关闭)
-        Config.isOpenVersionUpdate = false
 
         super.onCreate()
 

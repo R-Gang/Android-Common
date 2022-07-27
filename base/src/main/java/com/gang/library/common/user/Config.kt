@@ -67,10 +67,6 @@ object Config {
     var statusBarEnabled = true
     // 是否开启EventBus(默认关闭)
     var eventBusEnabled = false
-    // 是否开启Glide(默认关闭)
-    var glideEnabled = false
-    // 开启版本更新功能
-    var isOpenVersionUpdate = false
     // 使用腾讯浏览器X5内核
     var isOpenTBSX5QbSdk = false
 }

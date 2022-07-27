@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.util.Util
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
 import com.gang.library.common.EventBus
@@ -233,11 +231,6 @@ abstract class BaseActivity : AppCompatActivity() {
         if (Config.eventBusEnabled) {
             if (EventBus.isRegistered(this)) {
                 EventBus.unregister(this) //反注册EventBus
-            }
-        }
-        if (Config.glideEnabled) {
-            if (Util.isOnMainThread() && !this.isFinishing) {
-                Glide.with(applicationContext).pauseRequests()
             }
         }
     }

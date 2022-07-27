@@ -202,9 +202,11 @@
     implementation 'zlc.season:rxdownload3:1.2.7'
 
 
-    // 版本更新
+    // 版本更新 java方式引用
     implementation 'com.qianwen:update-app:3.5.2'
-    // 版本更新用的okhttp-utils,okgo
+    // 版本更新 kotlin方式引用
+    implementation 'com.qianwen:update-app-kotlin:1.2.3'
+    // 版本更新用的okhttp-utils
     // implementation 'com.qianwen:okhttp-utils:3.8.0'
 
 
