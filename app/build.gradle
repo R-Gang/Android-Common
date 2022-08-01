@@ -136,6 +136,6 @@ dependencies {
     // 小米依赖
     implementation 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.6.0'
 
-//    implementation 'com.github.R-Gang:Android-Common:v0.1.6-beta.4@aar'
+//    implementation 'com.github.R-Gang:Android-Common:v0.1.6-beta.6@aar'
     implementation project(path: ':base')
 }

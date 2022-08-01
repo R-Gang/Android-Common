@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--加载框-->
-    <declare-styleable name="LoadingFrameView">
-        <attr name="fv_emptyIcon" format="reference" />
-        <attr name="fv_emptyInfo" format="string" />
-        <attr name="fv_noIcon" format="reference" />
-        <attr name="fv_noInfo" format="string" />
-        <attr name="fv_repeatIcon" format="reference" />
-        <attr name="fv_repeatInfo" format="string" />
-        <attr name="fv_repeatBt" format="string" />
-    </declare-styleable>
-
-    <!--LoadingDialog-->
-    <attr name="speed">
-        <enum name="speedOne" value="1" />
-        <enum name="speedTwo" value="2" />
-    </attr>
-    <attr name="strokeColor" format="color" />
-    <declare-styleable name="RightDiaView">
-        <attr name="strokeColor" />
-        <attr name="speed" />
-    </declare-styleable>
-    <declare-styleable name="WrongDiaView">
-        <attr name="strokeColor" />
-        <attr name="speed" />
-    </declare-styleable>
-
     <!--着色器-->
     <declare-styleable name="ColorWheel">
         <!-- 背景圆的半径 -->
