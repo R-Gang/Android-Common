@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_size_5"
-        android:src="@mipmap/icon_empty" />
+        android:src="@drawable/rect_c6_f2_solid" />
 
     <TextView
         android:id="@+id/text"

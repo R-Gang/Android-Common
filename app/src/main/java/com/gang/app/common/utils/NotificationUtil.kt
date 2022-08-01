@@ -30,9 +30,10 @@ class NotificationUtil {
          * 接受到对应消息后，消息的弹出处理
          */
         public fun buildNotification(context: Context?, message: CPushMessage) {
-            val notificationManager: NotificationManager = MyApplication.instance.createNotificationChannel()
+            val notificationManager: NotificationManager =
+                MyApplication.instance.createNotificationChannel()
             val remoteViews = RemoteViews(context?.packageName, R.layout.custom_notification)
-            remoteViews.setImageViewResource(R.id.m_icon, R.mipmap.icon_empty)
+            remoteViews.setImageViewResource(R.id.m_icon, R.mipmap.laopo)
             remoteViews.setTextViewText(R.id.m_title, message.getTitle())
             remoteViews.setTextViewText(R.id.m_text, message.getContent())
             remoteViews.setTextViewText(R.id.text, SimpleDateFormat("HH:mm").format(Date()))
@@ -62,7 +63,7 @@ class NotificationUtil {
             builder.setContent(remoteViews)
                 .setContentTitle(message.getTitle())
                 .setContentText(message.getContent())
-                .setSmallIcon(R.mipmap.icon_empty)
+                .setSmallIcon(R.mipmap.laopo)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
