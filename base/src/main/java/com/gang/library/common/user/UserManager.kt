@@ -3,9 +3,9 @@ package com.gang.library.common.user
 import android.app.Activity
 import android.view.View
 import com.gang.library.bean.UserEntity
-import com.gang.library.common.utils.getSpValue
-import com.gang.library.common.utils.putSpValue
+import com.gang.library.common.store.getSpValue
 import com.gang.library.ui.interfaces.Setter
+import com.gang.library.common.store.putSpValue
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.util.*

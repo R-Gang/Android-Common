@@ -3,9 +3,8 @@ package com.gang.app.common.user
 import android.app.Activity
 import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
-import com.gang.library.common.view.progress.MyProgressDialog
 import com.gang.library.bean.UserEntity
-import com.gang.library.common.utils.getSpValue
+import com.gang.library.common.store.getSpValue
 import com.orhanobut.logger.Logger
 
 /**
@@ -55,8 +54,8 @@ enum class UserManager {
 
     open fun alibabaUnPush(activity: Activity, pushAccount: PushAccountCallBack) {
         // 1.获取设备Token
-        val dialog = MyProgressDialog(activity, true)
-        dialog.show()
+//        val dialog = MyProgressDialog(activity, true)
+//        dialog.show()
         mPushService.unbindAccount(object : CommonCallback {
             override fun onSuccess(s: String) {
 //                logout(activity, dialog)

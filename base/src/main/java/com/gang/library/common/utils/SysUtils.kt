@@ -9,9 +9,9 @@ import android.net.Uri
 import com.gang.library.BaseApplication.Companion.TAG
 import com.gang.library.R
 import com.gang.library.common.user.Config
-import com.gang.library.common.utils.permissions.BasePermissionActivity
-import com.gang.library.common.utils.permissions.BasePermissionFragment
-import com.gang.library.common.utils.permissions.PermissionCallBackM
+import com.gang.library.common.ext.permissions.BasePermissionActivity
+import com.gang.library.common.ext.permissions.BasePermissionFragment
+import com.gang.library.common.ext.permissions.PermissionCallBackM
 import com.gang.library.ui.activity.FileDisplayActivity
 import com.uuzuche.lib_zxing.activity.CaptureActivity
 

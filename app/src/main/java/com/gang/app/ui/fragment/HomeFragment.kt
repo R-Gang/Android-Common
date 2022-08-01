@@ -5,21 +5,21 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
 import com.gang.app.R
 import com.gang.app.ui.activity.HttpApiActivity
 import com.gang.app.ui.activity.PickerActivity
 import com.gang.app.ui.activity.SpannableActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
-import com.gang.library.common.utils.px2dip
 import com.gang.library.common.utils.toActivityAnimation
 import com.gang.library.common.view.manager.LayoutManager
 import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
 import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
+import com.library.kotlin.dimension.dp
+import com.library.kotlin.dimension.px2dip
+import com.library.kotlin.dimension.statusBarHeight
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -43,10 +43,10 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         view?.findViewById<BaseTitleBar>(R.id.myBoolbar)?.apply {
             goneLeftView()
             goneLine()
-            setTitle(resources.getString(R.string.app_name), R.color.black)
+            setTitle(resources.getString(R.string.app_title), R.color.black)
             setBoldTitle()
-            getTitle().textSize = px2dip(54f).toFloat()
-            setTooBarHeight(px2dip(125f).toFloat())
+            getTitle().textSize = px2dip(54f)
+            setLLEmtity(statusBarHeight.toFloat())
         }
 
         refresh_layout.setRefreshHeader(ClassicsHeader(activity))

@@ -30,7 +30,7 @@ class NotificationUtil {
          * 接受到对应消息后，消息的弹出处理
          */
         public fun buildNotification(context: Context?, message: CPushMessage) {
-            val notificationManager: NotificationManager = MyApplication.createNotificationChannel()
+            val notificationManager: NotificationManager = MyApplication.instance.createNotificationChannel()
             val remoteViews = RemoteViews(context?.packageName, R.layout.custom_notification)
             remoteViews.setImageViewResource(R.id.m_icon, R.mipmap.icon_empty)
             remoteViews.setTextViewText(R.id.m_title, message.getTitle())

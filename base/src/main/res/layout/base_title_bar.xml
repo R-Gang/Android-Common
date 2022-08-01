@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,98 +15,91 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_height="wrap_content">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ll_emtity"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_size_20"
             android:visibility="gone" />
 
         <RelativeLayout
-            android:id="@+id/rl_back_button"
-            android:layout_width="@dimen/margin_size_45"
-            android:layout_height="@dimen/margin_size_45"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ll_emtity"
-            android:gravity="center">
+            android:layout_gravity="bottom">
 
-            <ImageView
-                android:id="@+id/iv_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/arrow_left_black"
-                android:scaleType="centerCrop" />
+            <RelativeLayout
+                android:id="@+id/rl_back_button"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_title_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_size_15" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/arrow_left_black" />
+
+                <TextView
+                    android:id="@+id/tv_title_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/col_02"
+                    android:textSize="@dimen/text_size_18"
+                    tools:text="取消" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_next_button"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/arrow_right_black" />
+
+                <TextView
+                    android:id="@+id/tv_title_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/col_02"
+                    android:textSize="@dimen/text_size_18"
+                    tools:text="完成" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_title_left"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
+                android:layout_height="@dimen/margin_size_45"
+                android:ellipsize="end"
                 android:gravity="center"
-                android:text="取消"
-                android:textColor="@color/col_02"
-                android:textSize="@dimen/text_size_18"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_next_button"
-            android:layout_width="@dimen/margin_size_45"
-            android:layout_height="@dimen/margin_size_45"
-            android:layout_below="@+id/ll_emtity"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/iv_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:scaleType="centerInside" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_title_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_size_15" />
-
-            <TextView
-                android:id="@+id/tv_title_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:textColor="@color/col_02"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/color_3"
                 android:textSize="@dimen/text_size_18" />
+
+            <View
+                android:id="@+id/title_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tv_title"
+                android:background="@color/color_f6" />
+
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_size_45"
-            android:layout_below="@+id/ll_emtity"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text=""
-            android:textColor="@color/color_3"
-            android:textSize="@dimen/text_size_18" />
-
-        <View
-            android:id="@+id/title_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/tv_title"
-            android:background="@color/color_f6" />
     </RelativeLayout>
+
 </androidx.appcompat.widget.Toolbar>

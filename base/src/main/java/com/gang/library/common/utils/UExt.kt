@@ -13,13 +13,11 @@ import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Build
-import android.preference.PreferenceManager
 import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.*
-import android.util.Base64
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -47,218 +45,15 @@ import kotlin.experimental.and
 
 
 /**
- *
- * @ProjectName:    gang
- * @Package:        com.gang.app.common.utils
  * @ClassName:      U
  * @Description:     java类作用描述
  * @Author:         haoruigang
  * @CreateDate:     2020/8/3 17:30
- * @UpdateUser:     更新者：
- * @UpdateDate:     2020/8/3 17:30
- * @UpdateRemark:   更新说明：
- * @Version:        1.0
  */
 
 fun initAndroidCommon(content: Context = BaseApplication.appContext): Context {
     return content
 }
-
-
-
-/**
- * 获取屏幕的密度
- */
-inline val densityDpi
-    get() = Resources.getSystem().displayMetrics.densityDpi
-
-inline val density
-    get() = Resources.getSystem().displayMetrics.density
-
-/**
- * 屏幕宽高
- */
-inline val screenWidth
-    get() = Resources.getSystem().displayMetrics.widthPixels
-
-inline val screenHeight
-    get() = Resources.getSystem().displayMetrics.heightPixels
-
-/**
- * 获得屏幕宽高
- * ======
- * 不包含虚拟按键
- * @return
- */
-var screenArray = IntArray(2)
-    get() {
-        val outMetrics = initAndroidCommon().resources.displayMetrics
-        val iArray = IntArray(2)
-        iArray[0] = outMetrics.widthPixels
-        iArray[1] = outMetrics.heightPixels
-        return iArray
-    }
-
-/**
- * 获取屏幕原始尺寸宽高度
- * ======
- * 包括虚拟功能键高度
- */
-var screenDpiArray = IntArray(2)
-    get() {
-        val iArray = IntArray(2)
-        val windowManager =
-            initAndroidCommon().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val display = windowManager.defaultDisplay
-        val displayMetrics = DisplayMetrics()
-        val c: Class<*>
-        try {
-            c = Class.forName("android.view.Display")
-            val method: Method = c.getMethod("getRealMetrics", DisplayMetrics::class.java)
-            method.invoke(display, displayMetrics)
-            val iArray = IntArray(2)
-            iArray[0] = displayMetrics.widthPixels
-            iArray[1] = displayMetrics.heightPixels
-            return iArray
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-        return iArray
-    }
-
-/**
- * 状态栏宽高
- */
-inline val statusBarWidth
-    get() = Resources.getSystem().getIdentifier("status_bar_width", "dimen", "android").let {
-        Resources.getSystem().getDimensionPixelSize(it)
-    }
-
-inline val statusBarHeight
-    get() = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android").let {
-        var height = Resources.getSystem().getDimensionPixelSize(it)
-        if (height <= 0) {
-            height = try {
-                val clazz = Class.forName("com.android.internal.R\$dimen")
-                val obj = clazz.newInstance()
-                val h = clazz.getField("status_bar_height")[obj].toString().toInt()
-                Resources.getSystem().getDimensionPixelSize(h)
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-                0
-            }
-        }
-        height
-    }
-
-/**
- * 获取虚拟导航栏(NavigationBar)的高度，可能未显示
- */
-fun getNavigationBarHeight(context: Context): Int {
-    var result = 0
-    val resources = context.resources
-    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    if (resourceId > 0) result = resources.getDimensionPixelSize(resourceId)
-    return result
-}
-
-/**
- * 判断当前虚拟按键是否显示
- * ===
- * 大部分手机来说，基本上是可以实现需求
- * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
- */
-fun showNavigationBar(): Boolean {
-    var hasNavigationBar = false
-    val rs: Resources = initAndroidCommon().resources
-    val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
-    if (id > 0) {
-        hasNavigationBar = rs.getBoolean(id)
-    }
-    return hasNavigationBar
-}
-
-/**
- * 判断虚拟导航栏是否显示
- *
- * @return true(显示虚拟导航栏)，false(不显示或不支持虚拟导航栏)
- */
-fun checkNavigationBarShow(): Boolean {
-    var hasNavigationBar = showNavigationBar()
-    try {
-        val systemPropertiesClass = Class.forName("android.os.SystemProperties")
-        val m = systemPropertiesClass.getMethod("get", String::class.java)
-        val navBarOverride = m.invoke(systemPropertiesClass, "qemu.hw.mainkeys") as String
-        //判断是否隐藏了底部虚拟导航
-        var navigationBarIsMin = 0
-        navigationBarIsMin = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Settings.System.getInt(initAndroidCommon().contentResolver,
-                getDeviceInfo(), 0)
-        } else {
-            Settings.Global.getInt(initAndroidCommon().contentResolver,
-                getDeviceInfo(), 0)
-        }
-        if ("1" == navBarOverride || 1 == navigationBarIsMin) {
-            hasNavigationBar = false
-        } else if ("0" == navBarOverride) {
-            hasNavigationBar = true
-        }
-    } catch (e: java.lang.Exception) {
-    }
-    return hasNavigationBar
-}
-
-/**
- * 底部导航的高度
- */
-fun getBottomStatusHeight(): Int {
-    val totalHeight = screenDpiArray[1]
-    val contentHeight = screenArray[1]
-    LogUtils.d(TAG, "--显示虚拟导航了--")
-    return totalHeight - contentHeight
-}
-
-/**
- * 获取虚拟按键的高度
- *
- * @param context
- * @return
- */
-fun getNavigationBarHeight(): Int {
-    return if (checkNavigationBarShow()) {
-        getBottomStatusHeight()
-    } else {
-        LogUtils.d(TAG, "--没有虚拟导航 或者虚拟导航隐藏--")
-        0
-    }
-}
-
-
-
-/**
- * 获取设备信息（目前支持几大主流的全面屏手机，亲测华为、小米、oppo、魅族、vivo、三星都可以）
- *
- * @return
- */
-fun getDeviceInfo(): String {
-    val brand = Build.BRAND
-    if (TextUtils.isEmpty(brand)) return "navigationbar_is_min"
-    return if (brand.equals("HUAWEI", ignoreCase = true) || "HONOR" == brand) {
-        "navigationbar_is_min"
-    } else if (brand.equals("XIAOMI", ignoreCase = true)) {
-        "force_fsg_nav_bar"
-    } else if (brand.equals("VIVO", ignoreCase = true)) {
-        "navigation_gesture_on"
-    } else if (brand.equals("OPPO", ignoreCase = true)) {
-        "navigation_gesture_on"
-    } else if (brand.equals("samsung", ignoreCase = true)) {
-        "navigationbar_hide_bar_enabled"
-    } else {
-        "navigationbar_is_min"
-    }
-}
-
-
 
 /**
  * 判断网络是否连接
@@ -296,8 +91,6 @@ fun openNetSetting(activity: Activity) {
     intent.action = "android.intent.action.VIEW"
     activity.startActivityForResult(intent, 0)
 }
-
-
 
 
 private var toast: Toast? = null
@@ -407,107 +200,6 @@ fun getVersionName(): String? {
         e.printStackTrace()
         "unknown version"
     }
-}
-
-/**
- * SharePreference本地存储
- *
- * @param key
- * @param value
- */
-fun putSpValue(key: String?, value: Any?) {
-    val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
-    val editor = sharedPreferences.edit()
-    when (value) {
-        is String -> editor.putString(key, value as String?)
-        is Int -> editor.putInt(key, (value as Int?)!!)
-        is Long -> editor.putLong(key, (value as Long?)!!)
-        is Float -> editor.putFloat(key, (value as Float?)!!)
-        is Boolean -> editor.putBoolean(key, (value as Boolean?)!!)
-    }
-    editor.apply()
-}
-
-/**
- * 根据key和默认值的数据类型，获取SharePreference中所存值
- *
- * @param key
- * @param defaultObject
- * @return
- */
-fun getSpValue(key: String?, defaultObject: Any): Any? {
-    val type = defaultObject.javaClass.simpleName
-    val sp =
-        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
-    if ("String" == type) {
-        return sp.getString(key, defaultObject as String)
-    } else if ("Integer" == type) {
-        return sp.getInt(key, (defaultObject as Int))
-    } else if ("Boolean" == type) {
-        return sp.getBoolean(key, (defaultObject as Boolean))
-    } else if ("Float" == type) {
-        return sp.getFloat(key, (defaultObject as Float))
-    } else if ("Long" == type) {
-        return sp.getLong(key, (defaultObject as Long))
-    }
-    return null
-}
-
-/**
- * 存储集合
- */
-fun putValueHashMap(key: String?, hashmap: HashMap<String?, Int?>?) {
-    val liststr = SceneList2String(hashmap)
-    return putSpValue(key, liststr)
-}
-
-/**
- * 获取集合
- */
-fun getSpValueHashMap(key: String?): HashMap<String?, Int?>? {
-    return String2SceneList(getSpValue(key, "") as String?)
-}
-
-@Throws(IOException::class)
-fun SceneList2String(hashmap: HashMap<String?, Int?>?): String? {
-    // 实例化一个ByteArrayOutputStream对象，用来装载压缩后的字节文件。
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    // 然后将得到的字符数据装载到ObjectOutputStream
-    val objectOutputStream = ObjectOutputStream(
-        byteArrayOutputStream)
-    // writeObject 方法负责写入特定类的对象的状态，以便相应的 readObject 方法可以还原它
-    objectOutputStream.writeObject(hashmap)
-    // 最后，用Base64.encode将字节文件转换成Base64编码保存在String中
-    val SceneListString = String(Base64.encode(
-        byteArrayOutputStream.toByteArray(), Base64.DEFAULT))
-    // 关闭objectOutputStream
-    objectOutputStream.close()
-    return SceneListString
-}
-
-@Throws(StreamCorruptedException::class, IOException::class, ClassNotFoundException::class)
-fun String2SceneList(SceneListString: String?): HashMap<String?, Int?> {
-    val mobileBytes = Base64.decode(SceneListString!!.toByteArray(), Base64.DEFAULT)
-    val byteArrayInputStream = ByteArrayInputStream(
-        mobileBytes)
-    val objectInputStream = ObjectInputStream(
-        byteArrayInputStream)
-    val SceneList = objectInputStream
-        .readObject() as HashMap<String?, Int?>
-    objectInputStream.close()
-    return SceneList
-}
-
-/**
- *  清空本地缓存
- */
-fun clearSpValues() {
-    val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
-    val editor = sharedPreferences.edit()
-    editor.clear()
-    editor.apply()
 }
 
 /**
@@ -834,51 +526,12 @@ fun getReplaceTrim(s: String): String {
 }
 
 /**
- * dp转px
- */
-fun dip2px(dpValue: Int): Int {
-    return dip2px(dpValue.toFloat())
-}
-
-/**
- * dp转px
- */
-fun dip2px(dpValue: Float): Int {
-    val scale = initAndroidCommon().resources.displayMetrics.density
-    return (dpValue * scale + 0.5f).toInt()
-}
-
-/**
- * px转dp
- */
-fun px2dip(pxValue: Float): Int {
-    val scale = initAndroidCommon().resources.displayMetrics.density
-    return (pxValue / scale + 0.5f).toInt()
-}
-
-/**
- * px转sp
- */
-fun px2sp(spValue: Float): Int {
-    val fontScale = initAndroidCommon().resources.displayMetrics.scaledDensity
-    return (spValue / fontScale + 0.5f).toInt()
-}
-
-/**
- * sp转px
- */
-fun sp2px(spValue: Float): Int {
-    val fontScale = initAndroidCommon().resources.displayMetrics.scaledDensity
-    return (spValue * fontScale + 0.5f).toInt()
-}
-
-/**
  * 字符串（含中文）转16进制
  *
  * @param str
  * @return
  */
-fun SendS(str: String): ByteArray {
+fun string2byte(str: String): ByteArray {
     var ok = ByteArray(0)
     try {
         ok = str.toByteArray(charset("UTF-8"))
@@ -894,8 +547,8 @@ fun SendS(str: String): ByteArray {
  * @param bytes
  * @return
  */
-fun getString(bytes: ByteArray?): String {
-    return String(bytes!!, Charset.forName("UTF-8"))
+fun bety2string(bytes: ByteArray): String {
+    return String(bytes, Charset.forName("UTF-8"))
 }
 
 /**

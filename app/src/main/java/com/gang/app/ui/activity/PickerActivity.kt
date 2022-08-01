@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.gang.app.R
+import com.gang.library.common.ext.permissions.BasePermissionActivity
 import com.gang.library.common.user.Config
 import com.gang.library.common.utils.LogUtils
 import com.gang.library.common.utils.SysUtils.getScanCamere
-import com.gang.library.common.utils.permissions.BasePermissionActivity
 import com.gang.library.common.utils.typefaceAll
 import com.gang.library.common.utils.vClick
+import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
+import com.library.kotlin.dimension.dp
+import com.library.kotlin.dimension.px2dip
+import com.library.kotlin.dimension.statusBarHeight
 import com.uuzuche.lib_zxing.activity.CodeUtils
 import kotlinx.android.synthetic.main.activity_picker.*
 
@@ -47,6 +51,12 @@ class PickerActivity : BasePermissionActivity() {
                 //TODO:例如底部【下一步】按钮不可点击
             }
         })
+
+        // 目前kotlin-android-extensions暂时还不支持跨模块
+        findViewById<BaseSearchBar>(R.id.myBoolbar)?.apply {
+            goneLine()
+            setLLEmtity(statusBarHeight.toFloat())
+        }
 
     }
 

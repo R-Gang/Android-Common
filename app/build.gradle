@@ -113,17 +113,6 @@ dependencies {
 
     // 沉浸式状态栏
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
-
-    // 圆角图片
-    implementation 'com.makeramen:roundedimageview:2.3.0'
-
-    // okhttp
-    implementation 'com.lzy.net:okhttputils:1.8.1'
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.9'
-
-    //LoadingDialog
-    implementation 'com.github.ForgetAll:LoadingDialog:v1.1.2'
     // 常用类(以上为基类关联依赖)`
 
     // SmartRefreshLayout
@@ -147,6 +136,6 @@ dependencies {
     // 小米依赖
     implementation 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.6.0'
 
-//    implementation 'com.github.R-Gang:Android-Common:v0.1.6-beta.3@aar'
+//    implementation 'com.github.R-Gang:Android-Common:v0.1.6-beta.4@aar'
     implementation project(path: ':base')
 }

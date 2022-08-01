@@ -3,10 +3,12 @@ package com.gang.app.ui.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.gang.app.R
-import com.gang.library.common.view.progress.MyProgressDialog
+import com.gang.library.common.ext.permissions.BasePermissionFragment
+import com.gang.library.common.user.Config
 import com.gang.library.common.utils.SysUtils
-import com.gang.library.common.utils.permissions.BasePermissionFragment
 import com.gang.library.ui.adapter.VPFragmentAdapter
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.library.kotlin.dimension.statusBarHeight
 import kotlinx.android.synthetic.main.fragment_my.*
 
 /**
@@ -23,10 +25,14 @@ class MyFragment : BasePermissionFragment() {
     override val layoutId: Int = R.layout.fragment_my
 
     override fun initView(savedInstanceState: Bundle?) {
-//        (activity as MainActivity).setSupportActionBar(my_toolbar)
-//        if (activity is MainActivity) {
-//            (activity as MainActivity).dark()
-//        }
+        /*(activity as MainActivity).setSupportActionBar(my_toolbar)
+        if (activity is MainActivity) {
+            (activity as MainActivity).dark()
+        }*/
+        Config.statusBarEnabled = false
+        val params = my_toolbar.layoutParams as CollapsingToolbarLayout.LayoutParams
+        params.height += statusBarHeight
+        my_toolbar.layoutParams = params
 
 
         val itemFragment = ItemFragment()
@@ -38,7 +44,7 @@ class MyFragment : BasePermissionFragment() {
         tabs_viewpager.adapter = fragmentAdapter
         tabs.setupWithViewPager(tabs_viewpager, false)
 
-        MyProgressDialog(mActivity).show()
+//        MyProgressDialog(mActivity).show()
     }
 
     override fun initData() {

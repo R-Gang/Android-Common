@@ -7,6 +7,11 @@
     android:orientation="vertical"
     tools:context=".ui.activity.PickerActivity">
 
+    <com.gang.library.ui.widget.BaseSearchBar
+        android:id="@+id/myBoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.gang.library.ui.widget.SquircleImageView
         android:id="@+id/showPickerView"
         android:layout_width="@dimen/margin_size_80"

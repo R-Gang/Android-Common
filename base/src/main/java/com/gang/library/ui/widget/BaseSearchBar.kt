@@ -3,12 +3,15 @@ package com.gang.library.ui.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.Toolbar
 import com.gang.library.R
 import com.gang.library.common.utils.gone
 import com.gang.library.common.utils.show
-import com.makeramen.roundedimageview.RoundedImageView
+import com.library.kotlin.dimension.dip2px
+import com.library.kotlin.dimension.statusBarHeight
 import org.jetbrains.annotations.NotNull
 
 class BaseSearchBar @JvmOverloads constructor(
@@ -17,10 +20,11 @@ class BaseSearchBar @JvmOverloads constructor(
     defInt: Int = 0,
 ) : FrameLayout(context, attributeSet, defInt) {
     private val mView = View.inflate(context, R.layout.base_search_bar, null)
+    private val bgView = mView.findViewById<Toolbar>(R.id.my_toolbar)
+    private val llEmtity = mView.findViewById<ImageView>(R.id.ll_emtity)
     private val leftView = mView.findViewById<RelativeLayout>(R.id.rl_back_button)
     private val leftText = mView.findViewById<TextView>(R.id.tv_title_left)
     private val leftIv = mView.findViewById<ImageView>(R.id.iv_left)
-    private val leftRoundIv = mView.findViewById<RoundedImageView>(R.id.iv_title_left)
     private val ivSearch = mView.findViewById<ImageView>(R.id.iv_search)
     private val etSearch = mView.findViewById<EditText>(R.id.et_search)
     private val vLine = mView.findViewById<View>(R.id.title_line)
@@ -30,12 +34,12 @@ class BaseSearchBar @JvmOverloads constructor(
     }
 
 
+    fun getllEmtity() = llEmtity
     fun getLeftView() = leftView
     fun getLeftText() = leftText
     fun getLeftIv() = leftIv
-    fun getLeftRoundIv() = leftRoundIv
-    fun getIvSearch() = ivSearch
-    fun getEtSearch() = etSearch
+    fun getSearchView() = etSearch
+    fun getSearchIcon() = ivSearch
     fun getVLine() = vLine
 
     fun setLeftText(text: String) {
@@ -47,11 +51,6 @@ class BaseSearchBar @JvmOverloads constructor(
         leftView.show()
         leftIv.setImageResource(resId)
         leftIv.scaleType = ImageView.ScaleType.CENTER_INSIDE
-    }
-
-    fun setLeftRoundIvRes(@DrawableRes @NotNull resId: Int) {
-        leftView.show()
-        leftRoundIv.setImageResource(resId)
     }
 
     fun setSearchIv(@DrawableRes @NotNull resId: Int) {
@@ -71,7 +70,18 @@ class BaseSearchBar @JvmOverloads constructor(
         leftView.gone()
     }
 
-    fun getSearchView() = etSearch
+    fun setLLEmtity(height: Float): BaseSearchBar {
+        llEmtity.show()
+        val llParams = llEmtity.layoutParams as RelativeLayout.LayoutParams
+        llParams.height = height.toInt()
+        getllEmtity().layoutParams = llParams
+        return this
+    }
 
-    fun getSearchIcon() = ivSearch
+    fun setTooBarHeight(height: Float): BaseSearchBar {
+        val param = bgView.layoutParams as ViewGroup.LayoutParams
+        param.height = dip2px(height).toInt()
+        bgView.layoutParams = param
+        return this
+    }
 }

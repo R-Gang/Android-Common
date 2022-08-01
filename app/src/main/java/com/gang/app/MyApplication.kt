@@ -1,6 +1,5 @@
 package com.gang.app
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -141,34 +140,39 @@ class MyApplication : BaseApplication() {
 
     }
 
+    fun createNotificationChannel(): NotificationManager {
+        val mNotificationManager =
+            appContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // 通知渠道的id
+            val id = "1" //默认1,可设置(1-100)
+            // 用户可以看到的通知渠道的名字.
+            val name: CharSequence = appContext.getString(R.string.app_name)
+            // 用户可以看到的通知渠道的描述
+            val description = "notification description"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val mChannel = NotificationChannel(id, name, importance)
+            // 配置通知渠道的属性
+            mChannel.description = description
+            // 设置通知出现时的闪灯（如果 android 设备支持的话）
+            mChannel.enableLights(true)
+            mChannel.lightColor = Color.RED
+            // 设置通知出现时的震动（如果 android 设备支持的话）
+            mChannel.enableVibration(true)
+            mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+            //最后在notificationmanager中创建该通知渠道
+            mNotificationManager.createNotificationChannel(mChannel)
+        }
+        return mNotificationManager
+    }
+
 
     companion object {
+        val instance: MyApplication
+            get() = SingletonHolder.INSTANCE
+    }
 
-        fun createNotificationChannel(): NotificationManager {
-            val mNotificationManager =
-                appContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // 通知渠道的id
-                val id = "1" //默认1,可设置(1-100)
-                // 用户可以看到的通知渠道的名字.
-                val name: CharSequence = appContext.getString(R.string.app_name)
-                // 用户可以看到的通知渠道的描述
-                val description = "notification description"
-                val importance = NotificationManager.IMPORTANCE_HIGH
-                val mChannel = NotificationChannel(id, name, importance)
-                // 配置通知渠道的属性
-                mChannel.description = description
-                // 设置通知出现时的闪灯（如果 android 设备支持的话）
-                mChannel.enableLights(true)
-                mChannel.lightColor = Color.RED
-                // 设置通知出现时的震动（如果 android 设备支持的话）
-                mChannel.enableVibration(true)
-                mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-                //最后在notificationmanager中创建该通知渠道
-                mNotificationManager.createNotificationChannel(mChannel)
-            }
-            return mNotificationManager
-        }
-
+    private object SingletonHolder {
+        var INSTANCE: MyApplication = MyApplication()
     }
 }

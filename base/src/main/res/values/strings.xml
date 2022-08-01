@@ -16,5 +16,6 @@
         Open the app settings screen to modify app permissions.
     </string>
     <string name="title_settings_dialog">Permissions Required</string>
+    <string name="string_search">搜索</string>
 
 </resources>

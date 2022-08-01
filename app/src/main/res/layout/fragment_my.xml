@@ -88,7 +88,7 @@
         app:targetHeight="40dp"
         app:targetWidth="40dp"
         app:targetX="16dp"
-        app:targetY="8dp" />
+        app:targetY="35dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -106,6 +106,6 @@
         app:dependsOn="@+id/appbar"
         app:layout_behavior="com.zoonref.SimpleViewBehavior"
         app:targetAlpha="1"
-        app:targetY="0dp" />
+        app:targetY="30dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

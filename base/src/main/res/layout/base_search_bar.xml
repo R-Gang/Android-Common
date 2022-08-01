@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,113 +14,120 @@
     app:titleTextAppearance="@style/Toolbar.TitleText">
 
     <RelativeLayout
-        android:id="@+id/rlSearch"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom">
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ll_emtity"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_size_20"
+            android:visibility="gone" />
 
         <RelativeLayout
-            android:id="@+id/rl_back_button"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:id="@+id/rlSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_emtity"
+            android:layout_gravity="bottom">
 
-            <ImageView
-                android:id="@+id/iv_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/arrow_left_black"
-                android:scaleType="centerCrop" />
+            <RelativeLayout
+                android:id="@+id/rl_back_button"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45"
+                android:gravity="center">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_title_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_size_15" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/arrow_left_black" />
 
-            <TextView
-                android:id="@+id/tv_title_left"
+                <TextView
+                    android:id="@+id/tv_title_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/col_02"
+                    android:textSize="@dimen/text_size_18"
+                    tools:text="取消" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_next_button"
+                android:layout_width="@dimen/margin_size_45"
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    tools:src="@drawable/arrow_right_black" />
+
+                <TextView
+                    android:id="@+id/tv_title_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/col_02"
+                    android:textSize="@dimen/text_size_18"
+                    tools:text="完成" />
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_search"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="取消"
-                android:textColor="@color/col_02"
-                android:textSize="@dimen/text_size_18"
-                android:visibility="gone" />
+                android:layout_height="@dimen/margin_size_45"
+                android:layout_marginStart="@dimen/margin_size_5"
+                android:layout_marginEnd="@dimen/margin_size_10"
+                android:layout_toStartOf="@id/rl_next_button"
+                android:layout_toEndOf="@id/rl_back_button"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/base_search_bg"
+                    android:drawablePadding="@dimen/margin_size_10"
+                    android:gravity="center"
+                    android:hint="@string/string_search"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/margin_size_10"
+                    android:paddingEnd="@dimen/margin_size_10"
+                    android:singleLine="true"
+                    android:textColor="@color/color_9"
+                    android:textColorHint="@color/color_9"
+                    android:textSize="@dimen/text_size_14"
+                    android:top="@dimen/margin_size_5" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/margin_size_30"
+                    android:src="@mipmap/ic_search" />
+            </FrameLayout>
+
+            <View
+                android:id="@+id/title_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/fl_search"
+                android:background="@color/color_f6" />
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_next_button"
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_title_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:scaleType="centerInside" />
-
-            <TextView
-                android:id="@+id/tv_title_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:textColor="@color/col_02"
-                android:textSize="@dimen/text_size_18" />
-        </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/fl_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_size_15"
-            android:layout_marginTop="@dimen/margin_size_8"
-            android:layout_marginEnd="@dimen/margin_size_15"
-            android:layout_marginBottom="@dimen/margin_size_8"
-            android:layout_toStartOf="@id/rl_next_button"
-            android:layout_toEndOf="@id/rl_back_button"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/base_search_bg"
-                android:drawablePadding="@dimen/margin_size_10"
-                android:gravity="center"
-                android:hint="搜索"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:paddingLeft="@dimen/margin_size_10"
-                android:singleLine="true"
-                android:textColor="@color/color_9"
-                android:textColorHint="@color/color_9"
-                android:textSize="@dimen/text_size_14" />
-
-            <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/margin_size_30"
-                android:src="@mipmap/ic_search" />
-        </FrameLayout>
-
-        <View
-            android:id="@+id/title_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_f6" />
     </RelativeLayout>
+
 </androidx.appcompat.widget.Toolbar>

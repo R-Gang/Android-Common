@@ -14,11 +14,9 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
 import com.gang.library.R
-import com.gang.library.common.utils.dip2px
 import com.gang.library.common.utils.gone
 import com.gang.library.common.utils.show
-import com.google.android.material.appbar.AppBarLayout
-import com.makeramen.roundedimageview.RoundedImageView
+import com.library.kotlin.dimension.dip2px
 import org.jetbrains.annotations.NotNull
 
 class BaseTitleBar @JvmOverloads constructor(
@@ -28,37 +26,29 @@ class BaseTitleBar @JvmOverloads constructor(
 ) : FrameLayout(context, attributeSet, defInt) {
     private val mView = View.inflate(context, R.layout.base_title_bar, null)
     private val bgView = mView.findViewById<Toolbar>(R.id.my_toolbar)
+    private val llEmtity = mView.findViewById<ImageView>(R.id.ll_emtity)
     private val leftView = mView.findViewById<RelativeLayout>(R.id.rl_back_button)
     private val leftIv = mView.findViewById<ImageView>(R.id.iv_left)
-    private val leftRoundIv = mView.findViewById<RoundedImageView>(R.id.iv_title_left)
     private val leftText = mView.findViewById<TextView>(R.id.tv_title_left)
     private val rightView = mView.findViewById<RelativeLayout>(R.id.rl_next_button)
     private val rightIv = mView.findViewById<ImageView>(R.id.iv_right)
-    private val rightRoundIv = mView.findViewById<RoundedImageView>(R.id.iv_title_right)
     private val rightText = mView.findViewById<TextView>(R.id.tv_title_right)
     private val tvTitle = mView.findViewById<TextView>(R.id.tv_title)
     private val vLine = mView.findViewById<View>(R.id.title_line)
 
     fun getBgView() = bgView
+    fun getllEmtity() = llEmtity
     fun getLeftView() = leftView
     fun getLeftIv() = leftIv
-    fun getLeftRoundIv() = leftRoundIv
     fun getLeftText() = leftText
     fun getRightView() = rightView
     fun getRightIv() = rightIv
-    fun getRightRoundIv() = rightRoundIv
     fun getRightText() = rightText
     fun getTitle() = tvTitle
     fun getVLine() = vLine
 
     init {
-        val param1 = rightView.layoutParams as RelativeLayout.LayoutParams
-        param1.width = RelativeLayout.LayoutParams.WRAP_CONTENT
-        param1.topMargin = 50
-        addView(mView, param1)
-        val param = rightView.layoutParams as RelativeLayout.LayoutParams
-        param.width = RelativeLayout.LayoutParams.WRAP_CONTENT
-        rightView.layoutParams = param
+        addView(mView)
     }
 
     fun setBgColor(@ColorRes @NotNull resId: Int) {
@@ -76,10 +66,6 @@ class BaseTitleBar @JvmOverloads constructor(
         leftIv.scaleType = ImageView.ScaleType.CENTER_INSIDE
     }
 
-    fun setLeftRoundIvRes(@DrawableRes @NotNull resId: Int) {
-        leftView.show()
-        leftRoundIv.setImageResource(resId)
-    }
 
     fun setLeftText(text: String, @ColorRes colorRes: Int = 0) {
         leftView.show()
@@ -91,21 +77,16 @@ class BaseTitleBar @JvmOverloads constructor(
 
     fun setRightIvRes(@DrawableRes @NotNull resId: Int) {
         val param = rightIv.layoutParams as RelativeLayout.LayoutParams
-        param.rightMargin = dip2px(24f)
+        param.rightMargin = dip2px(24f).toInt()
         rightIv.layoutParams = param
         rightView.show()
         rightIv.setImageResource(resId)
         rightIv.scaleType = ImageView.ScaleType.CENTER_INSIDE
     }
 
-    fun setRoundIvRes(@DrawableRes @NotNull resId: Int) {
-        rightView.show()
-        rightRoundIv.setImageResource(resId)
-    }
-
     fun setRightText(text: String, @ColorRes colorRes: Int = 0, textSize: Float = 18f) {
         val param = rightText.layoutParams as RelativeLayout.LayoutParams
-        param.rightMargin = dip2px(22f)
+        param.rightMargin = dip2px(22f).toInt()
         rightText.layoutParams = param
         rightView.show()
         rightText.text = text
@@ -138,8 +119,8 @@ class BaseTitleBar @JvmOverloads constructor(
         textSize: Float,
     ): BaseTitleBar {
         val param = rightText.layoutParams as RelativeLayout.LayoutParams
-        param.rightMargin = dip2px(20f)
-        param.height = dip2px(24f)
+        param.rightMargin = dip2px(20f).toInt()
+        param.height = dip2px(24f).toInt()
         rightText.layoutParams = param
         rightText.text = text
         if (colorRes != 0) {
@@ -147,7 +128,7 @@ class BaseTitleBar @JvmOverloads constructor(
         }
         rightText.textSize = textSize
         rightText.gravity = Gravity.CENTER
-        rightText.setPadding(dip2px(17f), 0, dip2px(17f), 0)
+        rightText.setPadding(dip2px(17f).toInt(), 0, dip2px(17f).toInt(), 0)
         rightText.setBackgroundResource(bgResId)
         return this
     }
@@ -162,9 +143,17 @@ class BaseTitleBar @JvmOverloads constructor(
         return this
     }
 
+    fun setLLEmtity(height: Float): BaseTitleBar {
+        llEmtity.show()
+        val llParams = llEmtity.layoutParams
+        llParams.height = height.toInt()
+        getllEmtity().layoutParams = llParams
+        return this
+    }
+
     fun setTooBarHeight(height: Float): BaseTitleBar {
         val param = bgView.layoutParams as ViewGroup.LayoutParams
-        param.height = dip2px(height)
+        param.height = dip2px(height).toInt()
         bgView.layoutParams = param
         return this
     }
