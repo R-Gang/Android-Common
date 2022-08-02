@@ -4,11 +4,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.gang.app.R
 import com.gang.library.common.ext.permissions.BasePermissionFragment
-import com.gang.library.common.user.Config
 import com.gang.library.common.utils.SysUtils
 import com.gang.library.ui.adapter.VPFragmentAdapter
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.library.kotlin.dimension.statusBarHeight
+import com.gang.library.common.dimension.statusBarHeight
 import kotlinx.android.synthetic.main.fragment_my.*
 
 /**
@@ -29,7 +28,6 @@ class MyFragment : BasePermissionFragment() {
         if (activity is MainActivity) {
             (activity as MainActivity).dark()
         }*/
-        Config.statusBarEnabled = false
         val params = my_toolbar.layoutParams as CollapsingToolbarLayout.LayoutParams
         params.height += statusBarHeight
         my_toolbar.layoutParams = params

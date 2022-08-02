@@ -10,8 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.gang.library.R
 import com.gang.library.common.utils.gone
 import com.gang.library.common.utils.show
-import com.library.kotlin.dimension.dip2px
-import com.library.kotlin.dimension.statusBarHeight
+import com.gang.library.common.dimension.dip2px
 import org.jetbrains.annotations.NotNull
 
 class BaseSearchBar @JvmOverloads constructor(

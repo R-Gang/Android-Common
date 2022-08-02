@@ -1,4 +1,4 @@
-package com.library.kotlin.dimension
+package com.gang.library.common.dimension
 
 import android.content.Context
 import android.content.res.Resources

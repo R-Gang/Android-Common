@@ -2,11 +2,13 @@ package com.gang.library.common.utils
 
 import android.content.Context
 import android.graphics.*
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.gang.library.common.user.Config
+import com.gang.library.ui.interfaces.Setter
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -178,4 +180,16 @@ fun toRoundBitmap(bitmap: Bitmap): Bitmap {
 val typefaceAll: Typeface by lazy {
     Typeface.createFromAsset(initAndroidCommon().assets,
         Config.typefaceAll)
+}
+
+fun <T : View?, V> applyV(
+    list: List<T>,
+    setter: Setter<in T, V>, value: V,
+) {
+    var i = 0
+    val count = list.size
+    while (i < count) {
+        setter[list[i], value] = i
+        i++
+    }
 }

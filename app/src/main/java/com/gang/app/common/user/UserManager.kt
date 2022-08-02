@@ -4,8 +4,11 @@ import android.app.Activity
 import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.gang.library.bean.UserEntity
-import com.gang.library.common.store.getSpValue
+import com.gang.library.common.store.SpExt
 import com.orhanobut.logger.Logger
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import java.util.*
 
 /**
  *
@@ -26,13 +29,19 @@ enum class UserManager {
 
     var userData = UserEntity()
 
+    fun save(user: UserEntity) {
+        userData = user
+        SpExt.putSpValue("user_id", userData.user_id)
+        SpExt.putSpValue("user_token", userData.user_token)
+    }
+
     fun isLogin(): Boolean {
-        return userData.user_id.isNotEmpty() && userData.user_token.isNotEmpty()
+        return (userData.user_id.isNotEmpty() && userData.user_token.isNotEmpty())
     }
 
     fun isLogin1(): Boolean {
-        return (getSpValue("user_id", "").toString().isNotEmpty()
-                && getSpValue("user_token", "").toString().isNotEmpty())
+        return (SpExt.getSpValue("user_id", "").toString().isNotEmpty()
+                && SpExt.getSpValue("user_token", "").toString().isNotEmpty())
     }
 
     private val mPushService = PushServiceFactory.getCloudPushService()
@@ -75,4 +84,19 @@ enum class UserManager {
 
         fun onFailed(errorCode: String, errorMsg: String)
     }
+
+
+    init {
+        EventBus.getDefault().register(this)
+    }
+
+    @Subscribe
+    fun onEvent(objects: Objects) {
+        objects.apply {
+
+        }
+    }
+
+    private lateinit var mActivity: Activity
+
 }

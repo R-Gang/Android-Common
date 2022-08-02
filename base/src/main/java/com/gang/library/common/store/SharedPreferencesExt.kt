@@ -156,105 +156,107 @@ private fun <T> deSerialization(str: String?): T {
 
 
 //----------  以下旧版封装SharedPreferences start  ----------
-
-/**
- * SharePreference本地存储
- *
- * @param key
- * @param value
- */
-fun putSpValue(key: String?, value: Any?) {
-    val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
-    val editor = sharedPreferences.edit()
-    when (value) {
-        is String -> editor.putString(key, value as String?)
-        is Int -> editor.putInt(key, value)
-        is Long -> editor.putLong(key, value)
-        is Float -> editor.putFloat(key, value)
-        is Boolean -> editor.putBoolean(key, value)
+@Deprecated("旧版封装SharedPreferences，已废弃")
+object SpExt {
+    /**
+     * SharePreference本地存储
+     *
+     * @param key
+     * @param value
+     */
+    fun putSpValue(key: String?, value: Any?) {
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
+        val editor = sharedPreferences.edit()
+        when (value) {
+            is String -> editor.putString(key, value as String?)
+            is Int -> editor.putInt(key, value)
+            is Long -> editor.putLong(key, value)
+            is Float -> editor.putFloat(key, value)
+            is Boolean -> editor.putBoolean(key, value)
+        }
+        editor.apply()
     }
-    editor.apply()
-}
 
-/**
- * 根据key和默认值的数据类型，获取SharePreference中所存值
- *
- * @param key
- * @param defaultObject
- * @return
- */
-fun getSpValue(key: String?, defaultObject: Any): Any? {
-    val type = defaultObject.javaClass.simpleName
-    val sp =
-        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
-    if ("String" == type) {
-        return sp.getString(key, defaultObject as String)
-    } else if ("Integer" == type) {
-        return sp.getInt(key, (defaultObject as Int))
-    } else if ("Boolean" == type) {
-        return sp.getBoolean(key, (defaultObject as Boolean))
-    } else if ("Float" == type) {
-        return sp.getFloat(key, (defaultObject as Float))
-    } else if ("Long" == type) {
-        return sp.getLong(key, (defaultObject as Long))
+    /**
+     * 根据key和默认值的数据类型，获取SharePreference中所存值
+     *
+     * @param key
+     * @param defaultObject
+     * @return
+     */
+    fun getSpValue(key: String?, defaultObject: Any): Any? {
+        val type = defaultObject.javaClass.simpleName
+        val sp =
+            PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
+        if ("String" == type) {
+            return sp.getString(key, defaultObject as String)
+        } else if ("Integer" == type) {
+            return sp.getInt(key, (defaultObject as Int))
+        } else if ("Boolean" == type) {
+            return sp.getBoolean(key, (defaultObject as Boolean))
+        } else if ("Float" == type) {
+            return sp.getFloat(key, (defaultObject as Float))
+        } else if ("Long" == type) {
+            return sp.getLong(key, (defaultObject as Long))
+        }
+        return null
     }
-    return null
-}
 
-/**
- * 存储集合
- */
-fun putValueHashMap(key: String?, hashmap: HashMap<String?, Any?>?) {
-    val liststr = SceneList2String(hashmap)
-    return putSpValue(key, liststr)
-}
+    /**
+     * 存储集合
+     */
+    fun putValueHashMap(key: String?, hashmap: HashMap<String?, Any?>?) {
+        val liststr = SceneList2String(hashmap)
+        return putSpValue(key, liststr)
+    }
 
-/**
- * 获取集合
- */
-fun getSpValueHashMap(key: String?): HashMap<String?, Any?>? {
-    return String2SceneList(getSpValue(key, "") as String?)
-}
+    /**
+     * 获取集合
+     */
+    fun getSpValueHashMap(key: String?): HashMap<String?, Any?>? {
+        return String2SceneList(getSpValue(key, "") as String?)
+    }
 
-@Throws(IOException::class)
-fun SceneList2String(hashmap: HashMap<String?, Any?>?): String? {
-    // 实例化一个ByteArrayOutputStream对象，用来装载压缩后的字节文件。
-    val byteArrayOutputStream = ByteArrayOutputStream()
-    // 然后将得到的字符数据装载到ObjectOutputStream
-    val objectOutputStream = ObjectOutputStream(
-        byteArrayOutputStream)
-    // writeObject 方法负责写入特定类的对象的状态，以便相应的 readObject 方法可以还原它
-    objectOutputStream.writeObject(hashmap)
-    // 最后，用Base64.encode将字节文件转换成Base64编码保存在String中
-    val SceneListString = String(Base64.encode(
-        byteArrayOutputStream.toByteArray(), Base64.DEFAULT))
-    // 关闭objectOutputStream
-    objectOutputStream.close()
-    return SceneListString
-}
+    @Throws(IOException::class)
+    fun SceneList2String(hashmap: HashMap<String?, Any?>?): String? {
+        // 实例化一个ByteArrayOutputStream对象，用来装载压缩后的字节文件。
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        // 然后将得到的字符数据装载到ObjectOutputStream
+        val objectOutputStream = ObjectOutputStream(
+            byteArrayOutputStream)
+        // writeObject 方法负责写入特定类的对象的状态，以便相应的 readObject 方法可以还原它
+        objectOutputStream.writeObject(hashmap)
+        // 最后，用Base64.encode将字节文件转换成Base64编码保存在String中
+        val SceneListString = String(Base64.encode(
+            byteArrayOutputStream.toByteArray(), Base64.DEFAULT))
+        // 关闭objectOutputStream
+        objectOutputStream.close()
+        return SceneListString
+    }
 
-@Throws(StreamCorruptedException::class, IOException::class, ClassNotFoundException::class)
-fun String2SceneList(SceneListString: String?): HashMap<String?, Any?> {
-    val mobileBytes = Base64.decode(SceneListString?.toByteArray(), Base64.DEFAULT)
-    val byteArrayInputStream = ByteArrayInputStream(
-        mobileBytes)
-    val objectInputStream = ObjectInputStream(
-        byteArrayInputStream)
-    val SceneList = objectInputStream
-        .readObject() as HashMap<String?, Any?>
-    objectInputStream.close()
-    return SceneList
-}
+    @Throws(StreamCorruptedException::class, IOException::class, ClassNotFoundException::class)
+    fun String2SceneList(SceneListString: String?): HashMap<String?, Any?> {
+        val mobileBytes = Base64.decode(SceneListString?.toByteArray(), Base64.DEFAULT)
+        val byteArrayInputStream = ByteArrayInputStream(
+            mobileBytes)
+        val objectInputStream = ObjectInputStream(
+            byteArrayInputStream)
+        val SceneList = objectInputStream
+            .readObject() as HashMap<String?, Any?>
+        objectInputStream.close()
+        return SceneList
+    }
 
-/**
- *  清空本地缓存
- */
-fun clearSpValues() {
-    val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
-    val editor = sharedPreferences.edit()
-    editor.clear()
-    editor.apply()
-}
+    /**
+     *  清空本地缓存
+     */
+    fun clearSpValues() {
+        val sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
 //----------  以下旧版封装SharedPreferences end ----------
+}

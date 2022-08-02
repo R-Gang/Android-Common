@@ -16,14 +16,13 @@ import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
-import com.gang.library.common.user.UserManager
 import com.gang.library.common.utils.NotifiUtil.Companion.OpenNotificationSetting
+import com.gang.library.common.utils.applyV
 import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 /**
  * 1.刘海屏适配示例
@@ -91,7 +90,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         val fragmentManager: FragmentManager = supportFragmentManager
         val ft = fragmentManager.beginTransaction()
         hideFragments(ft)
-        radioButtons.let { UserManager.INSTANCE.apply(it, TABSPEC, radioButtons[index]) }
+        radioButtons.let { applyV(it, TABSPEC, radioButtons[index]) }
         when (index) {
             0 ->  //首页
                 if (null == homeFragment) {

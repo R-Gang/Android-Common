@@ -17,9 +17,8 @@ import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
 import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
-import com.library.kotlin.dimension.dp
-import com.library.kotlin.dimension.px2dip
-import com.library.kotlin.dimension.statusBarHeight
+import com.gang.library.common.dimension.px2dip
+import com.gang.library.common.dimension.statusBarHeight
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_home.*

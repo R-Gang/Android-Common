@@ -7,18 +7,19 @@ import com.alibaba.sdk.android.push.notification.CPushMessage
 import com.alibaba.sdk.android.push.popup.PopupNotifyClick
 import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
-import com.gang.library.common.user.Config
-import com.gang.library.common.user.UserManager
-import com.gang.library.common.utils.*
-import com.gang.library.common.utils.DateUtils.getCurTimeLong
+import com.gang.app.common.user.UserManager
 import com.gang.library.common.ext.thread.ThreadPoolManager
+import com.gang.library.common.user.Config
+import com.gang.library.common.utils.DateUtils.getCurTimeLong
+import com.gang.library.common.utils.LogUtils
+import com.gang.library.common.utils.showToast
 import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.widget.swipeback.helper.SwipeBackHelper
 import com.gang.library.ui.widget.swipeback.helper.dispatchTouchEvent
-import com.library.kotlin.dimension.checkNavigationBarShow
-import com.library.kotlin.dimension.navigationBarHeight
-import com.library.kotlin.dimension.screenArray
-import com.library.kotlin.dimension.screenDpiArray
+import com.gang.library.common.dimension.checkNavigationBarShow
+import com.gang.library.common.dimension.navigationBarHeight
+import com.gang.library.common.dimension.screenArray
+import com.gang.library.common.dimension.screenDpiArray
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 
@@ -84,7 +85,7 @@ class HttpApiActivity : BaseActivity() {
 
         LogUtils.i(this, "${screenArray[0]}===${screenArray[1]}")
         LogUtils.i(this, "${screenDpiArray[0]}===${screenDpiArray[1]}")
-        LogUtils.i(this, "${checkNavigationBarShow()}===${navigationBarHeight}")
+        LogUtils.i(this, "${checkNavigationBarShow()}===$navigationBarHeight")
 
     }
 

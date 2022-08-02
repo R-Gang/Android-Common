@@ -16,7 +16,7 @@ import androidx.appcompat.widget.Toolbar
 import com.gang.library.R
 import com.gang.library.common.utils.gone
 import com.gang.library.common.utils.show
-import com.library.kotlin.dimension.dip2px
+import com.gang.library.common.dimension.dip2px
 import org.jetbrains.annotations.NotNull
 
 class BaseTitleBar @JvmOverloads constructor(

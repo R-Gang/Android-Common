@@ -14,9 +14,7 @@ import com.gang.library.common.utils.typefaceAll
 import com.gang.library.common.utils.vClick
 import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
-import com.library.kotlin.dimension.dp
-import com.library.kotlin.dimension.px2dip
-import com.library.kotlin.dimension.statusBarHeight
+import com.gang.library.common.dimension.statusBarHeight
 import com.uuzuche.lib_zxing.activity.CodeUtils
 import kotlinx.android.synthetic.main.activity_picker.*
 
