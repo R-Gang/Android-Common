@@ -1,19 +1,17 @@
 package com.gang.library.common.utils
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.gang.library.BaseApplication.Companion.TAG
 import com.gang.library.R
-import com.gang.library.common.user.Config
 import com.gang.library.common.ext.permissions.BasePermissionActivity
 import com.gang.library.common.ext.permissions.BasePermissionFragment
 import com.gang.library.common.ext.permissions.PermissionCallBackM
+import com.gang.library.common.user.Config
 import com.gang.library.ui.activity.FileDisplayActivity
-import com.uuzuche.lib_zxing.activity.CaptureActivity
 
 /**
  *
@@ -47,7 +45,7 @@ object SysUtils {
                 arrayOf(Manifest.permission.CALL_PHONE),
                 mContext.getString(R.string.rationale_call_phone),
                 object : PermissionCallBackM {
-                    @SuppressLint("MissingPermission")
+
                     override fun onPermissionGrantedM(
                         requestCode: Int,
                         vararg perms: String?,
@@ -69,7 +67,7 @@ object SysUtils {
                 arrayOf(Manifest.permission.CALL_PHONE),
                 mContext.getString(R.string.rationale_call_phone),
                 object : PermissionCallBackM {
-                    @SuppressLint("MissingPermission")
+
                     override fun onPermissionGrantedM(
                         requestCode: Int,
                         vararg perms: String?,
@@ -90,90 +88,94 @@ object SysUtils {
     }
 
     //获取CAMERA权限 haoruigang on 2021-11-25 13:50:43
-    fun getScanCamere(mContext: Context) {
-        if (mContext is BasePermissionActivity) {
-            mContext.requestPermission(Config.REQUEST_CAMERA,
-                arrayOf(Manifest.permission.CAMERA),
-                mContext.getString(R.string.rationale_call_camere),
-                object : PermissionCallBackM {
-                    @SuppressLint("MissingPermission")
-                    override fun onPermissionGrantedM(
-                        requestCode: Int,
-                        vararg perms: String?,
-                    ) {
-                        LogUtils.e(mContext.toString(), "TODO: CAMERA Granted")
-                        mContext.toActivityForResult<CaptureActivity>(Config.REQUEST_CODE_CAMERE)
-                    }
+    inline fun <reified T : Activity> Activity.getScanCamere(mContext: Context) {
+        (mContext as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
+            arrayOf(Manifest.permission.CAMERA),
+            mContext.getString(R.string.rationale_call_camere),
+            object : PermissionCallBackM {
+                override fun onPermissionGrantedM(
+                    requestCode: Int,
+                    vararg perms: String?,
+                ) {
+                    LogUtils.e(mContext.toString(), "TODO: CAMERA Granted")
+                    mContext.toActivityForResult<T>(Config.REQUEST_CODE_CAMERE) // T to CaptureActivity
+                }
 
-                    override fun onPermissionDeniedM(
-                        requestCode: Int,
-                        vararg perms: String?,
-                    ) {
-                        LogUtils.e(mContext.toString(), "TODO: CALL_PHONE Denied")
-                    }
-                })
-        } else if (mContext is BasePermissionFragment) {
-            mContext.requestPermission(Config.REQUEST_CAMERA,
-                arrayOf(Manifest.permission.CAMERA),
-                mContext.getString(R.string.rationale_call_camere),
-                object : PermissionCallBackM {
-                    @SuppressLint("MissingPermission")
-                    override fun onPermissionGrantedM(
-                        requestCode: Int,
-                        vararg perms: String?,
-                    ) {
-                        LogUtils.e(mContext.toString(), "TODO: CAMERA Granted")
-                        (mContext as Activity).toActivityForResult<CaptureActivity>(Config.REQUEST_CODE_CAMERE)
-                    }
+                override fun onPermissionDeniedM(
+                    requestCode: Int,
+                    vararg perms: String?,
+                ) {
+                    LogUtils.e(mContext.toString(), "TODO: CALL_PHONE Denied")
+                }
+            })
+    }
 
-                    override fun onPermissionDeniedM(
-                        requestCode: Int,
-                        vararg perms: String?,
-                    ) {
-                        LogUtils.e(mContext.toString(), "TODO: CALL_PHONE Denied")
-                    }
-                })
-        }
+    //获取CAMERA权限 haoruigang on 2021-11-25 13:50:43
+    inline fun <reified T : Activity> Context.getScanCamere(mContext: Context) {
+        (mContext as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
+            arrayOf(Manifest.permission.CAMERA),
+            mContext.getString(R.string.rationale_call_camere),
+            object : PermissionCallBackM {
+
+                override fun onPermissionGrantedM(
+                    requestCode: Int,
+                    vararg perms: String?,
+                ) {
+                    LogUtils.e(mContext.toString(), "TODO: CAMERA Granted")
+                    (mContext as Activity).toActivityForResult<T>(Config.REQUEST_CODE_CAMERE)
+                }
+
+                override fun onPermissionDeniedM(
+                    requestCode: Int,
+                    vararg perms: String?,
+                ) {
+                    LogUtils.e(mContext.toString(), "TODO: CALL_PHONE Denied")
+                }
+            })
+
     }
 
     //获取READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE权限 haoruigang on 2018-4-3 15:29:46
-    fun getRead_Write(mContext: Context, filePath: String, fileName: String) {
+    fun Activity.toGetRead_Write(filePath: String, fileName: String) {
+        (this as BasePermissionActivity).requestPermission(Config.REQUEST_CODE_READ_WRITE,
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            mContext.getString(R.string.rationale_file),
+            object : PermissionCallBackM {
+                override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
+                    FileDisplayActivity.actionStart(this@toGetRead_Write,
+                        filePath,
+                        fileName)
+                }
+
+                override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
+                    LogUtils.e(TAG, "TODO: WRITE_EXTERNAL_STORAGE Denied")
+                }
+            })
+    }
+
+    fun Context.toGetRead_Write(filePath: String, fileName: String) {
         //动态权限申请
-        if (mContext is BasePermissionActivity) {
-            mContext.requestPermission(Config.REQUEST_CODE_READ_WRITE,
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                mContext.getString(R.string.rationale_file),
-                object : PermissionCallBackM {
-                    override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
-                        FileDisplayActivity.actionStart(mContext, filePath, fileName)
-                    }
+        (this as BasePermissionActivity).requestPermission(Config.REQUEST_CODE_READ_WRITE,
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            getString(R.string.rationale_file),
+            object : PermissionCallBackM {
+                override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
+                    FileDisplayActivity.actionStart(this@toGetRead_Write, filePath, fileName)
+                }
 
-                    override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
-                        LogUtils.e(TAG, "TODO: WRITE_EXTERNAL_STORAGE Denied")
-                    }
-                })
-        } else if (mContext is BasePermissionFragment) {
-            mContext.requestPermission(Config.REQUEST_CODE_READ_WRITE,
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                mContext.getString(R.string.rationale_file),
-                object : PermissionCallBackM {
-                    override fun onPermissionGrantedM(requestCode: Int, vararg perms: String?) {
-                        FileDisplayActivity.actionStart(mContext, filePath, fileName)
-                    }
-
-                    override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
-                        LogUtils.e(TAG, "TODO: WRITE_EXTERNAL_STORAGE Denied")
-                    }
-                })
-        }
+                override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
+                    LogUtils.e(TAG, "TODO: WRITE_EXTERNAL_STORAGE Denied")
+                }
+            })
 
     }
+
 
     //获取权限 haoruigang on 2018-4-3 15:29:46
     fun requestPermission(

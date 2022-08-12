@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.WindowManager
+import androidx.annotation.DimenRes
 import com.gang.library.BaseApplication
 import com.gang.library.common.utils.LogUtils
 import com.gang.library.common.utils.initAndroidCommon
@@ -319,6 +320,11 @@ inline val Float.toMMF
     get() = this / Resources.getSystem().displayMetrics.xdpi * (1.0f / 25.4f)
 
 
+fun getDimension(@DimenRes resId: Int): Float =
+    initAndroidCommon().resources.getDimension(resId)
+
+fun getDimensionPixelOffset(@DimenRes resId: Int): Int =
+    initAndroidCommon().resources.getDimensionPixelOffset(resId)
 
 /**
  * dp转px

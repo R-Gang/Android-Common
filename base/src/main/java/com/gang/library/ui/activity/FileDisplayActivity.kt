@@ -58,57 +58,60 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
-        if (mFileUrl == null || mFileUrl!!.length <= 0) {
-            Toast.makeText(
-                this@FileDisplayActivity, "获取文件url出错了",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
-        mFileName = parseName(mFileUrl!!)
-        mWebView = findViewById(R.id.web)
-        val settings = mWebView.getSettings()
-        settings.savePassword = false
-        settings.javaScriptEnabled = true
-        settings.setAllowFileAccessFromFileURLs(true)
-        settings.setAllowUniversalAccessFromFileURLs(true)
-        settings.setSupportZoom(true)
-        //设置是否可缩放，会出现缩放工具（若为true则上面的设值也默认为true）
-        settings.builtInZoomControls = true
-        //是否隐藏缩放工具
-        settings.displayZoomControls = true
-        settings.setAppCacheEnabled(false) //禁止缓存
-        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-        settings.loadWithOverviewMode = true
-        mWebView.setWebViewClient(object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView,
-                url: String,
-            ): Boolean {
-                view.loadUrl(url)
-                return true
+        mFileUrl?.apply {
+            if (mFileUrl == null || length <= 0) {
+                Toast.makeText(
+                    this@FileDisplayActivity, "获取文件url出错了",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
             }
-        })
-        mWebView.setWebChromeClient(WebChromeClient())
-        if (mFileUrl!!.contains(".mp4")) {
-            mWebView.loadUrl(mFileUrl)
-            mWebView.setVisibility(View.VISIBLE)
-            rl_tbsView?.visibility = View.GONE
-        } else if (isLocalExist) {
-            tv_download!!.text = "打开文件"
-            tv_download!!.visibility = View.GONE
-            displayFile()
-        } else {
-            if (!mFileUrl!!.contains("http")) {
-                AlertDialog.Builder(this@FileDisplayActivity)
-                    .setTitle("温馨提示:")
-                    .setMessage("文件的url地址不合法哟，无法进行下载")
-                    .setCancelable(false)
-                    .setPositiveButton(
-                        "确定"
-                    ) { arg0: DialogInterface?, arg1: Int -> }.create().show()
+            mFileName = parseName(this)
+
+            mWebView = findViewById(R.id.web)
+            val settings = mWebView.getSettings()
+            settings.savePassword = false
+            settings.javaScriptEnabled = true
+            settings.setAllowFileAccessFromFileURLs(true)
+            settings.setAllowUniversalAccessFromFileURLs(true)
+            settings.setSupportZoom(true)
+            //设置是否可缩放，会出现缩放工具（若为true则上面的设值也默认为true）
+            settings.builtInZoomControls = true
+            //是否隐藏缩放工具
+            settings.displayZoomControls = true
+            settings.setAppCacheEnabled(false) //禁止缓存
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+            settings.loadWithOverviewMode = true
+            mWebView.setWebViewClient(object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(
+                    view: WebView,
+                    url: String,
+                ): Boolean {
+                    view.loadUrl(url)
+                    return true
+                }
+            })
+            mWebView.setWebChromeClient(WebChromeClient())
+            if (this.contains(".mp4")) {
+                mWebView.loadUrl(mFileUrl)
+                mWebView.setVisibility(View.VISIBLE)
+                rl_tbsView?.visibility = View.GONE
+            } else if (isLocalExist) {
+                tv_download?.text = "打开文件"
+                tv_download?.visibility = View.GONE
+                displayFile()
+            } else {
+                if (!this?.contains("http")) {
+                    AlertDialog.Builder(this@FileDisplayActivity)
+                        .setTitle("温馨提示:")
+                        .setMessage("文件的url地址不合法哟，无法进行下载")
+                        .setCancelable(false)
+                        .setPositiveButton(
+                            "确定"
+                        ) { arg0: DialogInterface?, arg1: Int -> }.create().show()
+                }
+                startDownload()
             }
-            startDownload()
         }
     }
 
@@ -119,9 +122,9 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
      * @return
      * @author xch
      */
-    private fun toUtf8String(url: String?): String {
+    private fun toUtf8String(url: String): String {
         val sb = StringBuffer()
-        for (i in 0 until url!!.length) {
+        for (i in 0 until url.length) {
             val c = url[i]
             if (c.toInt() >= 0 && c.toInt() <= 255) {
                 sb.append(c)
@@ -170,7 +173,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         val bundle = Bundle()
         bundle.putString("filePath", localFile.path)
         bundle.putString("tempPath", Environment.getExternalStorageDirectory().path)
-        val parseFormat = parseFormat(mFileName)
+        val parseFormat = parseFormat(mFileName.toString())
         val result = mTbsReaderView?.preOpen(parseFormat, false) as Boolean
         if (result) {
             mTbsReaderView?.visibility = View.VISIBLE
@@ -180,8 +183,8 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         }
     }
 
-    private fun parseFormat(fileName: String?): String {
-        return fileName!!.substring(fileName.lastIndexOf(".") + 1)
+    private fun parseFormat(fileName: String): String {
+        return fileName.substring(fileName.lastIndexOf(".") + 1)
     }
 
     /**
@@ -217,27 +220,32 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
     @SuppressLint("NewApi")
     private fun startDownload() {
         mDownloadObserver = DownloadObserver(Handler())
-        contentResolver.registerContentObserver(
-            Uri.parse("content://downloads/my_downloads"),
-            true,
-            mDownloadObserver!!
-        )
+        mDownloadObserver?.apply {
+
+            contentResolver.registerContentObserver(
+                Uri.parse("content://downloads/my_downloads"),
+                true,
+                this
+            )
+        }
         mDownloadManager =
             getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        //将含有中文的url进行encode
-        val fileUrl = toUtf8String(mFileUrl)
-        try {
-            val request = DownloadManager.Request(
-                Uri.parse(fileUrl)
-            )
-            request.setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS, mFileName
-            )
-            request.allowScanningByMediaScanner()
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
-            mRequestId = mDownloadManager!!.enqueue(request)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        mDownloadManager?.apply {
+            //将含有中文的url进行encode
+            val fileUrl = mFileUrl?.let { toUtf8String(it) }
+            try {
+                val request = DownloadManager.Request(
+                    Uri.parse(fileUrl)
+                )
+                request.setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS, mFileName
+                )
+                request.allowScanningByMediaScanner()
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
+                mRequestId = this.enqueue(request)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -247,7 +255,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
             .setFilterById(mRequestId)
         var cursor: Cursor? = null
         try {
-            cursor = mDownloadManager!!.query(query)
+            cursor = mDownloadManager?.query(query)
             if (cursor != null && cursor.moveToFirst()) { // 已经下载的字节数
                 val currentBytes = cursor
                     .getLong(
@@ -265,22 +273,22 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
                     cursor
                         .getColumnIndex(DownloadManager.COLUMN_STATUS)
                 )
-                tv_download!!.text = ("下载中...(" + formatKMGByBytes(currentBytes)
+                tv_download?.text = ("下载中...(" + formatKMGByBytes(currentBytes)
                         + "/" + formatKMGByBytes(totalBytes) + ")")
                 // 将当前下载的字节数转化为进度位置
                 val progress = (currentBytes * 1.0 / totalBytes * 100).toInt()
-                progressBar_download!!.progress = progress
+                progressBar_download?.progress = progress
                 Log.i(
                     "downloadUpdate: ", currentBytes.toString() + " " + totalBytes + " "
                             + status + " " + progress
                 )
                 if (DownloadManager.STATUS_SUCCESSFUL == status
-                    && tv_download!!.visibility == View.VISIBLE
+                    && tv_download?.visibility == View.VISIBLE
                 ) {
-                    tv_download!!.visibility = View.GONE
-                    tv_download!!.performClick()
+                    tv_download?.visibility = View.GONE
+                    tv_download?.performClick()
                     if (isLocalExist) {
-                        tv_download!!.visibility = View.GONE
+                        tv_download?.visibility = View.GONE
                         displayFile()
                     }
                 }
@@ -301,7 +309,9 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         super.onDestroy()
         mTbsReaderView?.onStop()
         if (mDownloadObserver != null) {
-            contentResolver.unregisterContentObserver(mDownloadObserver!!)
+            mDownloadObserver?.apply {
+                contentResolver.unregisterContentObserver(this)
+            }
         }
     }
 

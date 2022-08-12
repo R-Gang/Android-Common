@@ -9,18 +9,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.os.Build
-import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.*
 import android.view.Gravity
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
@@ -34,7 +30,6 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import java.io.*
 import java.lang.reflect.Array
-import java.lang.reflect.Method
 import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.util.*
@@ -645,34 +640,39 @@ fun pictureToVideo(pictureType: String): Int {
  * TextView实现部分文字可点击
  *
  * @param textView
- * @param start
- * @param end
+ * @param range start end
  */
 fun setSpannable(
     textView: TextView,
-    start: Int,
-    end: Int,
+    vararg range: Range<Int>,
     click: ClickableSpans,
     flags: Int = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
 ) {
     val spanUser = SpannableStringBuilder(textView.text)
-    spanUser.setSpan(object : ClickableSpan() {
-        override fun onClick(widget: View) {
-            click.clickable(widget)
-        }
+    spanUser.apply {
+        range.forEach {
+            if (it.upper <= length) {
+                val subStr = substring(it.lower, it.upper)
+                setSpan(object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        click.clickable(widget, subStr)
+                    }
 
-        override fun updateDrawState(ds: TextPaint) {
-            super.updateDrawState(ds)
-            click.updateDrawState(ds)
+                    override fun updateDrawState(ds: TextPaint) {
+                        super.updateDrawState(ds)
+                        click.updateDrawState(ds)
+                    }
+                }, it.lower, it.upper, flags)
+            }
         }
-    }, start, end, flags)
-    //设置相应点击事件
-    textView.movementMethod = LinkMovementMethod.getInstance()
-    textView.text = spanUser
+        //设置相应点击事件
+        textView.movementMethod = LinkMovementMethod.getInstance()
+        textView.text = this
+    }
 }
 
 interface ClickableSpans {
-    fun clickable(widget: View)
+    fun clickable(view: View, key: String)
 
     fun updateDrawState(ds: TextPaint) {
         //下划线

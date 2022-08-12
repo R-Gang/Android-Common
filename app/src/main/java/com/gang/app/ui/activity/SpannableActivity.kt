@@ -8,6 +8,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.style.*
+import android.util.Range
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -26,22 +27,24 @@ class SpannableActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spannable)
 
-        setSpannable(userAgreement, 2, 18, object : ClickableSpans {
-            override fun clickable(widget: View) {
-                showToast("点击了用户协议")
-            }
+        userAgreement.highlightColor = Color.TRANSPARENT; //设置点击后的颜色为透明，否则会一直出现高亮
+        setSpannable(textView = userAgreement,
+            range = arrayOf(Range<Int>(2, 18)),
+            click = object : ClickableSpans {
+                override fun clickable(view: View, key: String) {
+                    showToast("点击了用户协议")
+                }
 
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.color = Color.parseColor("#697CAD")
-
-                // 去掉点击背景
-                val spanUser = SpannableStringBuilder(userAgreement.text)
-                val span = BackgroundColorSpan(Color.TRANSPARENT)
-                spanUser.setSpan(span, 2, 18, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                userAgreement.setText(spanUser)
-            }
-        })
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = Color.parseColor("#697CAD")
+                }
+            })
+        /*// 去掉点击背景
+        val spanUser = SpannableStringBuilder(userAgreement.text)
+        val span = BackgroundColorSpan(Color.TRANSPARENT)
+        spanUser.setSpan(span, 2, 18, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        userAgreement.text = spanUser*/
 
         addUrlSpan()
         addBackColorSpan()

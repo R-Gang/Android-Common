@@ -26,7 +26,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 abstract class BaseFragment : Fragment() {
 
-    lateinit var mActivity: BaseActivity
+    lateinit var mActivity: Activity
     var mContext: Context? = null
     var pageIndex = 1
     var pageSize = "15"

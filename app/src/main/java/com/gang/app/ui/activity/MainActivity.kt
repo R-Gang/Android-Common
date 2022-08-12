@@ -1,5 +1,6 @@
 package com.gang.app.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.PixelFormat
 import android.os.Build
@@ -7,7 +8,6 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.gang.app.R
@@ -16,10 +16,10 @@ import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
+import com.gang.library.common.ext.permissions.BasePermissionActivity
 import com.gang.library.common.utils.NotifiUtil.Companion.OpenNotificationSetting
 import com.gang.library.common.utils.applyV
 import com.gang.library.common.utils.showToast
-import com.gang.library.ui.activity.BaseActivity
 import com.gang.library.ui.interfaces.Setter
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,8 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  * 3.判断是否需要开启通知栏功能
  * 4.沉浸式状态栏
  */
-@RequiresApi(api = Build.VERSION_CODES.O)
-class MainActivity : BaseActivity(), View.OnClickListener {
+class MainActivity : BasePermissionActivity(), View.OnClickListener {
 
     private var radioButtons: MutableList<TextView> = ArrayList()
 
@@ -52,6 +51,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         radioButtons.forEach { it.setOnClickListener(this) }
         setChioceItem(position)
+        @SuppressLint("ObsoleteSdkInt")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //判断是否需要开启通知栏功能
             OpenNotificationSetting(this, null, "")
         }

@@ -9,7 +9,6 @@ import com.gang.library.common.user.Config
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.tencent.smtt.sdk.QbSdk
-import com.uuzuche.lib_zxing.activity.ZXingLibrary
 
 
 open class BaseApplication : MultiDexApplication() {
@@ -20,11 +19,7 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     open fun init() { //
-        Logger.addLogAdapter(object : AndroidLogAdapter() {
-            override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return Config.isShowLog
-            }
-        })
+
 
     }
 
@@ -49,6 +44,14 @@ open class BaseApplication : MultiDexApplication() {
         )
     }
 
+    fun initLogger(){
+        Logger.addLogAdapter(object : AndroidLogAdapter() {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return Config.isShowLog
+            }
+        })
+    }
+
     fun preinitX5WebCore() {
         //预加载x5内核
         if (!QbSdk.isTbsCoreInited()) {
@@ -69,11 +72,6 @@ open class BaseApplication : MultiDexApplication() {
             //x5内核初始化接口
             QbSdk.initX5Environment(applicationContext, cb)
         }
-    }
-
-    fun initDisplayOpinion() {
-        // 二维码扫描
-        ZXingLibrary.initDisplayOpinion(applicationContext)
     }
 
     companion object {

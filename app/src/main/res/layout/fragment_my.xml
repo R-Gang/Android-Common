@@ -75,6 +75,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.gang.library.ui.widget.SquircleImageView
+        android:id="@+id/ivAvater"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center|top"
@@ -93,14 +94,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="-100dp"
         android:alpha="0"
         android:elevation="10dp"
         android:gravity="center_vertical"
         android:text="Amornchai"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:dependTargetY="-206dp"
         app:dependType="y"
         app:dependsOn="@+id/appbar"

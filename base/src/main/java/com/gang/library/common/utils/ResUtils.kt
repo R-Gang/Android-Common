@@ -1,12 +1,13 @@
 package com.gang.library.common.utils
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.ArrayRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.gang.library.common.user.Config
 import com.gang.library.ui.interfaces.Setter
 import java.io.BufferedReader
@@ -15,18 +16,14 @@ import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
 
 /**
- *
- * @ProjectName:    gang
- * @Package:        com.gang.app.common.utils
  * @ClassName:      ResourcesUtils
  * @Description:    获取资源
  * @Author:         haoruigang
  * @CreateDate:     2020/8/3 17:28
- * @UpdateUser:     更新者：
- * @UpdateDate:     2020/8/3 17:28
- * @UpdateRemark:   更新说明：
- * @Version:        1.0
  */
+
+fun getColor(@ColorRes resId: Int): Int = initAndroidCommon().getColor(resId)
+
 /**
  * 获取字符串
  *
@@ -34,7 +31,7 @@ import java.io.UnsupportedEncodingException
  * @param obj
  * @return
  */
-fun getString(@StringRes id: Int, obj: Array<Any?>): String {
+fun getStringFormat(@StringRes id: Int, obj: Array<Any?>): String {
     val string: String = initAndroidCommon().resources.getString(id)
     return if (obj.isNotEmpty()) String.format(string, *obj) else string
 }
@@ -42,6 +39,94 @@ fun getString(@StringRes id: Int, obj: Array<Any?>): String {
 fun getStrings(@ArrayRes id: Int): Array<String> {
     return initAndroidCommon().resources.getStringArray(id)
 }
+
+fun getString(@StringRes resId: Int): String = initAndroidCommon().getString(resId)
+fun getString(@StringRes resId: Int, vararg params: Any): String =
+    initAndroidCommon().getString(resId, *params)
+
+fun getStringOrNull(@StringRes resId: Int?, vararg params: Any): CharSequence? {
+    return when {
+        resId == null -> {
+            null
+        }
+        params.isNotEmpty() -> {
+            initAndroidCommon().getString(resId, *params)
+        }
+        else -> {
+            initAndroidCommon().getString(resId)
+        }
+    }
+}
+
+fun getStringOrDefault(
+    @StringRes resId: Int?,
+    def: CharSequence,
+    vararg params: Any,
+): CharSequence {
+    return when {
+        resId == null -> {
+            def
+        }
+        params.isNotEmpty() -> {
+            initAndroidCommon().getString(resId, *params)
+        }
+        else -> {
+            initAndroidCommon().getString(resId)
+        }
+    }
+}
+
+
+fun getDrawable(@DrawableRes resId: Int): Drawable? =
+    ContextCompat.getDrawable(initAndroidCommon(), resId)
+
+fun Context.getCompatDrawable(@DrawableRes id: Int?): Drawable? =
+    id?.let { ContextCompat.getDrawable(this, it) }
+
+fun getDrawableOrNull(@DrawableRes resId: Int?): Drawable? {
+    return when (resId) {
+        null -> {
+            null
+        }
+        else -> {
+            initAndroidCommon().getCompatDrawable(resId)
+        }
+    }
+}
+
+fun getCompoundDrawableOrNull(@DrawableRes resId: Int?): Drawable? {
+    return when (resId) {
+        null -> {
+            null
+        }
+        else -> {
+            initAndroidCommon().getCompoundDrawable(resId)
+        }
+    }
+}
+
+/**
+ * 获取 CompoundDrawable 用于 [androidx.appcompat.widget.AppCompatTextView.setCompoundDrawables]
+ */
+fun Context.getCompoundDrawable(
+    @DrawableRes id: Int?,
+    width: Int? = null,
+    height: Int? = null,
+): Drawable? =
+    id?.let {
+        ContextCompat.getDrawable(this, it)?.apply {
+            setBounds(0, 0, width ?: minimumWidth, height ?: minimumHeight)
+        }
+    }
+
+fun Fragment.getCompoundDrawable(
+    @DrawableRes id: Int?,
+    width: Int? = null,
+    height: Int? = null,
+): Drawable? =
+    context?.getCompoundDrawable(id, width, height)
+
+
 
 /**
  * 文字中添加图片
@@ -104,76 +189,6 @@ fun readAssetsText(context: Context, fileName: String?): String {
     } catch (e1: IOException) {
     }
     return sb.toString()
-}
-
-/**
- * 转换图片成圆形
- *
- * @param bitmap 传入Bitmap对象
- * @return
- */
-fun toRoundBitmap(bitmap: Bitmap): Bitmap {
-    var width = bitmap.width
-    var height = bitmap.height
-    val roundPx: Float
-    val left: Float
-    val top: Float
-    val right: Float
-    val bottom: Float
-    val dst_left: Float
-    val dst_top: Float
-    val dst_right: Float
-    val dst_bottom: Float
-    if (width <= height) {
-        roundPx = width / 2.toFloat()
-        left = 0f
-        top = 0f
-        right = width.toFloat()
-        bottom = width.toFloat()
-        height = width
-        dst_left = 0f
-        dst_top = 0f
-        dst_right = width.toFloat()
-        dst_bottom = width.toFloat()
-    } else {
-        roundPx = height / 2.toFloat()
-        val clip = (width - height) / 2.toFloat()
-        left = clip
-        right = width - clip
-        top = 0f
-        bottom = height.toFloat()
-        width = height
-        dst_left = 0f
-        dst_top = 0f
-        dst_right = height.toFloat()
-        dst_bottom = height.toFloat()
-    }
-    val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(output)
-    val paint = Paint()
-    val src =
-        Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-    val dst = Rect(
-        dst_left.toInt(),
-        dst_top.toInt(),
-        dst_right.toInt(),
-        dst_bottom.toInt()
-    )
-    val rectF = RectF(dst)
-    paint.isAntiAlias = true // 设置画笔无锯齿
-    canvas.drawARGB(0, 0, 0, 0) // 填充整个Canvas
-    // 以下有两种方法画圆,drawRounRect和drawCircle
-    canvas.drawRoundRect(
-        rectF,
-        roundPx,
-        roundPx,
-        paint
-    ) // 画圆角矩形，第一个参数为图形显示区域，第二个参数和第三个参数分别是水平圆角半径和垂直圆角半径。
-    // canvas.drawCircle(roundPx, roundPx, roundPx, paint);
-    paint.xfermode =
-        PorterDuffXfermode(PorterDuff.Mode.SRC_IN) // 设置两张图片相交时的模式,参考http://trylovecatch.iteye.com/blog/1189452
-    canvas.drawBitmap(bitmap, src, dst, paint) // 以Mode.SRC_IN模式合并bitmap和已经draw了的Circle
-    return output
 }
 
 //全局字体

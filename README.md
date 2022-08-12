@@ -100,6 +100,8 @@
 
     // BGA Zxing
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
+    //AndroidX 版本
+    implementation 'com.github.jenly1314:zxing-lite:2.2.1'
 
 
     // 动态显示圆形图像或圆形文字的AvatarImageView

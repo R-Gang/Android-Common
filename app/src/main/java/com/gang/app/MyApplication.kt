@@ -1,5 +1,6 @@
 package com.gang.app
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -26,6 +27,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
+import com.uuzuche.lib_zxing.activity.ZXingLibrary
 
 
 class MyApplication : BaseApplication() {
@@ -58,6 +60,7 @@ class MyApplication : BaseApplication() {
         super.init()
 
         struct()
+        initLogger()
         preinitX5WebCore()//预加载x5内核
         initDisplayOpinion()//初始化ZXing扫描
 
@@ -143,6 +146,7 @@ class MyApplication : BaseApplication() {
     fun createNotificationChannel(): NotificationManager {
         val mNotificationManager =
             appContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        @SuppressLint("ObsoleteSdkInt")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // 通知渠道的id
             val id = "1" //默认1,可设置(1-100)
@@ -164,6 +168,11 @@ class MyApplication : BaseApplication() {
             mNotificationManager.createNotificationChannel(mChannel)
         }
         return mNotificationManager
+    }
+
+    fun initDisplayOpinion() {
+        // 二维码扫描
+        ZXingLibrary.initDisplayOpinion(applicationContext)
     }
 
 

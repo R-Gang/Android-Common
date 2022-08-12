@@ -1,11 +1,11 @@
 package com.gang.app.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.gang.app.R
+import com.gang.library.common.dimension.statusBarHeight
 import com.gang.library.common.ext.permissions.BasePermissionActivity
 import com.gang.library.common.user.Config
 import com.gang.library.common.utils.LogUtils
@@ -14,7 +14,7 @@ import com.gang.library.common.utils.typefaceAll
 import com.gang.library.common.utils.vClick
 import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
-import com.gang.library.common.dimension.statusBarHeight
+import com.uuzuche.lib_zxing.activity.CaptureActivity
 import com.uuzuche.lib_zxing.activity.CodeUtils
 import kotlinx.android.synthetic.main.activity_picker.*
 
@@ -67,12 +67,12 @@ class PickerActivity : BasePermissionActivity() {
 
         btn_scan.vClick {
             // 简单模式,加载默认二维码扫描界面
-            getScanCamere(this)
+            getScanCamere<CaptureActivity>(this)
         }
     }
 
-    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         /**
          * 处理二维码扫描结果
          */
