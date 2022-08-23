@@ -7,19 +7,16 @@ import com.alibaba.sdk.android.push.notification.CPushMessage
 import com.alibaba.sdk.android.push.popup.PopupNotifyClick
 import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
-import com.gang.app.common.user.UserManager
-import com.gang.library.common.ext.thread.ThreadPoolManager
-import com.gang.library.common.user.Config
-import com.gang.library.common.utils.DateUtils.getCurTimeLong
-import com.gang.library.common.utils.LogUtils
-import com.gang.library.common.utils.showToast
-import com.gang.library.ui.activity.BaseActivity
-import com.gang.library.ui.widget.swipeback.helper.SwipeBackHelper
-import com.gang.library.ui.widget.swipeback.helper.dispatchTouchEvent
 import com.gang.library.common.dimension.checkNavigationBarShow
 import com.gang.library.common.dimension.navigationBarHeight
 import com.gang.library.common.dimension.screenArray
 import com.gang.library.common.dimension.screenDpiArray
+import com.gang.library.common.ext.thread.ThreadPoolManager
+import com.gang.library.ui.activity.BaseActivity
+import com.gang.library.ui.widget.swipeback.helper.SwipeBackHelper
+import com.gang.library.ui.widget.swipeback.helper.dispatchTouchEvent
+import com.gang.tools.kotlin.utils.LogUtils
+import com.gang.tools.kotlin.utils.showToast
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 
@@ -30,7 +27,6 @@ import java.util.concurrent.FutureTask
  */
 class HttpApiActivity : BaseActivity() {
 
-    private lateinit var headImage: String
     private var countDownTimer: CountDownTimer? = null
     val phoneNum = "18510507183"
 
@@ -47,15 +43,6 @@ class HttpApiActivity : BaseActivity() {
         }
 
         dark()
-
-        val mImageName =
-            getCurTimeLong("yyyyMMddHHmmss") + UserManager.INSTANCE.userData.user_id + ".jpg"
-        //Url
-        if (mImageName != "") {
-            headImage = Config.OSS_URL + mImageName
-        }
-        // 阿里云使用方式
-        // AliYunOss.getInstance(this)?.upload(mImageName, "", null)
 
 
         // 线程池使用示例

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Base64
-import com.gang.library.common.utils.initAndroidCommon
+import com.gang.tools.kotlin.utils.mToolsContext
 import java.io.*
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -166,7 +166,7 @@ object SpExt {
      */
     fun putSpValue(key: String?, value: Any?) {
         val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
+            PreferenceManager.getDefaultSharedPreferences(mToolsContext)
         val editor = sharedPreferences.edit()
         when (value) {
             is String -> editor.putString(key, value as String?)
@@ -188,7 +188,7 @@ object SpExt {
     fun getSpValue(key: String?, defaultObject: Any): Any? {
         val type = defaultObject.javaClass.simpleName
         val sp =
-            PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
+            PreferenceManager.getDefaultSharedPreferences(mToolsContext)
         if ("String" == type) {
             return sp.getString(key, defaultObject as String)
         } else if ("Integer" == type) {
@@ -253,7 +253,7 @@ object SpExt {
      */
     fun clearSpValues() {
         val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(initAndroidCommon())
+            PreferenceManager.getDefaultSharedPreferences(mToolsContext)
         val editor = sharedPreferences.edit()
         editor.clear()
         editor.apply()

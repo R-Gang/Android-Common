@@ -10,8 +10,8 @@ import android.util.TypedValue
 import android.view.WindowManager
 import androidx.annotation.DimenRes
 import com.gang.library.BaseApplication
-import com.gang.library.common.utils.LogUtils
-import com.gang.library.common.utils.initAndroidCommon
+import com.gang.tools.kotlin.utils.LogUtils
+import com.gang.tools.kotlin.utils.mToolsContext
 import java.lang.reflect.Method
 
 /**
@@ -49,11 +49,14 @@ inline val screenHeight
  */
 var screenArray = IntArray(2)
     get() {
-        val outMetrics = initAndroidCommon().resources.displayMetrics
-        val iArray = IntArray(2)
-        iArray[0] = outMetrics.widthPixels
-        iArray[1] = outMetrics.heightPixels
-        return iArray
+        mToolsContext?.apply {
+            val outMetrics = resources.displayMetrics
+            val iArray = IntArray(2)
+            iArray[0] = outMetrics.widthPixels
+            iArray[1] = outMetrics.heightPixels
+            return iArray
+        }
+        return IntArray(2)
     }
 
 /**
@@ -65,7 +68,7 @@ var screenDpiArray = IntArray(2)
     get() {
         val iArray = IntArray(2)
         val windowManager =
-            initAndroidCommon().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            mToolsContext?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = windowManager.defaultDisplay
         val displayMetrics = DisplayMetrics()
         val c: Class<*>
@@ -130,10 +133,13 @@ inline val navigationBarHeight
  */
 fun showNavigationBar(): Boolean {
     var hasNavigationBar = false
-    val rs: Resources = initAndroidCommon().resources
-    val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
-    if (id > 0) {
-        hasNavigationBar = rs.getBoolean(id)
+    mToolsContext?.apply {
+        val rs: Resources = resources
+        val id: Int = rs.getIdentifier("config_showNavigationBar", "bool", "android")
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id)
+        }
+        return hasNavigationBar
     }
     return hasNavigationBar
 }
@@ -152,10 +158,10 @@ fun checkNavigationBarShow(): Boolean {
         //判断是否隐藏了底部虚拟导航
         var navigationBarIsMin = 0
         navigationBarIsMin = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Settings.System.getInt(initAndroidCommon().contentResolver,
+            Settings.System.getInt(mToolsContext?.contentResolver,
                 getDeviceInfo(), 0)
         } else {
-            Settings.Global.getInt(initAndroidCommon().contentResolver,
+            Settings.Global.getInt(mToolsContext?.contentResolver,
                 getDeviceInfo(), 0)
         }
         if ("1" == navBarOverride || 1 == navigationBarIsMin) {
@@ -320,40 +326,52 @@ inline val Float.toMMF
     get() = this / Resources.getSystem().displayMetrics.xdpi * (1.0f / 25.4f)
 
 
-fun getDimension(@DimenRes resId: Int): Float =
-    initAndroidCommon().resources.getDimension(resId)
+fun getDimension(@DimenRes resId: Int): Float? =
+    mToolsContext?.resources?.getDimension(resId)
 
-fun getDimensionPixelOffset(@DimenRes resId: Int): Int =
-    initAndroidCommon().resources.getDimensionPixelOffset(resId)
+fun getDimensionPixelOffset(@DimenRes resId: Int): Int? =
+    mToolsContext?.resources?.getDimensionPixelOffset(resId)
 
 /**
  * dp转px
  */
 fun dip2px(dpValue: Float): Float {
-    val scale = initAndroidCommon().resources.displayMetrics.density
-    return (dpValue * scale + 0.5f)
+    mToolsContext?.apply {
+        val scale = resources.displayMetrics.density
+        return (dpValue * scale + 0.5f)
+    }
+    return 0f
 }
 
 /**
  * px转dp
  */
 fun px2dip(pxValue: Float): Float {
-    val scale = initAndroidCommon().resources.displayMetrics.density
-    return (pxValue / scale + 0.5f)
+    mToolsContext?.apply {
+        val scale = resources.displayMetrics.density
+        return (pxValue / scale + 0.5f)
+    }
+    return 0f
 }
 
 /**
  * px转sp
  */
 fun px2sp(spValue: Float): Float {
-    val fontScale = initAndroidCommon().resources.displayMetrics.scaledDensity
-    return (spValue / fontScale + 0.5f)
+    mToolsContext?.apply {
+        val fontScale = resources.displayMetrics.scaledDensity
+        return (spValue / fontScale + 0.5f)
+    }
+    return 0f
 }
 
 /**
  * sp转px
  */
 fun sp2px(spValue: Float): Float {
-    val fontScale = initAndroidCommon().resources.displayMetrics.scaledDensity
-    return (spValue * fontScale + 0.5f)
+    mToolsContext?.apply {
+        val fontScale = resources.displayMetrics.scaledDensity
+        return (spValue * fontScale + 0.5f)
+    }
+    return 0f
 }

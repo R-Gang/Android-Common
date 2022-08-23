@@ -1,16 +1,5 @@
 package com.gang.library.common.user
 
-import android.app.Activity
-import android.view.View
-import com.gang.library.bean.UserEntity
-import com.gang.library.common.store.SpExt
-import com.gang.library.common.store.getSpValue
-import com.gang.library.common.store.putSpValue
-import com.gang.library.ui.interfaces.Setter
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import java.util.*
-
 /**
  *
  * @ProjectName:    gang
@@ -27,7 +16,6 @@ import java.util.*
 enum class UserManager {
 
     INSTANCE;
-
 
 
 }

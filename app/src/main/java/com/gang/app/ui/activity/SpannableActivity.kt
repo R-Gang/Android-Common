@@ -13,9 +13,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.gang.app.R
-import com.gang.library.common.utils.ClickableSpans
-import com.gang.library.common.utils.setSpannable
-import com.gang.library.common.utils.showToast
+import com.gang.tools.kotlin.utils.ClickableSpans
+import com.gang.tools.kotlin.utils.setSpannable
+import com.gang.tools.kotlin.utils.showToast
 import kotlinx.android.synthetic.main.activity_spannable.*
 
 /**

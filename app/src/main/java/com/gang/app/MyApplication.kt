@@ -20,7 +20,7 @@ import com.alibaba.sdk.android.push.register.MiPushRegister
 import com.gang.app.common.user.Configs
 import com.gang.library.BaseApplication
 import com.gang.library.common.user.Config
-import com.gang.library.common.utils.LogUtils
+import com.gang.tools.kotlin.utils.LogUtils
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -36,17 +36,7 @@ class MyApplication : BaseApplication() {
 
     override fun onCreate() {
         // 是否显示日志
-        Config.isShowLog = true
-
-        // 阿里云配置参数
-        Config.accessKeyId = ""
-        Config.accessKeySecret = ""
-        val ossBucket = ""
-        Config.ENDPOINT = "http://oss-cn-beijing.aliyuncs.com/"
-        Config.OSS_URL = "https://$ossBucket.oss-cn-beijing.aliyuncs.com/"
-
-        // 设置全局字体("HYXinRenWenSongW.ttf")
-        Config.typefaceAll = "HYXinRenWenSongW.ttf"
+        com.gang.tools.kotlin.Config.isShowLog = true
 
         // 是否开启全局页面管理(默认开启)
         Config.activityEnabled = true
@@ -108,7 +98,7 @@ class MyApplication : BaseApplication() {
             .build()
         PushServiceFactory.init(config)
         val pushService = PushServiceFactory.getCloudPushService()
-        pushService.setLogLevel(if (Config.isShowLog) CloudPushService.LOG_DEBUG else CloudPushService.LOG_OFF);
+        pushService.setLogLevel(if (com.gang.tools.kotlin.Config.isShowLog) CloudPushService.LOG_DEBUG else CloudPushService.LOG_OFF);
         pushService.register(applicationContext, object : CommonCallback {
             override fun onSuccess(response: String) {
                 Log.i(TAG, "init cloudchannel success")

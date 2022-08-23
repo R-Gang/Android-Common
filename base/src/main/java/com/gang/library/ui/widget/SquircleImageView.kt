@@ -5,7 +5,8 @@ import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.gang.library.R
-import org.jetbrains.anko.dip
+import com.gang.library.common.dimension.dp
+import com.gang.library.common.dimension.dpF
 
 /**
  * @ClassName: haoruigang
@@ -16,7 +17,7 @@ import org.jetbrains.anko.dip
 class SquircleImageView : AppCompatImageView {
 
     private var borderWidth //不规则圆角边框宽度
-            = dip(1)
+            = 1.dp
     private var borderColor //不规则圆角边框颜色
             = 0x20000000
 
@@ -82,8 +83,8 @@ class SquircleImageView : AppCompatImageView {
         val m = Matrix()
         m.setScale(w / 200f, h / 200f, 0f, 0f)
         clipPath?.transform(m)
-        m.setScale((w - dip(borderWidth)).toFloat() / w,
-            (w - dip(borderWidth)).toFloat() / h,
+        m.setScale((w - borderWidth.dpF) / w,
+            (w - borderWidth.dpF) / h,
             w / 2f,
             h / 2f) // 边框
         clipPath?.transform(m, borderPath)

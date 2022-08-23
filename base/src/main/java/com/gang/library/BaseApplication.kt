@@ -6,6 +6,7 @@ import android.os.StrictMode.VmPolicy
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.gang.library.common.user.Config
+import com.gang.tools.kotlin.utils.initToolsUtils
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.tencent.smtt.sdk.QbSdk
@@ -18,8 +19,9 @@ open class BaseApplication : MultiDexApplication() {
         appContext = applicationContext
     }
 
-    open fun init() { //
-
+    open fun init() {
+        // 初始化实用工具类
+        initToolsUtils(this)
 
     }
 
@@ -44,10 +46,10 @@ open class BaseApplication : MultiDexApplication() {
         )
     }
 
-    fun initLogger(){
+    fun initLogger() {
         Logger.addLogAdapter(object : AndroidLogAdapter() {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return Config.isShowLog
+                return BuildConfig.DEBUG
             }
         })
     }

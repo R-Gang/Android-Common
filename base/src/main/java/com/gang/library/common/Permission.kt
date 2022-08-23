@@ -1,4 +1,4 @@
-package com.gang.library.common.utils
+package com.gang.library.common
 
 import android.Manifest
 import android.app.Activity
@@ -12,11 +12,13 @@ import com.gang.library.common.ext.permissions.BasePermissionFragment
 import com.gang.library.common.ext.permissions.PermissionCallBackM
 import com.gang.library.common.user.Config
 import com.gang.library.ui.activity.FileDisplayActivity
+import com.gang.tools.kotlin.utils.LogUtils
+import com.gang.tools.kotlin.utils.toActivityForResult
 
 /**
  *
  * @ProjectName:    Android-Common
- * @Package:        com.gang.library.common.utils
+ * @Package:        com.gang.tools.kotlin.utils
  * @ClassName:      Sys
  * @Description:    获取权限
  * @Author:         haoruigang
@@ -26,7 +28,7 @@ import com.gang.library.ui.activity.FileDisplayActivity
  * @UpdateRemark:   更新说明：
  * @Version:        1.0
  */
-object SysUtils {
+object Permission {
 
     /**
      * GC

@@ -14,10 +14,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.gang.library.R
-import com.gang.library.common.utils.flash
-import com.gang.library.common.utils.gone
-import com.gang.library.common.utils.show
-import com.gang.library.common.utils.showKeyBoard
+import com.gang.tools.kotlin.utils.flash
+import com.gang.tools.kotlin.utils.gone
+import com.gang.tools.kotlin.utils.show
+import com.gang.tools.kotlin.utils.showKeyBoard
 import kotlinx.android.synthetic.main.phone_code.view.*
 
 /**

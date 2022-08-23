@@ -17,10 +17,10 @@ import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
 import com.gang.library.common.ext.permissions.BasePermissionActivity
-import com.gang.library.common.utils.NotifiUtil.Companion.OpenNotificationSetting
-import com.gang.library.common.utils.applyV
-import com.gang.library.common.utils.showToast
-import com.gang.library.ui.interfaces.Setter
+import com.gang.tools.kotlin.interfaces.Setter
+import com.gang.tools.kotlin.utils.NotifiUtil.Companion.OpenNotificationSetting
+import com.gang.tools.kotlin.utils.applyV
+import com.gang.tools.kotlin.utils.showToast
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 

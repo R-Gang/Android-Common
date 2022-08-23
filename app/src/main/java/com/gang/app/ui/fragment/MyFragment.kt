@@ -3,11 +3,11 @@ package com.gang.app.ui.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.gang.app.R
+import com.gang.library.common.Permission.toGetRead_Write
 import com.gang.library.common.dimension.statusBarHeight
-import com.gang.library.common.utils.SysUtils.toGetRead_Write
-import com.gang.library.common.utils.vClick
 import com.gang.library.ui.adapter.VPFragmentAdapter
 import com.gang.library.ui.fragment.BaseFragment
+import com.gang.tools.kotlin.utils.vClick
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.android.synthetic.main.fragment_my.*
 

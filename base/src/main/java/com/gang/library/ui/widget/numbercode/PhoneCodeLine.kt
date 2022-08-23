@@ -9,14 +9,12 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnKeyListener
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gang.library.R
-import com.gang.library.common.utils.showKeyBoard
+import com.gang.tools.kotlin.utils.showKeyBoard
 import kotlinx.android.synthetic.main.phone_code.view.*
-import java.util.*
 
 /**
  *

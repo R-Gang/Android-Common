@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gang.library.common.AppManager
 import com.gang.library.common.CrashHandler
 import com.gang.library.common.EventBus
-import com.gang.library.common.user.Config
 import com.gang.library.common.ext.notch.CutoutUtil
 import com.gang.library.common.ext.notch.callback.CutoutAdapt
 import com.gang.library.common.ext.notch.callback.NotchCallback
+import com.gang.library.common.user.Config
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.base_title_bar.*
 import org.greenrobot.eventbus.Subscribe
@@ -93,6 +93,11 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun dark() {
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    }
+
+    //应用运行时，保持屏幕高亮，不锁屏
+    open fun screenHighlight() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     /**

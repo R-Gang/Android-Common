@@ -25,7 +25,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.gang.library.R
-import com.gang.library.common.utils.showToast
+import com.gang.tools.kotlin.utils.showToast
 import com.tencent.smtt.sdk.*
 import java.io.File
 import java.text.DecimalFormat
