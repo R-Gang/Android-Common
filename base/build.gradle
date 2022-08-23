@@ -31,7 +31,7 @@ android {
         renderscriptSupportModeEnabled true    // Enable RS support
     }
 
-    ndkVersion "21.1.6352462"
+    ndkVersion "22.1.7171670"
 
     dexOptions {
         javaMaxHeapSize "4g"
