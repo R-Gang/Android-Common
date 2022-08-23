@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
 import com.gang.library.R
-import com.gang.library.common.dimension.dip2px
+import com.gang.tools.kotlin.dimension.dip2px
 import com.gang.tools.kotlin.utils.gone
 import com.gang.tools.kotlin.utils.show
 import org.jetbrains.annotations.NotNull

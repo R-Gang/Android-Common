@@ -5,8 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.gang.library.R
-import com.gang.library.common.dimension.dp
-import com.gang.library.common.dimension.dpF
+import com.gang.tools.kotlin.dimension.dpF
 
 /**
  * @ClassName: haoruigang
@@ -17,7 +16,7 @@ import com.gang.library.common.dimension.dpF
 class SquircleImageView : AppCompatImageView {
 
     private var borderWidth //不规则圆角边框宽度
-            = 1.dp
+            = 1.dpF
     private var borderColor //不规则圆角边框颜色
             = 0x20000000
 
@@ -61,6 +60,7 @@ class SquircleImageView : AppCompatImageView {
             //不规则圆角边框宽度
             borderWidth =
                 types.getDimensionPixelOffset(R.styleable.SquircleImageView_siv_border_width, 1)
+                    .toFloat()
             //不规则圆角边框颜色
             borderColor =
                 types.getColor(R.styleable.SquircleImageView_siv_border_color, Color.TRANSPARENT)

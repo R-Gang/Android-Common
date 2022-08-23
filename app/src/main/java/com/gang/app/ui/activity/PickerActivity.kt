@@ -6,11 +6,11 @@ import android.view.View
 import android.widget.Toast
 import com.gang.app.R
 import com.gang.library.common.Permission.getScanCamere
-import com.gang.library.common.dimension.statusBarHeight
 import com.gang.library.common.ext.permissions.BasePermissionActivity
 import com.gang.library.common.user.Config
 import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
+import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.LogUtils
 import com.gang.tools.kotlin.utils.typefaceAll
 import com.gang.tools.kotlin.utils.vClick

@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.Nullable
 import com.gang.app.R
-import com.gang.library.common.dimension.dip2px
+import com.gang.tools.kotlin.dimension.dip2px
 import com.scwang.smart.refresh.layout.api.RefreshFooter
 import com.scwang.smart.refresh.layout.api.RefreshKernel
 import com.scwang.smart.refresh.layout.api.RefreshLayout

@@ -5,7 +5,7 @@ ext {
             minSdkVersion         : 26,
             targetSdkVersion      : 29,
 
-            tools_utils           : "v1.0.0",
+            tools_utils           : "v1.0.0-beta.1",
 
             retrofit2ConverterGson: "2.9.0"
 

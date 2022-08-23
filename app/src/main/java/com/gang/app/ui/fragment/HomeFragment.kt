@@ -11,13 +11,13 @@ import com.gang.app.ui.activity.PickerActivity
 import com.gang.app.ui.activity.SpannableActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
-import com.gang.library.common.dimension.px2dip
-import com.gang.library.common.dimension.statusBarHeight
 import com.gang.library.common.view.manager.LayoutManager
 import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
 import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
+import com.gang.tools.kotlin.dimension.px2dip
+import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.toActivityAnimation
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
