@@ -12,7 +12,7 @@ import com.orhanobut.logger.Logger
 import com.tencent.smtt.sdk.QbSdk
 
 
-open class BaseApplication : MultiDexApplication() {
+open class BaseApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -77,7 +77,7 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     companion object {
-        const val TAG = "BaseApplication"
+        const val TAG = "BaseApp"
 
         /**
          * 获取系统上下文

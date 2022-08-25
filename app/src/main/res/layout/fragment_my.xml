@@ -74,7 +74,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.gang.library.ui.widget.SquircleImageView
+    <com.gang.library.common.view.SquircleImageView
         android:id="@+id/ivAvater"
         android:layout_width="120dp"
         android:layout_height="120dp"

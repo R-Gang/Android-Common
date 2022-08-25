@@ -40,7 +40,7 @@
     // 万能适配器
     implementation 'com.zhy:base-adapter:3.0.3'
     // recyclerview
-    implementation 'androidx.recyclerview:recyclerview:1.1.0@aar'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1@aar'
     // xrecyclerview
     implementation('com.jcodecraeer:xrecyclerview:1.6.0') {
         // exclude group: 'com.android.support', module: 'design'

@@ -2,9 +2,9 @@ package com.gang.app.ui.adapter
 
 import android.content.Context
 import com.gang.app.ui.bean.HomeIcon
-import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
-import com.gang.library.common.view.xrecyclerview.xrecycleradapter.XrecyclerAdapter
-import com.gang.library.common.view.xrecyclerview.xrecycleradapter.XrecyclerViewHolder
+import com.gang.recycler.kotlin.interfaces.ViewOnItemClick
+import com.gang.recycler.kotlin.recycleradapter.RecyclerAdapter
+import com.gang.recycler.kotlin.recycleradapter.RecyclerViewHolder
 import kotlinx.android.synthetic.main.item_home_menu.view.*
 
 /**
@@ -26,13 +26,13 @@ import kotlinx.android.synthetic.main.item_home_menu.view.*
  */
 class HomeMenuAdapter(
     datas: MutableList<*>, `object`: Any, onItemClick1: ViewOnItemClick,
-    override val layoutResId: Int
+    override val layoutResId: Int,
 ) :
-    XrecyclerAdapter(datas, `object`, onItemClick1) {
+    RecyclerAdapter(datas, `object`, onItemClick1) {
 
     var homeIcon: HomeIcon? = null
 
-    override fun convert(holder: XrecyclerViewHolder, position: Int, context: Context) {
+    override fun convert(holder: RecyclerViewHolder, position: Int, context: Context) {
         holder.view.apply {
             homeIcon = datas[position] as HomeIcon
 

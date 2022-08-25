@@ -18,8 +18,10 @@ import com.alibaba.sdk.android.push.noonesdk.PushInitConfig
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.register.MiPushRegister
 import com.gang.app.common.user.Configs
-import com.gang.library.BaseApplication
+import com.gang.library.BaseApp
 import com.gang.library.common.user.Config
+import com.gang.recycler.kotlin.manager.LayoutManager
+import com.gang.tools.kotlin.ToolsConfig
 import com.gang.tools.kotlin.utils.LogUtils
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
@@ -30,13 +32,13 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.uuzuche.lib_zxing.activity.ZXingLibrary
 
 
-class MyApplication : BaseApplication() {
+class MyApplication : BaseApp() {
 
     private val TAG = "AlibabaPush"
 
     override fun onCreate() {
         // 是否显示日志
-        com.gang.tools.kotlin.Config.isShowLog = true
+        ToolsConfig.isShowLog = true
 
         // 是否开启全局页面管理(默认开启)
         Config.activityEnabled = true
@@ -53,6 +55,8 @@ class MyApplication : BaseApplication() {
         initLogger()
         preinitX5WebCore()//预加载x5内核
         initDisplayOpinion()//初始化ZXing扫描
+
+        LayoutManager.instance?.init(this) // 初始化RecyclerView
 
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
@@ -98,7 +102,7 @@ class MyApplication : BaseApplication() {
             .build()
         PushServiceFactory.init(config)
         val pushService = PushServiceFactory.getCloudPushService()
-        pushService.setLogLevel(if (com.gang.tools.kotlin.Config.isShowLog) CloudPushService.LOG_DEBUG else CloudPushService.LOG_OFF);
+        pushService.setLogLevel(if (ToolsConfig.isShowLog) CloudPushService.LOG_DEBUG else CloudPushService.LOG_OFF);
         pushService.register(applicationContext, object : CommonCallback {
             override fun onSuccess(response: String) {
                 Log.i(TAG, "init cloudchannel success")

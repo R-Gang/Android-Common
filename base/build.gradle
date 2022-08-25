@@ -75,11 +75,6 @@ dependencies {
     // 沉浸式状态栏
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
-    // xrecyclerview
-    implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
-    //流式布局
-    implementation 'com.google.android:flexbox:2.0.1'
-
     // x5 tbs
     implementation 'com.tencent.tbs:tbssdk:44085'
 

@@ -103,9 +103,8 @@ dependencies {
     implementation rootProject.ext.dependencies["anko-sdk25"]
     implementation rootProject.ext.dependencies["anko-sdk25-coroutines"]
 
-    // xrecyclerview
+    // recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.2.1@aar'
-    implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
 
     //日志工具类 logger
     implementation 'com.orhanobut:logger:2.2.0'
@@ -117,7 +116,7 @@ dependencies {
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
     // 常用类(以上为基类关联依赖)`
 
-    // SmartRefreshLayout
+    // SmartRefreshLayou`t
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
@@ -136,6 +135,8 @@ dependencies {
     implementation 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.6.0'
 
 
+    // 视图列表管理
+    implementation rootProject.ext.dependencies["recycler-common"]
     // 实用工具类
     implementation rootProject.ext.dependencies["tools-utils"]
 

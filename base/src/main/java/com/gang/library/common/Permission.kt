@@ -5,7 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.gang.library.BaseApplication.Companion.TAG
+import com.gang.library.BaseApp.Companion.TAG
 import com.gang.library.R
 import com.gang.library.common.ext.permissions.BasePermissionActivity
 import com.gang.library.common.ext.permissions.BasePermissionFragment

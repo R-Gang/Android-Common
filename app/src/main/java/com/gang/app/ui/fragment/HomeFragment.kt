@@ -11,11 +11,11 @@ import com.gang.app.ui.activity.PickerActivity
 import com.gang.app.ui.activity.SpannableActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
-import com.gang.library.common.view.manager.LayoutManager
-import com.gang.library.common.view.xrecyclerview.onitemclick.ViewOnItemClick
 import com.gang.library.ui.fragment.BaseFragment
 import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
+import com.gang.recycler.kotlin.interfaces.ViewOnItemClick
+import com.gang.recycler.kotlin.manager.LayoutManager
 import com.gang.tools.kotlin.dimension.px2dip
 import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.toActivityAnimation
@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         homeMenu.add(HomeIcon(1, R.mipmap.cate2, "业务板块"))
         homeMenu.add(HomeIcon(2, R.mipmap.cate3, "产品中心"))
         homeMenu.add(HomeIcon(3, R.mipmap.cate4, "营销网络"))
-        LayoutManager.instance?.init(activity)?.initRecyclerGrid(recyclerView, 4)
+        LayoutManager.instance?.initRecyclerGrid(recyclerView, 4)
         recyclerView.adapter = HomeMenuAdapter(
             homeMenu,
             mActivity, this,

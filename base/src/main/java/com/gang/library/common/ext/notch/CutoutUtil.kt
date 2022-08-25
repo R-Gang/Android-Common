@@ -9,7 +9,7 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.gang.library.BaseApplication.Companion.appContext
+import com.gang.library.BaseApp.Companion.appContext
 import com.gang.library.common.ext.notch.callback.NotchCallback
 import com.gang.tools.kotlin.utils.LogUtils
 

@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.gang.app.R
 import com.gang.library.common.Permission.toGetRead_Write
-import com.gang.library.ui.adapter.VPFragmentAdapter
 import com.gang.library.ui.fragment.BaseFragment
+import com.gang.recycler.kotlin.viewpager.VPFragmentAdapter
 import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.vClick
 import com.google.android.material.appbar.CollapsingToolbarLayout

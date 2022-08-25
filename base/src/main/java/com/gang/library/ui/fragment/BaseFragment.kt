@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.gang.library.common.EventBus
-import com.gang.library.common.user.Config
 import com.gang.library.common.ext.notch.CutoutUtil
 import com.gang.library.common.ext.notch.callback.CutoutAdapt
 import com.gang.library.common.ext.notch.callback.NotchCallback
+import com.gang.library.common.user.Config
 import com.gang.library.ui.activity.BaseActivity
 import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe
@@ -113,6 +113,13 @@ abstract class BaseFragment : Fragment() {
     protected abstract val layoutId: Int
 
     /**
+     * 初始化View
+     *
+     * @param savedInstanceState
+     */
+    abstract fun initView(savedInstanceState: Bundle?)
+
+    /**
      * 初始化数据
      */
     abstract fun initData()
@@ -123,13 +130,6 @@ abstract class BaseFragment : Fragment() {
     fun <T : View?> findViewId(v: Int): T {
         return mActivity.findViewById<T>(v)
     }
-
-    /**
-     * 初始化View
-     *
-     * @param savedInstanceState
-     */
-    abstract fun initView(savedInstanceState: Bundle?)
 
     /**
      * 刘海屏适配

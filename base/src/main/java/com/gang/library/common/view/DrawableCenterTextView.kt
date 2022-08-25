@@ -1,27 +1,23 @@
-package com.gang.library.ui.widget
+package com.gang.library.common.view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 
-@SuppressLint("AppCompatCustomView")
-class DrawableCenterTextView : TextView {
-    constructor(context: Context?) : super(context) { // TODO Auto-generated constructor stub
-    }
+class DrawableCenterTextView : AppCompatTextView {
+
+    constructor(context: Context) : super(context)
 
     constructor(
-        context: Context?, attrs: AttributeSet?,
-        defStyle: Int
-    ) : super(context, attrs, defStyle) { // TODO Auto-generated constructor stub
-    }
+        context: Context, attrs: AttributeSet?,
+        defStyle: Int,
+    ) : super(context, attrs, defStyle)
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(
+    constructor(context: Context, attrs: AttributeSet?) : super(
         context,
         attrs
-    ) { // TODO Auto-generated constructor stub
-    }
+    )
 
     override fun onDraw(canvas: Canvas) { //在布局文件中设置TextView的四周图片，用getCompoundDrawables方法可以获取这4个位置的图片
         val drawables = compoundDrawables

@@ -177,9 +177,21 @@ abstract class BaseActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }
 
-    /********************* 子类实现  */ // 获取布局文件
-    abstract val layoutId: Int
+    /********************* 子类实现  */
+    /**
+     * 该抽象方法就是 onCreate中需要的layoutId
+     *
+     * @return
+     */
+    abstract val layoutId: Int  // 获取布局文件
 
+    /**
+     * 初始化View
+     *
+     * @param view
+     * @param savedInstanceState
+     */
+    abstract fun initView(savedInstanceState: Bundle?)
 
     /**
      * 初始化数据
@@ -192,14 +204,6 @@ abstract class BaseActivity : AppCompatActivity() {
     fun <T : View?> findViewId(v: Int): T {
         return findViewById<T>(v)
     }
-
-    /**
-     * 初始化View
-     *
-     * @param view
-     * @param savedInstanceState
-     */
-    abstract fun initView(savedInstanceState: Bundle?)
 
     /**
      * 刘海屏适配

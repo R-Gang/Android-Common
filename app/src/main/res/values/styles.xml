@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/transparent20</item>
-        <item name="colorAccent">@color/col_02</item>
+        <item name="colorAccent">@color/col_02b8d6</item>
         <!--允许内容过度 toActivityAnimation 需要-->
         <item name="android:windowContentTransitions">true</item>
         <!--全局禁用掉系统Activity切换的动画 使用自定义动画是打开-->
