@@ -46,10 +46,10 @@ open class BaseApp : MultiDexApplication() {
         )
     }
 
-    fun initLogger() {
+    fun initLogger(isShowLog: Boolean = false) {
         Logger.addLogAdapter(object : AndroidLogAdapter() {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
+                return isShowLog
             }
         })
     }

@@ -28,6 +28,7 @@
                 android:paddingBottom="40dp">
 
                 <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HI!"
@@ -92,6 +93,7 @@
         app:targetY="35dp" />
 
     <TextView
+        android:id="@+id/tvSubTitle"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginStart="72dp"

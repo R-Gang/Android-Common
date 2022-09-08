@@ -153,7 +153,7 @@ object Permission {
                 }
 
                 override fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {
-                    LogUtils.e(TAG, "TODO: WRITE_EXTERNAL_STORAGE Denied")
+                    LogUtils.e(TAG, "TODO: READ_EXTERNAL_STORAGE Denied")
                 }
             })
     }

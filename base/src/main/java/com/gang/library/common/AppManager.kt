@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Process
 import java.util.*
+import kotlin.system.exitProcess
 
 /**
  *
@@ -40,8 +41,8 @@ class AppManager private constructor() {
      * 结束当前Activity（堆栈中最后一个压入的）
      */
     fun finishActivity() {
-        val activity = activityStack!!.lastElement()
-        finishActivity(activity)
+        val activity = activityStack?.lastElement()
+        activity?.let { finishActivity(it) }
     }
 
     /**
@@ -56,10 +57,12 @@ class AppManager private constructor() {
      * 结束指定类名的Activity
      */
     fun finishActivity(cls: Class<*>) {
-        for (activity in activityStack!!) {
-            if (activity?.javaClass == cls) {
-                finishActivity(activity)
-                break
+        activityStack?.apply {
+            for (activity in this) {
+                if (activity?.javaClass == cls) {
+                    finishActivity(activity)
+                    break
+                }
             }
         }
     }
@@ -68,12 +71,14 @@ class AppManager private constructor() {
      * 结束所有Activity
      */
     fun finishAllActivity() {
-        for (i in activityStack!!.indices) {
-            if (null != activityStack!![i]) {
-                activityStack!![i]?.finish()
+        activityStack?.apply {
+            for (i in indices) {
+                if (null != this[i]) {
+                    this[i]?.finish()
+                }
             }
+            activityStack?.clear()
         }
-        activityStack?.clear()
     }
 
     /**
@@ -84,7 +89,7 @@ class AppManager private constructor() {
             finishAllActivity()
             //退出程序
             Process.killProcess(Process.myPid())
-            System.exit(1)
+            exitProcess(1)
         } catch (e: Exception) {
         }
     }

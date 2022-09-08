@@ -2,6 +2,8 @@
 
 引入方式：
 
+[![](https://jitpack.io/v/R-Gang/Android-Common.svg)](https://jitpack.io/#R-Gang/Android-Common)
+
     allprojects {
         repositories {
             ...
@@ -100,7 +102,7 @@
 
     // BGA Zxing
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
-    //AndroidX 版本
+    // AndroidX 版本
     implementation 'com.github.jenly1314:zxing-lite:2.2.1'
 
 
@@ -114,6 +116,8 @@
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
     // Glide 加载图片
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    // Coil 图片加载框架
+    implementation 'io.coil-kt:coil:2.2.0'
     // 提供了局部加载长图，还提供缩放支持
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     // universal-image-loader
@@ -225,13 +229,13 @@
     implementation 'com.bm.photoview:library:1.4.1'
     // 拍照/选择图片
     implementation 'com.jph.takephoto:takephoto_library:4.0.3'
-    // 选择图库
-    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
-    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
+    // 选择图库（图片裁剪）
+    implementation 'com.github.bingoogolapple:BGAPhotoPicker-Android:2.0.3'
+    implementation 'com.github.bingoogolapple:BGABaseAdapter-Android:2.0.1'
     // 图片选择
     implementation 'com.zhihu.android:matisse:0.5.3-beta3'
     // 图片、视频、音频 选择
-    implementation('com.github.LuckSiege.PictureSelector:picture_library:v2.2.3') {
+    implementation ('com.github.LuckSiege.PictureSelector:picture_library:v2.5.8') {
     // exclude group: 'com.github.bumptech.glide' //通过排除依赖冲突 
     // }
 
@@ -242,6 +246,8 @@
     implementation 'pub.devrel:easypermissions:3.0.0'
     // 一行代码搞定Android 6.0动态权限授权、权限管理
     implementation 'com.github.dfqin:grantor:2.5'
+    // rxpermissions2(配合rxjava)
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
     // 一种粗暴快速的 Android 全屏幕适配方案
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'

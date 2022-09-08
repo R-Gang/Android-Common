@@ -15,5 +15,5 @@ package com.gang.library.common.ext.permissions
  */
 open interface PermissionCallBackM {
     fun onPermissionGrantedM(requestCode: Int, vararg perms: String?)
-    fun onPermissionDeniedM(requestCode: Int, vararg perms: String?)
+    fun onPermissionDeniedM(requestCode: Int, vararg perms: String?) {}
 }

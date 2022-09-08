@@ -1,4 +1,4 @@
-package com.gang.library.ui.activity
+package com.gang.library.base
 
 import android.app.Activity
 import android.content.Context
@@ -36,7 +36,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Config.setContentView) {
+        if (layoutId > 0) {
             setContentView(layoutId)
         }
         mContext = this
@@ -98,6 +98,11 @@ abstract class BaseActivity : AppCompatActivity() {
     //应用运行时，保持屏幕高亮，不锁屏
     open fun screenHighlight() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    //应用运行时，解除保持屏幕高亮，不锁屏
+    open fun clearScreenHighlight() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     /**
@@ -177,7 +182,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }
 
-    /********************* 子类实现  */
+    /***************** 子类实现 start ****************/
     /**
      * 该抽象方法就是 onCreate中需要的layoutId
      *
@@ -216,7 +221,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * 初始化点击事件
      */
     open fun onClick() {
-        rl_back_button?.setOnClickListener { finish() }
+
     }
 
     override fun onStart() {

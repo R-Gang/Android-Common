@@ -32,7 +32,7 @@ import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.uuzuche.lib_zxing.activity.ZXingLibrary
 
 
-class MyApplication : BaseApp() {
+class MyApp : BaseApp() {
 
     private val TAG = "AlibabaPush"
 
@@ -54,13 +54,15 @@ class MyApplication : BaseApp() {
         struct()
         initLogger()
         preinitX5WebCore()//预加载x5内核
+        Config.isOpenTBSX5QbSdk = true
+        initX5Qb()
         initDisplayOpinion()//初始化ZXing扫描
 
         LayoutManager.instance?.init(this) // 初始化RecyclerView
 
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-            layout.setPrimaryColorsId(R.color.cBCBCBC, R.color.white)//全局设置主题颜色
+            layout.setPrimaryColorsId(com.gang.tools.R.color.cBCBCBC, R.color.white)//全局设置主题颜色
             ClassicsHeader(context).setDrawableSize(20f)//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
         }
         //设置全局的Footer构建器
@@ -171,11 +173,12 @@ class MyApplication : BaseApp() {
 
 
     companion object {
-        val instance: MyApplication
+        val instance: MyApp
             get() = SingletonHolder.INSTANCE
     }
 
     private object SingletonHolder {
-        var INSTANCE: MyApplication = MyApplication()
+        var INSTANCE: MyApp = MyApp()
     }
+
 }

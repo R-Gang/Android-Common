@@ -1,27 +1,23 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-//支持maven插件，并填入自己的github的用户名
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.R-Gang'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+    id 'kotlin-android-extensions'
+}
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-//        applicationId "com.gang.library"
-        minSdkVersion rootProject.ext.android["minSdkVersion"]
-        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode 17
-        versionName "0.1.7"
+        //applicationId "com.gang.library"
+        minSdk rootProject.ext.android["minSdkVersion"]
+        targetSdk rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
-
-        //添加如下配置 开启annotation processor
-        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
         ndk {
             abiFilters "armeabi", "armeabi-v7a", 'x86'
@@ -33,35 +29,51 @@ android {
 
     ndkVersion "22.1.7171670"
 
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
-
     lintOptions {
-        disable 'InvalidPackage'
-        disable 'MissingTranslation'
         checkReleaseBuilds false
         abortOnError false
-        disable 'GoogleAppIndexingWarning'
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
 
+    buildFeatures {
+        dataBinding true
+    }
+
+    publishing {//这个不能少
+        singleVariant("release")
+    }
+}
+
+afterEvaluate {
+    publishing {
+        // 当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
+        // def versionName = "1.0"
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release // 表示发布 release（jitpack 都不会使用到）
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.github.R-Gang' // 这个是依赖库的组 id
+                artifactId = 'Android-Common' // 依赖库的名称（jitpack 都不会使用到）
+                version = rootProject.ext.android["versionName"]
+            }
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.4.0-alpha03'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
     // Dex处理
     implementation 'androidx.multidex:multidex:2.0.1'

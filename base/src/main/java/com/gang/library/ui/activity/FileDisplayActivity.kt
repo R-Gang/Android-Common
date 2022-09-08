@@ -25,6 +25,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.gang.library.R
+import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.tools.kotlin.utils.showToast
 import com.tencent.smtt.sdk.*
 import java.io.File
@@ -69,7 +70,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
             mFileName = parseName(this)
 
             mWebView = findViewById(R.id.web)
-            val settings = mWebView.getSettings()
+            val settings = mWebView.settings
             settings.savePassword = false
             settings.javaScriptEnabled = true
             settings.setAllowFileAccessFromFileURLs(true)
@@ -82,7 +83,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
             settings.setAppCacheEnabled(false) //禁止缓存
             settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
             settings.loadWithOverviewMode = true
-            mWebView.setWebViewClient(object : WebViewClient() {
+            mWebView.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(
                     view: WebView,
                     url: String,
@@ -90,18 +91,18 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
                     view.loadUrl(url)
                     return true
                 }
-            })
-            mWebView.setWebChromeClient(WebChromeClient())
+            }
+            mWebView.webChromeClient = WebChromeClient()
             if (this.contains(".mp4")) {
                 mWebView.loadUrl(mFileUrl)
-                mWebView.setVisibility(View.VISIBLE)
+                mWebView.visibility = View.VISIBLE
                 rl_tbsView?.visibility = View.GONE
-            } else if (isLocalExist) {
+            } else if (isLocalExist == true) {
                 tv_download?.text = "打开文件"
                 tv_download?.visibility = View.GONE
                 displayFile()
             } else {
-                if (!this?.contains("http")) {
+                if (!this.contains("http")) {
                     AlertDialog.Builder(this@FileDisplayActivity)
                         .setTitle("温馨提示:")
                         .setMessage("文件的url地址不合法哟，无法进行下载")
@@ -124,13 +125,12 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
      */
     private fun toUtf8String(url: String): String {
         val sb = StringBuffer()
-        for (i in 0 until url.length) {
-            val c = url[i]
-            if (c.toInt() >= 0 && c.toInt() <= 255) {
+        for (element in url) {
+            val c = element
+            if (c.code >= 0 && c.toInt() <= 255) {
                 sb.append(c)
             } else {
-                var b: ByteArray
-                b = try {
+                val b: ByteArray = try {
                     c.toString().toByteArray(charset("utf-8"))
                 } catch (ex: Exception) {
                     println(ex)
@@ -148,18 +148,18 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
 
     private fun findViewById() {
         tv_download = findViewById(R.id.tv_download)
-        val back_icon = findViewById<RelativeLayout>(R.id.rl_back_button)
-        tv_title = findViewById(R.id.tv_title)
+        val titleBar = findViewById<BaseTitleBar>(R.id.titleBar)
+        tv_title = titleBar.getTitle()
         progressBar_download = findViewById(R.id.progressBar_download)
         rl_tbsView = findViewById(R.id.rl_tbsView)
-        back_icon.setOnClickListener { v: View? -> finish() }
+        titleBar.getLeftView().setOnClickListener { v: View? -> finish() }
     }
 
     /**
      * 获取传过来的文件url和文件名
      */
     private val fileUrlByIntent: Unit
-        private get() {
+        get() {
             val intent = intent
             mFileUrl = intent.getStringExtra("fileUrl")
             fileName = intent.getStringExtra("fileName")
@@ -171,7 +171,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
      */
     private fun displayFile() {
         val bundle = Bundle()
-        bundle.putString("filePath", localFile.path)
+        bundle.putString("filePath", localFile?.path)
         bundle.putString("tempPath", Environment.getExternalStorageDirectory().path)
         val parseFormat = parseFormat(mFileName.toString())
         val result = mTbsReaderView?.preOpen(parseFormat, false) as Boolean
@@ -205,14 +205,16 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         return fileName
     }
 
-    private val isLocalExist: Boolean
-        private get() = localFile.exists()
+    private val isLocalExist: Boolean?
+        get() = localFile?.exists()
 
-    private val localFile: File
-        private get() = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            mFileName
-        )
+    private val localFile: File?
+        get() = mFileName?.let {
+            File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                it
+            )
+        }
 
     /**
      * 下载文件
@@ -249,6 +251,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
         }
     }
 
+    @SuppressLint("Range")
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     private fun queryDownloadStatus() {
         val query = DownloadManager.Query()
@@ -270,8 +273,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
                     )
                 // 状态所在的列索引
                 val status = cursor.getInt(
-                    cursor
-                        .getColumnIndex(DownloadManager.COLUMN_STATUS)
+                    cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
                 )
                 tv_download?.text = ("下载中...(" + formatKMGByBytes(currentBytes)
                         + "/" + formatKMGByBytes(totalBytes) + ")")
@@ -287,7 +289,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
                 ) {
                     tv_download?.visibility = View.GONE
                     tv_download?.performClick()
-                    if (isLocalExist) {
+                    if (isLocalExist == true) {
                         tv_download?.visibility = View.GONE
                         displayFile()
                     }
@@ -321,10 +323,7 @@ class FileDisplayActivity : Activity(), TbsReaderView.ReaderCallback {
 
     private inner class DownloadObserver(handler: Handler) :
         ContentObserver(handler) {
-        override fun onChange(
-            selfChange: Boolean,
-            uri: Uri,
-        ) {
+        override fun onChange(selfChange: Boolean) {
             queryDownloadStatus()
         }
     }

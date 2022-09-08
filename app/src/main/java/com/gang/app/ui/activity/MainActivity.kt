@@ -90,7 +90,7 @@ class MainActivity : BasePermissionActivity(), View.OnClickListener {
         val fragmentManager: FragmentManager = supportFragmentManager
         val ft = fragmentManager.beginTransaction()
         hideFragments(ft)
-        radioButtons.let { applyV(it, TABSPEC, radioButtons[index]) }
+        applyV(radioButtons, TABSPEC, radioButtons[index])
         when (index) {
             0 ->  //首页
                 if (null == homeFragment) {

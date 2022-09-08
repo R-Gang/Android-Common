@@ -1,4 +1,4 @@
-package com.gang.library.ui.fragment
+package com.gang.library.base
 
 import android.app.Activity
 import android.content.Context
@@ -14,7 +14,6 @@ import com.gang.library.common.ext.notch.CutoutUtil
 import com.gang.library.common.ext.notch.callback.CutoutAdapt
 import com.gang.library.common.ext.notch.callback.NotchCallback
 import com.gang.library.common.user.Config
-import com.gang.library.ui.activity.BaseActivity
 import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -51,22 +50,21 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        return if (layoutId > 0) {
+            inflater.inflate(layoutId, container, false)
+        } else {
+            super.onCreateView(inflater, container, savedInstanceState)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         if (Config.eventBusEnabled) {
             if (!EventBus.isRegistered(this)) {
                 EventBus.register(this) //注册EventBus
             }
         }
-        if (Config.setContentView) {
-            val view = inflater.inflate(layoutId, container, false)
-            return view
-        } else {
-            return super.onCreateView(inflater, container, savedInstanceState)
-        }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
         if (Config.statusBarEnabled) {
             StatusBarUtil.setTranslucentForImageView(mActivity, 0, null)
         }

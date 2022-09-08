@@ -2,6 +2,7 @@ package com.gang.app.ui.fragment
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -11,12 +12,13 @@ import com.gang.app.ui.activity.PickerActivity
 import com.gang.app.ui.activity.SpannableActivity
 import com.gang.app.ui.adapter.HomeMenuAdapter
 import com.gang.app.ui.bean.HomeIcon
-import com.gang.library.ui.fragment.BaseFragment
+import com.gang.library.base.BaseFragment
 import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
 import com.gang.recycler.kotlin.interfaces.ViewOnItemClick
 import com.gang.recycler.kotlin.manager.LayoutManager
 import com.gang.tools.kotlin.dimension.px2dip
+import com.gang.tools.kotlin.dimension.px2sp
 import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.toActivityAnimation
 import com.orhanobut.logger.Logger
@@ -42,10 +44,11 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         view?.findViewById<BaseTitleBar>(R.id.myBoolbar)?.apply {
             goneLeftView()
             goneLine()
-            setTitle(resources.getString(R.string.app_title), R.color.black)
-            setBoldTitle()
-            getTitle().textSize = px2dip(54f)
-            setLLEmtity(statusBarHeight.toFloat())
+            setTitle(resources.getString(R.string.app_title),
+                R.color.black,
+                textSize = px2sp(54f),
+                style = Typeface.BOLD)
+            setLLEmtity(statusBarHeight)
         }
 
         refresh_layout.setRefreshHeader(ClassicsHeader(activity))

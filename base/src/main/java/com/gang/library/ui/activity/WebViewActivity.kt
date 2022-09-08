@@ -1,13 +1,16 @@
 package com.gang.library.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
 import com.gang.library.R
+import com.gang.library.base.BaseActivity
+import com.gang.library.ui.widget.BaseTitleBar
+import com.gang.tools.kotlin.dimension.statusBarHeight
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.base_title_bar.*
 
@@ -18,26 +21,28 @@ import kotlinx.android.synthetic.main.base_title_bar.*
 open class WebViewActivity : BaseActivity() {
 
 
-    lateinit var tvTitle: TextView
+    lateinit var titleBar: BaseTitleBar
     lateinit var wbXy: WebView
 
-    var mUrl: String? = ""
-    var mTitleName: String? = ""
+    var mUrl: String = ""
+    var mTitleName: String = ""
 
     override val layoutId: Int
         get() = R.layout.activity_webview
 
     override fun initView(savedInstanceState: Bundle?) {
-        tvTitle = findViewById(R.id.tv_title)
+        titleBar = findViewById(R.id.titleBar)
         wbXy = findViewById(R.id.wb_xy)
+        titleBar.setLLEmtity(statusBarHeight)
         fileUrlByIntent
-        mUrl?.let { setUrl(it) }
+        setUrl(mUrl)
     }
 
     override fun initData() {
         dark()
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     fun setUrl(url: String) { //声明WebSettings子类
         val webSettings = wbXy.settings
         webSettings.javaScriptEnabled = true
@@ -56,6 +61,7 @@ open class WebViewActivity : BaseActivity() {
         webSettings.defaultTextEncodingName = "utf-8" //设置编码格式
         //步骤3. 复写shouldOverrideUrlLoading()方法，使得打开网页时不调用系统浏览器， 而是在本WebView中显示
         wbXy.webViewClient = object : WebViewClient() {
+            @Deprecated("Deprecated in Java")
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 url: String,
@@ -73,9 +79,9 @@ open class WebViewActivity : BaseActivity() {
     val fileUrlByIntent: Unit
         get() {
             val intent = intent
-            mUrl = intent.getStringExtra("Url")
-            mTitleName = intent.getStringExtra("titleName")
-            tvTitle.text = mTitleName
+            mUrl = intent.getStringExtra("Url") as String
+            mTitleName = intent.getStringExtra("titleName") as String
+            titleBar.setTitle(mTitleName, com.gang.tools.R.color.color_2)
         }
 
     companion object {

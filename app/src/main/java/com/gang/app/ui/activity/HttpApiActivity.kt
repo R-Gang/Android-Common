@@ -8,7 +8,7 @@ import com.alibaba.sdk.android.push.popup.PopupNotifyClick
 import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
 import com.gang.library.common.ext.thread.ThreadPoolManager
-import com.gang.library.ui.activity.BaseActivity
+import com.gang.library.base.BaseActivity
 import com.gang.library.ui.widget.swipeback.helper.SwipeBackHelper
 import com.gang.library.ui.widget.swipeback.helper.dispatchTouchEvent
 import com.gang.tools.kotlin.dimension.checkNavigationBarShow

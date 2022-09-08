@@ -2,8 +2,8 @@ package com.gang.library.common.ext.permissions
 
 import android.R
 import android.content.Intent
+import com.gang.library.base.BaseFragment
 import com.gang.library.common.ext.permissions.easyPermission.EasyPermission
-import com.gang.library.ui.fragment.BaseFragment
 
 /**
  *
@@ -13,10 +13,6 @@ import com.gang.library.ui.fragment.BaseFragment
  * @Description:    动态请求权限
  * @Author:         haoruigang
  * @CreateDate:     2020/8/3 16:53
- * @UpdateUser:     更新者：
- * @UpdateDate:     2020/8/3 16:53
- * @UpdateRemark:   更新说明：
- * @Version:        1.0
  */
 abstract class BasePermissionFragment : BaseFragment(),
     EasyPermission.PermissionCallback {

@@ -46,8 +46,6 @@ object Config {
     const val TYPE_ZIP = 8
     const val TYPE_FILE = 9
 
-    // 是否开启设置页面(默认开启)
-    var setContentView = true
 
     // 是否开启全局页面管理(默认开启)
     var activityEnabled = true

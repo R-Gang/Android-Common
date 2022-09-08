@@ -1,5 +1,6 @@
 package com.gang.library.ui.widget
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
@@ -14,9 +15,10 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.Toolbar
 import com.gang.library.R
-import com.gang.tools.kotlin.dimension.dip2px
+import com.gang.tools.kotlin.dimension.dp
 import com.gang.tools.kotlin.utils.gone
 import com.gang.tools.kotlin.utils.show
+import com.gang.tools.kotlin.utils.vClick
 import org.jetbrains.annotations.NotNull
 
 class BaseTitleBar @JvmOverloads constructor(
@@ -36,16 +38,16 @@ class BaseTitleBar @JvmOverloads constructor(
     private val tvTitle = mView.findViewById<TextView>(R.id.tv_title)
     private val vLine = mView.findViewById<View>(R.id.title_line)
 
-    fun getBgView() = bgView
-    fun getllEmtity() = llEmtity
-    fun getLeftView() = leftView
-    fun getLeftIv() = leftIv
-    fun getLeftText() = leftText
-    fun getRightView() = rightView
-    fun getRightIv() = rightIv
-    fun getRightText() = rightText
-    fun getTitle() = tvTitle
-    fun getVLine() = vLine
+    fun getBgView(): Toolbar = bgView
+    fun getllEmtity(): ImageView = llEmtity
+    fun getLeftView(): RelativeLayout = leftView
+    fun getLeftIv(): ImageView = leftIv
+    fun getLeftText(): TextView = leftText
+    fun getRightView(): RelativeLayout = rightView
+    fun getRightIv(): ImageView = rightIv
+    fun getRightText(): TextView = rightText
+    fun getTitle(): TextView = tvTitle
+    fun getVLine(): View = vLine
 
     init {
         addView(mView)
@@ -55,106 +57,152 @@ class BaseTitleBar @JvmOverloads constructor(
         bgView.setBackgroundColor(context.resources.getColor(resId))
     }
 
-    fun goneLeftView() {
-        leftView.gone()
+    fun setTooBarHeight(height: Int): BaseTitleBar {
+        val param = bgView.layoutParams as ViewGroup.LayoutParams
+        param.height = height
+        bgView.layoutParams = param
+        return this
     }
 
-    fun setLeftIvRes(@DrawableRes @NotNull resId: Int) {
-        leftView.show()
-        leftIv.setImageResource(resId)
-        leftIv.background = null
-        leftIv.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    fun setLLEmtity(height: Int): BaseTitleBar {
+        llEmtity.show()
+        val llParams = llEmtity.layoutParams
+        llParams.height = height
+        llEmtity.layoutParams = llParams
+        return this
     }
 
-
-    fun setLeftText(text: String, @ColorRes colorRes: Int = 0) {
-        leftView.show()
-        leftText.text = text
-        if (colorRes != 0) {
-            leftText.setTextColor(context.resources.getColor(colorRes))
-        }
+    fun backLFinish(activity: Activity) {
+        leftView?.vClick { activity.finish() }
     }
 
-    fun setRightIvRes(@DrawableRes @NotNull resId: Int) {
-        val param = rightIv.layoutParams as RelativeLayout.LayoutParams
-        param.rightMargin = dip2px(24f).toInt()
-        rightIv.layoutParams = param
-        rightView.show()
-        rightIv.setImageResource(resId)
-        rightIv.scaleType = ImageView.ScaleType.CENTER_INSIDE
-    }
-
-    fun setRightText(text: String, @ColorRes colorRes: Int = 0, textSize: Float = 18f) {
-        val param = rightText.layoutParams as RelativeLayout.LayoutParams
-        param.rightMargin = dip2px(22f).toInt()
-        rightText.layoutParams = param
-        rightView.show()
-        rightText.text = text
-        rightText.textSize = textSize
-        if (colorRes != 0) {
-            rightText.setTextColor(context.resources.getColor(colorRes))
-        }
-    }
-
-    fun setTitle(text: String, @ColorRes colorRes: Int = 0) {
+    fun setTitle(
+        text: String,
+        @ColorRes colorRes: Int = 0,
+        textSize: Float = 18f,
+        tf: Typeface = Typeface.DEFAULT,
+        style: Int = Typeface.NORMAL,
+    ) {
         tvTitle.text = text
         if (colorRes != 0) {
             tvTitle.setTextColor(context.resources.getColor(colorRes))
         }
+        tvTitle.textSize = textSize
+        tvTitle.setTypeface(tf, style)
     }
 
     fun goneLine() {
         vLine.gone()
     }
 
-    fun setLeftIvScaleType(type: ImageView.ScaleType = ImageView.ScaleType.CENTER_INSIDE): BaseTitleBar {
-        leftIv.scaleType = type
-        return this
+    fun goneLeftView() {
+        leftView.gone()
     }
 
-    fun setRightFinishBtn(
+    fun setLeftIvRes(
+        @DrawableRes resId: Int,
+        type: ImageView.ScaleType = ImageView.ScaleType.CENTER_INSIDE,
+    ) {
+        leftView.show()
+        leftIv.setImageResource(resId)
+        leftIv.scaleType = type
+    }
+
+
+    fun setLeftText(
+        text: String,
+        @ColorRes colorRes: Int = 0,
+        textSize: Float = 18f,
+        tf: Typeface = Typeface.DEFAULT,
+        style: Int = Typeface.NORMAL,
+    ) {
+        leftView.show()
+        leftText.text = text
+        leftText.textSize = textSize
+        if (colorRes != 0) {
+            leftText.setTextColor(context.resources.getColor(colorRes))
+        }
+        leftText.setTypeface(tf, style)
+    }
+
+    fun setRightIvRes(
+        @DrawableRes resId: Int,
+        type: ImageView.ScaleType = ImageView.ScaleType.CENTER_INSIDE,
+    ) {
+        rightView.show()
+        rightIv.setImageResource(resId)
+        rightIv.scaleType = type
+    }
+
+    fun setRightIvParams(params: RelativeLayout.LayoutParams?) {
+        var param = rightIv.layoutParams as RelativeLayout.LayoutParams
+        if (params == null) {
+            param.rightMargin = 24.dp
+        } else {
+            param = params
+        }
+        rightIv.layoutParams = param
+    }
+
+    fun setRightText(
+        text: String,
+        @ColorRes colorRes: Int = 0,
+        textSize: Float = 18f,
+        tf: Typeface = Typeface.DEFAULT,
+        style: Int = Typeface.NORMAL,
+    ) {
+        rightView.show()
+        rightText.text = text
+        rightText.textSize = textSize
+        if (colorRes != 0) {
+            rightText.setTextColor(context.resources.getColor(colorRes))
+        }
+        rightText.setTypeface(tf, style)
+    }
+
+    fun setRightViewParams(params: RelativeLayout.LayoutParams?) {
+        var param = rightView.layoutParams as RelativeLayout.LayoutParams
+        if (params == null) {
+            param.rightMargin = 22.dp
+        } else {
+            param = params
+        }
+        rightView.layoutParams = param
+    }
+
+    fun setRightTextParams(params: RelativeLayout.LayoutParams?) {
+        var param = rightText.layoutParams as RelativeLayout.LayoutParams
+        if (params == null) {
+            param.rightMargin = 22.dp
+        } else {
+            param = params
+        }
+        rightText.layoutParams = param
+    }
+
+    fun setRightButton(
         text: String,
         @ColorRes colorRes: Int = 0,
         @DrawableRes bgResId: Int,
-        textSize: Float,
+        textSize: Float = 18f,
+        gravity: Int = Gravity.CENTER,
+        tf: Typeface = Typeface.DEFAULT,
+        style: Int = Typeface.NORMAL,
+        leftPadding: Int = 0,
+        topPadding: Int = 0,
+        rightPadding: Int = 0,
+        bottomPadding: Int = 0,
     ): BaseTitleBar {
-        val param = rightText.layoutParams as RelativeLayout.LayoutParams
-        param.rightMargin = dip2px(20f).toInt()
-        param.height = dip2px(24f).toInt()
-        rightText.layoutParams = param
+        rightView.show()
         rightText.text = text
         if (colorRes != 0) {
             rightText.setTextColor(context.resources.getColor(colorRes))
         }
         rightText.textSize = textSize
-        rightText.gravity = Gravity.CENTER
-        rightText.setPadding(dip2px(17f).toInt(), 0, dip2px(17f).toInt(), 0)
+        rightText.gravity = gravity
+        rightText.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
         rightText.setBackgroundResource(bgResId)
-        return this
-    }
-
-    fun setBoldTitle(): BaseTitleBar {
-        tvTitle.setTypeface(null, Typeface.BOLD)
-        return this
-    }
-
-    fun setBoldRightText(): BaseTitleBar {
-        rightText.setTypeface(null, Typeface.BOLD)
-        return this
-    }
-
-    fun setLLEmtity(height: Float): BaseTitleBar {
-        llEmtity.show()
-        val llParams = llEmtity.layoutParams
-        llParams.height = height.toInt()
-        getllEmtity().layoutParams = llParams
-        return this
-    }
-
-    fun setTooBarHeight(height: Float): BaseTitleBar {
-        val param = bgView.layoutParams as ViewGroup.LayoutParams
-        param.height = dip2px(height).toInt()
-        bgView.layoutParams = param
+        rightText.setTypeface(tf, style)
         return this
     }
 

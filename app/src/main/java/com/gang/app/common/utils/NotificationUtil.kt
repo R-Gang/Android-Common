@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 import com.alibaba.sdk.android.push.notification.CPushMessage
-import com.gang.app.MyApplication
+import com.gang.app.MyApp
 import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
 import com.gang.app.ui.activity.MainActivity
@@ -31,7 +31,7 @@ class NotificationUtil {
          */
         public fun buildNotification(context: Context?, message: CPushMessage) {
             val notificationManager: NotificationManager =
-                MyApplication.instance.createNotificationChannel()
+                MyApp.instance.createNotificationChannel()
             val remoteViews = RemoteViews(context?.packageName, R.layout.custom_notification)
             remoteViews.setImageViewResource(R.id.m_icon, R.mipmap.laopo)
             remoteViews.setTextViewText(R.id.m_title, message.getTitle())

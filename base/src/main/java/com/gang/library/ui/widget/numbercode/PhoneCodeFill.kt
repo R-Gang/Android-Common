@@ -51,7 +51,7 @@ class PhoneCodeFill : RelativeLayout {
 
     var color_default = R.drawable.rect_c6_f2_solid
     var color_focus = R.drawable.rect_c11_ff58_solid
-    var code4Color = R.color.color_f
+    var code4Color = com.gang.tools.R.color.color_f
     var vLine4Bg: Drawable?
     var flashDuration = 500
 
@@ -72,7 +72,7 @@ class PhoneCodeFill : RelativeLayout {
             // 第四个颜色
             code4Color =
                 types.getColor(R.styleable.PhoneCodeView_code4_color,
-                    context.getColor(R.color.color_f))
+                    context.getColor(com.gang.tools.R.color.color_f))
             // 第四个光标背景
             vLine4Bg = types.getDrawable(R.styleable.PhoneCodeView_vline4_bg)
             // 光标闪烁频率

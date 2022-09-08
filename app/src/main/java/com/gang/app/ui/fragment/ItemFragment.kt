@@ -1,17 +1,17 @@
 package com.gang.app.ui.fragment
 
 import android.os.Bundle
-import android.view.View
 import com.gang.app.R
-import com.gang.library.ui.fragment.BaseFragment
+import com.gang.library.base.BaseFragment
 
 class ItemFragment : BaseFragment() {
 
-    fun newInstance(): ItemFragment {
-        val fragment = ItemFragment()
-        val args = Bundle()
-        fragment.arguments = args
-        return fragment
+    companion object {
+        fun newInstance(args: Bundle): ItemFragment {
+            val fragment = ItemFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override val layoutId: Int
