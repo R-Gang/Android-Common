@@ -1,19 +1,28 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
     id 'maven-publish'
-    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
 }
 
 android {
-    compileSdk rootProject.ext.compileSdkVersion
+
+    /**
+     * 资源同名问题处理
+     * 每个子模块给资源名添加前缀，具体做法是在每个子模块的build.gradle文件的android块内添加一行代码：resourcePrefix “资源名前缀”：
+     */
+    compileSdk Android.compileSdkVersion
+    ndkVersion "22.1.7171670"
 
     defaultConfig {
-        //applicationId "com.gang.library"
-        minSdk rootProject.ext.android["minSdkVersion"]
-        targetSdk rootProject.ext.android["targetSdkVersion"]
-        versionCode rootProject.ext.android["versionCode"]
-        versionName rootProject.ext.android["versionName"]
+        minSdk Android.minSdkVersion
+        targetSdk Android.targetSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,56 +36,52 @@ android {
         renderscriptSupportModeEnabled true    // Enable RS support
     }
 
-    ndkVersion "22.1.7171670"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        useIR = true
+        jvmTarget = JavaVersion.VERSION_11
+        freeCompilerArgs += ["-Xskip-prerelease-check"]
+    }
+
+    afterEvaluate {
+        publishing {
+            // 当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
+            // def versionName = "1.0"
+            publications {
+                // Creates a Maven publication called "release".
+                release(MavenPublication) {
+                    // Applies the component for the release build variant.
+                    from components.release // 表示发布 release（jitpack 都不会使用到）
+
+                    // You can then customize attributes of the publication as shown below.
+                    groupId = 'com.github.R-Gang' // 这个是依赖库的组 id
+                    artifactId = 'Android-Common' // 依赖库的名称（jitpack 都不会使用到）
+                    version = Android.versionName
+                }
+            }
+        }
+    }
 
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-    }
-
     buildFeatures {
-        dataBinding true
+        dataBinding = true
     }
 
-    publishing {//这个不能少
-        singleVariant("release")
-    }
-}
-
-afterEvaluate {
-    publishing {
-        // 当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
-        // def versionName = "1.0"
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                // Applies the component for the release build variant.
-                from components.release // 表示发布 release（jitpack 都不会使用到）
-
-                // You can then customize attributes of the publication as shown below.
-                groupId = 'com.github.R-Gang' // 这个是依赖库的组 id
-                artifactId = 'Android-Common' // 依赖库的名称（jitpack 都不会使用到）
-                version = rootProject.ext.android["versionName"]
-            }
-        }
-    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api Support.appcompat
+    api Dependencies.androidx_multidex
 
-    // Dex处理
-    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
     //EventBus解耦
     implementation 'org.greenrobot:eventbus:3.2.0'
@@ -91,8 +96,32 @@ dependencies {
     implementation 'com.tencent.tbs:tbssdk:44085'
 
     // 实用工具类
-    implementation rootProject.ext.dependencies["tools-utils"]
+    implementation Dependencies.toolsUtils
 
+}
+
+
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+/**
+ * 点击 studio 右侧 Gradle 中的 lib-module 的 publishReleasePublicationToMavenLocal
+ * 或执行命令 ./gradlew publishReleasePublicationToMavenLocal，
+ * 执行成功就可以准备发布了。
+ */
+// 打包源码
+task androidSourcesJar(type: Jar) {
+    if (project.hasProperty("kotlin")) {
+        from android.sourceSets.main.java.getSrcDirs()
+    } else if (project.hasProperty("android")) {
+        from android.sourceSets.main.java.sourceFiles
+    } else {
+        println project
+        from sourceSets.main.allSource
+    }
+    classifier 'sources'
 }
 
 // 导出jar包

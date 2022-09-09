@@ -1,21 +1,20 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-android'
+    id 'kotlin-kapt'// 注解的插件，添加此组件使用@Bindable注解
 }
 
 android {
-    compileSdk rootProject.ext.compileSdkVersion
-    //buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk Android.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.gang.app"
-        minSdk rootProject.ext.android["minSdkVersion"]
-        targetSdk rootProject.ext.android["targetSdkVersion"]
-        versionCode rootProject.ext.android["versionCode"]
-        versionName rootProject.ext.android["versionName"]
+        applicationId App.applicationId
+        minSdk Android.minSdkVersion
+        targetSdk Android.targetSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         multiDexEnabled true
 
@@ -74,6 +73,10 @@ android {
         jvmTarget = JavaVersion.VERSION_11
     }
 
+    buildFeatures {
+        dataBinding true
+    }
+
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "Gang_${variant.versionName}_${releaseTime()}.apk"
@@ -88,28 +91,25 @@ static def releaseTime() {
 }
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation Dependencies.androidx_multidex
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation Support.appcompat
+    implementation Support.constraintlayout
+
+    testImplementation Support.junit
+    androidTestImplementation Support.junit_ext
+    androidTestImplementation Support.espresso_core
+
+    implementation Dependencies.anko_commons
+    implementation Dependencies.anko_sdk25
+    implementation Dependencies.anko_sdk25_coroutines
+
+    implementation Dependencies.toolsUtils
+    implementation Dependencies.recyclerview
+    implementation Dependencies.RecyclerCommon
 
     implementation 'com.google.android.material:material:1.4.0'
-
-    // Dex处理
-    implementation 'androidx.multidex:multidex:2.0.1'
-
-    // Anko Commons
-    implementation rootProject.ext.dependencies["anko-commons"]
-    implementation rootProject.ext.dependencies["anko-sdk25"]
-    implementation rootProject.ext.dependencies["anko-sdk25-coroutines"]
-
-    // recyclerview
-    implementation 'androidx.recyclerview:recyclerview:1.2.1@aar'
 
     //日志工具类 logger
     implementation 'com.orhanobut:logger:2.2.0'
@@ -122,9 +122,9 @@ dependencies {
 
     // x5 tbs
     implementation 'com.tencent.tbs:tbssdk:44085'
-    // 常用类(以上为基类关联依赖)`
+    // 常用类(以上为基类关联依赖)
 
-    // SmartRefreshLayou`t
+    // SmartRefreshLayou
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
@@ -138,16 +138,12 @@ dependencies {
     // 阿里推送
     implementation 'com.aliyun.ams:alicloud-android-push:3.7.7'
     // 华为依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push-huawei:3.7.7'
+    //implementation 'com.aliyun.ams:alicloud-android-third-push-huawei:3.7.7'
     // 小米依赖
     implementation 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.7.7'
 
 
-    // 视图列表管理
-    implementation rootProject.ext.dependencies["recycler-common"]
-    // 实用工具类
-    implementation rootProject.ext.dependencies["tools-utils"]
-
-//    implementation 'com.github.R-Gang:Android-Common:v0.1.6-beta.12@aar'
+//    implementation Dependencies.AndroidCommon
     implementation project(path: ':base')
+
 }

@@ -10,25 +10,29 @@ import android.text.TextPaint
 import android.text.style.*
 import android.util.Range
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.gang.app.R
 import com.gang.tools.kotlin.utils.ClickableSpans
 import com.gang.tools.kotlin.utils.setSpannable
 import com.gang.tools.kotlin.utils.showToast
-import kotlinx.android.synthetic.main.activity_spannable.*
+import org.w3c.dom.Text
 
 /**
  * 文本一系列处理
  */
 class SpannableActivity : AppCompatActivity() {
 
+    private var userAgreement: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spannable)
 
-        userAgreement.highlightColor = Color.TRANSPARENT; //设置点击后的颜色为透明，否则会一直出现高亮
-        setSpannable(textView = userAgreement,
+        userAgreement = findViewById<TextView>(R.id.userAgreement)
+        userAgreement?.highlightColor = Color.TRANSPARENT; //设置点击后的颜色为透明，否则会一直出现高亮
+        setSpannable(textView = userAgreement!!,
             range = arrayOf(Range<Int>(2, 18)),
             click = object : ClickableSpans {
                 override fun clickable(view: View, key: String) {
@@ -66,7 +70,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("超链接")
         val span = URLSpan("tel:0123456789")
         spanString.setSpan(span, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv1.setText(spanString)
+        findViewById<TextView>(R.id.tv1).text = spanString
     }
 
 
@@ -77,7 +81,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("背景色")
         val span = BackgroundColorSpan(Color.YELLOW)
         spanString.setSpan(span, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv2.setText(spanString)
+        findViewById<TextView>(R.id.tv2).text = spanString
     }
 
 
@@ -88,7 +92,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("字体色")
         val span = ForegroundColorSpan(Color.BLUE)
         spanString.setSpan(span, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv3.setText(spanString)
+        findViewById<TextView>(R.id.tv3).text = spanString
     }
 
 
@@ -99,7 +103,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("36号字体")
         val span = AbsoluteSizeSpan(36)
         spanString.setSpan(span, 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv4.setText(spanString)
+        findViewById<TextView>(R.id.tv4).text = spanString
     }
 
 
@@ -110,7 +114,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("BIBI")
         val span = StyleSpan(Typeface.BOLD_ITALIC)
         spanString.setSpan(span, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv5.setText(spanString)
+        findViewById<TextView>(R.id.tv5).text = spanString
     }
 
 
@@ -121,7 +125,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("删除线")
         val span = StrikethroughSpan()
         spanString.setSpan(span, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv6.setText(spanString)
+        findViewById<TextView>(R.id.tv6).text = spanString
     }
 
 
@@ -132,7 +136,7 @@ class SpannableActivity : AppCompatActivity() {
         val spanString = SpannableString("下划线")
         val span = UnderlineSpan()
         spanString.setSpan(span, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv7.setText(spanString)
+        findViewById<TextView>(R.id.tv7).text = spanString
     }
 
 
@@ -146,7 +150,7 @@ class SpannableActivity : AppCompatActivity() {
         d?.apply {
             val span = ImageSpan(d, ImageSpan.ALIGN_BASELINE)
             spanString.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            tv8.setText(spanString)
+            findViewById<TextView>(R.id.tv8).text = spanString
         }
     }
 
@@ -160,6 +164,6 @@ class SpannableActivity : AppCompatActivity() {
         val span2: CharacterStyle = ForegroundColorSpan(Color.RED)
         spannable.setSpan(span1, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannable.setSpan(span2, 2, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv9.setText(spannable)
+        findViewById<TextView>(R.id.tv9).text = spannable
     }
 }

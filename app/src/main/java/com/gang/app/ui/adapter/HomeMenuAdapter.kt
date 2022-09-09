@@ -1,11 +1,14 @@
 package com.gang.app.ui.adapter
 
 import android.content.Context
+import android.media.Image
+import android.widget.ImageView
+import android.widget.TextView
+import com.gang.app.R
 import com.gang.app.ui.bean.HomeIcon
 import com.gang.recycler.kotlin.interfaces.ViewOnItemClick
 import com.gang.recycler.kotlin.recycleradapter.RecyclerAdapter
 import com.gang.recycler.kotlin.recycleradapter.RecyclerViewHolder
-import kotlinx.android.synthetic.main.item_home_menu.view.*
 
 /**
  *
@@ -36,8 +39,8 @@ class HomeMenuAdapter(
         holder.view.apply {
             homeIcon = datas[position] as HomeIcon
 
-            homeIcon?.icon?.toInt()?.let { iv_icon?.setImageResource(it) }
-            tv_name?.text = homeIcon?.name
+            homeIcon?.icon?.toInt()?.let { findViewById<ImageView>(R.id.iv_icon)?.setImageResource(it) }
+            findViewById<TextView>(R.id.tv_name)?.text = homeIcon?.name
         }
     }
 }

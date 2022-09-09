@@ -30,7 +30,7 @@ fun <VB : ViewBinding> BaseVBActivity<VB>.initViewBinding(): VB? {
     var viewBinding: VB? = null
     val type = javaClass.genericSuperclass
     if (type is ParameterizedType) {
-        val clazz = type.actualTypeArguments[1] as? Class<VB>
+        val clazz = type.actualTypeArguments[0] as? Class<VB>
         val method = clazz?.getMethod("inflate", LayoutInflater::class.java)
         viewBinding = (method?.invoke(null, layoutInflater) as? VB)?.apply {
             setContentView(root)
@@ -75,7 +75,7 @@ fun <VB : ViewBinding> BaseVBFragment<VB>.initViewBinding(
     var viewBinding: VB? = null
     val type = javaClass.genericSuperclass
     if (type is ParameterizedType) {
-        val clazz = type.actualTypeArguments[1] as? Class<VB>
+        val clazz = type.actualTypeArguments[0] as? Class<VB>
         val method = clazz?.getMethod(
             "inflate",
             LayoutInflater::class.java,

@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.gang.app.R
 import com.gang.app.ui.activity.HttpApiActivity
 import com.gang.app.ui.activity.PickerActivity
@@ -17,13 +18,12 @@ import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
 import com.gang.recycler.kotlin.interfaces.ViewOnItemClick
 import com.gang.recycler.kotlin.manager.LayoutManager
-import com.gang.tools.kotlin.dimension.px2dip
 import com.gang.tools.kotlin.dimension.px2sp
 import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.toActivityAnimation
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 
 /**
@@ -33,6 +33,9 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * 1.RecyclerView基本使用方式
  */
 class HomeFragment : BaseFragment(), ViewOnItemClick {
+
+    private var refresh_layout: SmartRefreshLayout? = null
+    private var recyclerView: RecyclerView? = null
 
     private var homeMenu = arrayListOf<HomeIcon>()
 
@@ -51,9 +54,10 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
             setLLEmtity(statusBarHeight)
         }
 
-        refresh_layout.setRefreshHeader(ClassicsHeader(activity))
-        refresh_layout.setOnRefreshListener {
-            refresh_layout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+        refresh_layout = findViewId<SmartRefreshLayout>(R.id.refresh_layout)
+        refresh_layout?.setRefreshHeader(ClassicsHeader(activity))
+        refresh_layout?.setOnRefreshListener {
+            refresh_layout?.finishRefresh(2000/*,false*/);//传入false表示刷新失败
         }
 
     }
@@ -63,15 +67,16 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         homeMenu.add(HomeIcon(1, R.mipmap.cate2, "业务板块"))
         homeMenu.add(HomeIcon(2, R.mipmap.cate3, "产品中心"))
         homeMenu.add(HomeIcon(3, R.mipmap.cate4, "营销网络"))
-        LayoutManager.instance?.initRecyclerGrid(recyclerView, 4)
-        recyclerView.adapter = HomeMenuAdapter(
+        recyclerView = findViewId<RecyclerView>(R.id.recyclerView)
+        LayoutManager.instance?.initRecyclerGrid(recyclerView!!, 4)
+        recyclerView?.adapter = HomeMenuAdapter(
             homeMenu,
             mActivity, this,
             R.layout.item_home_menu
         )
 
         //        监听事件
-        color_wheel.setOnColorChangedListener(object : ColorWheel.OnColorChangedListener {
+        findViewId<ColorWheel>(R.id.color_wheel).setOnColorChangedListener(object : ColorWheel.OnColorChangedListener {
             override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
 //                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
                 Logger.d(Color.argb(a, r, g, b))

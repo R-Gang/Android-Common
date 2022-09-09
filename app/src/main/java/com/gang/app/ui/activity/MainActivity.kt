@@ -22,7 +22,6 @@ import com.gang.tools.kotlin.utils.NotifiUtil.Companion.OpenNotificationSetting
 import com.gang.tools.kotlin.utils.applyV
 import com.gang.tools.kotlin.utils.showToast
 import com.orhanobut.logger.Logger
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 1.刘海屏适配示例
@@ -46,8 +45,8 @@ class MainActivity : BasePermissionActivity(), View.OnClickListener {
         dark()
 
         // 添加底部按钮
-        radioButtons.add(ll_home_btn)
-        radioButtons.add(ll_my_btn)
+        radioButtons.add(findViewId(R.id.ll_home_btn))
+        radioButtons.add(findViewId(R.id.ll_my_btn))
 
         radioButtons.forEach { it.setOnClickListener(this) }
         setChioceItem(position)

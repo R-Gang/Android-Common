@@ -25,7 +25,19 @@
         android:id="@+id/number_code_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/showPickerView"
+        android:layout_marginTop="@dimen/margin_size_12"
+        android:inputType="number"
+        android:paddingTop="@dimen/margin_size_10"
+        android:paddingBottom="@dimen/margin_size_10"
+        android:text=""
+        app:code4_color="@color/color_f"
+        app:flash_duration="200dp"
+        app:vline4_bg="@drawable/edit_cursor_color3" />
+
+    <com.gang.library.ui.widget.numbercode.PhoneCodeLine
+        android:id="@+id/number_code_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_size_12"
         android:inputType="number"
         android:paddingTop="@dimen/margin_size_10"

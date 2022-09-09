@@ -1,7 +1,7 @@
 package com.gang.app
 
+//TODO import com.alibaba.sdk.android.push.huawei.HuaWeiRegister
 import android.annotation.SuppressLint
-import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -13,7 +13,6 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.alibaba.sdk.android.push.CloudPushService
 import com.alibaba.sdk.android.push.CommonCallback
-import com.alibaba.sdk.android.push.huawei.HuaWeiRegister
 import com.alibaba.sdk.android.push.noonesdk.PushInitConfig
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.register.MiPushRegister
@@ -135,7 +134,7 @@ class MyApp : BaseApp() {
 //        // 注册方法会自动判断是否支持小米系统推送，如不支持会跳过注册。
         MiPushRegister.register(appContext, "小米AppId", "小米AppKey")
 //        // 注册方法会自动判断是否支持华为系统推送，如不支持会跳过注册。
-        HuaWeiRegister.register(appContext as Application?)
+        //TODO HuaWeiRegister.register(appContext as Application?)
 
     }
 

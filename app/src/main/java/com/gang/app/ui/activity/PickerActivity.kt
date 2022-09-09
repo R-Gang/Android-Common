@@ -3,6 +3,7 @@ package com.gang.app.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import com.gang.app.R
 import com.gang.library.common.Permission.getScanCamere
@@ -16,7 +17,6 @@ import com.gang.tools.kotlin.utils.typefaceAll
 import com.gang.tools.kotlin.utils.vClick
 import com.uuzuche.lib_zxing.activity.CaptureActivity
 import com.uuzuche.lib_zxing.activity.CodeUtils
-import kotlinx.android.synthetic.main.activity_picker.*
 
 /**
  * 1.地址选择器底部弹框
@@ -65,7 +65,7 @@ class PickerActivity : BasePermissionActivity() {
     override fun onClick() {
         super.onClick()
 
-        btn_scan.vClick {
+        findViewId<Button>(R.id.btn_scan).vClick {
             // 简单模式,加载默认二维码扫描界面
             getScanCamere<CaptureActivity>(this)
         }

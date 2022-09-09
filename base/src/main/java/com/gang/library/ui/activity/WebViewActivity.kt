@@ -11,8 +11,6 @@ import com.gang.library.R
 import com.gang.library.base.BaseActivity
 import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.tools.kotlin.dimension.statusBarHeight
-import kotlinx.android.synthetic.main.activity_webview.*
-import kotlinx.android.synthetic.main.base_title_bar.*
 
 /**
  * Created by haoruigang on 2019-3-8 18:19:23.

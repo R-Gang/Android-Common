@@ -18,7 +18,6 @@ import com.gang.library.common.ext.notch.callback.CutoutAdapt
 import com.gang.library.common.ext.notch.callback.NotchCallback
 import com.gang.library.common.user.Config
 import com.jaeger.library.StatusBarUtil
-import kotlinx.android.synthetic.main.base_title_bar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
