@@ -1,4 +1,4 @@
-package com.gang.library.common.ext.notch
+package com.gang.library.common.fit.notch
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.gang.library.BaseApp.Companion.appContext
-import com.gang.library.common.ext.notch.callback.NotchCallback
+import com.gang.library.common.fit.notch.callback.NotchCallback
 import com.gang.tools.kotlin.utils.LogUtils
 
 /**

@@ -7,9 +7,9 @@ import android.content.Intent
 import android.net.Uri
 import com.gang.library.BaseApp.Companion.TAG
 import com.gang.library.R
-import com.gang.library.common.ext.permissions.BasePermissionActivity
-import com.gang.library.common.ext.permissions.BasePermissionFragment
-import com.gang.library.common.ext.permissions.PermissionCallBackM
+import com.gang.library.common.fit.permissions.BasePermissionActivity
+import com.gang.library.common.fit.permissions.BasePermissionFragment
+import com.gang.library.common.fit.permissions.PermissionCallBackM
 import com.gang.library.common.user.Config
 import com.gang.library.ui.activity.FileDisplayActivity
 import com.gang.tools.kotlin.utils.LogUtils

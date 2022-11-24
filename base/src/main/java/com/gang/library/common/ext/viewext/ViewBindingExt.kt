@@ -1,4 +1,4 @@
-package com.gang.library.common.view.ext
+package com.gang.library.common.ext.viewext
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

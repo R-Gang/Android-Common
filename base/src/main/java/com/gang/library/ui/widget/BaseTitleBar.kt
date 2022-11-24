@@ -181,9 +181,9 @@ class BaseTitleBar @JvmOverloads constructor(
     }
 
     fun setRightButton(
-        text: String,
-        @ColorRes colorRes: Int = 0,
-        @DrawableRes bgResId: Int,
+        text: String = "",
+        @ColorRes colorRes: Int = R.color.white,
+        @DrawableRes bgResId: Int = R.color.transparent,
         textSize: Float = 18f,
         gravity: Int = Gravity.CENTER,
         tf: Typeface = Typeface.DEFAULT,

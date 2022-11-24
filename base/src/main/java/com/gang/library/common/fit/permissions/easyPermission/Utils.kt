@@ -1,4 +1,4 @@
-package com.gang.library.common.ext.permissions.easyPermission
+package com.gang.library.common.fit.permissions.easyPermission
 
 import android.app.Activity
 import android.content.pm.PackageManager

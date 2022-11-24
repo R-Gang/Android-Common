@@ -1,22 +1,20 @@
-package com.gang.library.common.ext.permissions
+package com.gang.library.common.fit.permissions
 
 import android.R
 import android.content.Intent
-import com.gang.library.base.BaseFragment
-import com.gang.library.common.ext.permissions.easyPermission.EasyPermission
+import com.gang.library.base.BaseActivity
+import com.gang.library.common.fit.permissions.easyPermission.EasyPermission
 
 /**
  *
  * @ProjectName:    gang
- * @Package:        com.gang.app.common.utils.permissions
- * @ClassName:      BasePermissionFragment
+ * @Package:        com.gang.app.common.utils.permissions.easyPermission
+ * @ClassName:      BasePermissionActivity
  * @Description:    动态请求权限
  * @Author:         haoruigang
- * @CreateDate:     2020/8/3 16:53
+ * @CreateDate:     2020/8/3 16:34
  */
-abstract class BasePermissionFragment : BaseFragment(),
-    EasyPermission.PermissionCallback {
-
+abstract class BasePermissionActivity : BaseActivity(), EasyPermission.PermissionCallback {
     private var mRequestCode = 0
     private lateinit var mPermissions: Array<String>
     private var mPermissionCallBack: PermissionCallBackM? = null
@@ -46,30 +44,25 @@ abstract class BasePermissionFragment : BaseFragment(),
         EasyPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
 
-    override fun onActivityResult(
+    public override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
         data: Intent?,
     ) {
         super.onActivityResult(requestCode, resultCode, data)
         /*
-         *  从Settings界面跳转回来，标准代码，就这么写
-         */
-        if (requestCode == EasyPermission.SETTINGS_REQ_CODE) {
-            mContext?.apply {
-                if (EasyPermission.hasPermissions(this, *mPermissions)) { //已授权，处理业务逻辑
-                    onEasyPermissionGranted(mRequestCode, *mPermissions)
-                } else {
-                    onEasyPermissionDenied(mRequestCode, *mPermissions)
-                }
+            从Settings界面跳转回来，标准代码，就这么写
+        */if (requestCode == EasyPermission.SETTINGS_REQ_CODE) {
+            if (EasyPermission.hasPermissions(this, *mPermissions)) { //已授权，处理业务逻辑
+                onEasyPermissionGranted(mRequestCode, *mPermissions)
+            } else {
+                onEasyPermissionDenied(mRequestCode, *mPermissions)
             }
         }
     }
 
     override fun onEasyPermissionGranted(requestCode: Int, vararg perms: String?) {
-        if (mPermissionCallBack != null) {
-            mPermissionCallBack!!.onPermissionGrantedM(requestCode, *perms)
-        }
+        mPermissionCallBack?.onPermissionGrantedM(requestCode, *perms)
     }
 
     override fun onEasyPermissionDenied(
@@ -82,19 +75,15 @@ abstract class BasePermissionFragment : BaseFragment(),
                 R.string.ok,
                 R.string.cancel,
                 { dialog, which ->
-                    if (mPermissionCallBack != null) {
-                        mPermissionCallBack!!.onPermissionDeniedM(
-                            requestCode, *perms
-                        )
-                    }
+                    mPermissionCallBack?.onPermissionDeniedM(
+                        requestCode, *perms
+                    )
                 },
                 perms
             )
         ) {
             return
         }
-        if (mPermissionCallBack != null) {
-            mPermissionCallBack!!.onPermissionDeniedM(requestCode, *perms)
-        }
+        mPermissionCallBack?.onPermissionDeniedM(requestCode, *perms)
     }
 }

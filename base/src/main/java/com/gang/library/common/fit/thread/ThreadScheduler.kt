@@ -1,4 +1,4 @@
-package com.gang.library.common.ext.thread
+package com.gang.library.common.fit.thread
 
 import android.os.Handler
 import android.os.Looper

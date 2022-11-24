@@ -21,8 +21,6 @@ android {
     defaultConfig {
         minSdk Android.minSdkVersion
         targetSdk Android.targetSdkVersion
-        versionCode Android.versionCode
-        versionName Android.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -77,9 +75,13 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api Support.appcompat
-    api Dependencies.androidx_multidex
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Support.appcompat
+    implementation Dependencies.androidx_multidex
+
+    implementation Dependencies.anko_commons
+    implementation Dependencies.anko_sdk25
+    implementation Dependencies.anko_sdk25_coroutines
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 

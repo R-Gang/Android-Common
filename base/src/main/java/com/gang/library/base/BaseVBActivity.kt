@@ -2,8 +2,8 @@ package com.gang.library.base
 
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding
-import com.gang.library.common.ext.permissions.BasePermissionActivity
-import com.gang.library.common.view.ext.initViewBinding
+import com.gang.library.common.fit.permissions.BasePermissionActivity
+import com.gang.library.common.ext.viewext.initViewBinding
 
 /**
  * @CreateDate:     2022/7/12 18:19

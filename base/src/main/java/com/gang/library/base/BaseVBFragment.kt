@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import com.gang.library.common.view.ext.initViewBinding
+import com.gang.library.common.ext.viewext.initViewBinding
 
 /**
  * 基于 [BaseViewModel] 和 [ViewBinding] 管理的 Fragment 基类

@@ -1,4 +1,4 @@
-package com.gang.library.common.ext.permissions
+package com.gang.library.common.fit.permissions
 
 /**
  *

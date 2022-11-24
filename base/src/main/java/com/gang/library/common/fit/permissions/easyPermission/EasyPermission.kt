@@ -1,4 +1,4 @@
-package com.gang.library.common.ext.permissions.easyPermission
+package com.gang.library.common.fit.permissions.easyPermission
 
 import android.R
 import android.annotation.TargetApi
@@ -17,8 +17,8 @@ import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.app.AppOpsManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.gang.library.common.ext.permissions.BasePermissionActivity
-import com.gang.library.common.ext.permissions.BasePermissionFragment
+import com.gang.library.common.fit.permissions.BasePermissionActivity
+import com.gang.library.common.fit.permissions.BasePermissionFragment
 import java.util.*
 
 /**

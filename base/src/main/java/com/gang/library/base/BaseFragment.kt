@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.gang.library.common.EventBus
-import com.gang.library.common.ext.notch.CutoutUtil
-import com.gang.library.common.ext.notch.callback.CutoutAdapt
-import com.gang.library.common.ext.notch.callback.NotchCallback
+import com.gang.library.common.fit.notch.CutoutUtil
+import com.gang.library.common.fit.notch.callback.CutoutAdapt
+import com.gang.library.common.fit.notch.callback.NotchCallback
 import com.gang.library.common.user.Config
 import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe

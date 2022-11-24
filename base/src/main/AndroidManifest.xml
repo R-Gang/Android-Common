@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.gang.library">
 
     <!-- 访问网络权限 -->
@@ -21,7 +22,8 @@
     <!-- 麦克风权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 写入扩展存储权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <!-- 允许程序在手机屏幕关闭后后台进程仍然运行 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- 下载完成通知栏提醒权限-->
@@ -39,7 +41,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
     <uses-permission android:name="android.permission.GET_TASKS"/>
-
+    <!-- 获取当前device手机信息 -->
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
     <application>
 
         <!--允许绘制到oppo、vivo刘海屏机型的刘海区域 -->

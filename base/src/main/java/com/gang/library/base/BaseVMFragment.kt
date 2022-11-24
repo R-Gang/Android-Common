@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager.widget.ViewPager
 import com.gang.tools.kotlin.utils.LogUtils
-import com.gang.library.common.view.ext.initViewBinding
-import com.gang.library.common.view.ext.initViewModel
+import com.gang.library.common.ext.viewext.initViewBinding
+import com.gang.library.common.ext.viewext.initViewModel
 
 /**
  * 基于 [BaseViewModel] 和 [ViewBinding] 管理的 Fragment 基类

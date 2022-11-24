@@ -16,7 +16,7 @@ import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
-import com.gang.library.common.ext.permissions.BasePermissionActivity
+import com.gang.library.common.fit.permissions.BasePermissionActivity
 import com.gang.tools.kotlin.interfaces.Setter
 import com.gang.tools.kotlin.utils.NotifiUtil.Companion.OpenNotificationSetting
 import com.gang.tools.kotlin.utils.applyV

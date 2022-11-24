@@ -59,7 +59,7 @@ object Dependencies {
     const val anko_sdk25_coroutines =
         "org.jetbrains.anko:anko-sdk25-coroutines:${Android.anko_version}"
 
-    const val toolsUtils = "com.github.R-Gang:Tools-Utils:v1.0.1-beta" // 实用工具类
+    const val toolsUtils = "com.github.R-Gang:Tools-Utils:v1.0.1-beta.1" // 实用工具类
     const val RecyclerCommon = "com.github.R-Gang:Recycler-Common:1.0.0" // 视图列表扩展
     const val AndroidCommon =
         "com.github.R-Gang:Android-Common:v0.1.6-beta.13.0@aar" // 常用类(以上为基类关联依赖)
@@ -75,7 +75,11 @@ object Dependencies {
         it.maven { url = URI("https://maven.aliyun.com/repository/central") }
         it.maven { url = URI("https://maven.aliyun.com/repository/google") }
         it.maven { url = URI("https://maven.aliyun.com/repository/jcenter") }
-        it.maven { url = URI("https://jitpack.io") }
+        it.maven {
+            url = URI("https://jitpack.io")
+            val authToken = "jp_7hqsbgvlrlh8sua6dainpc08j4"
+            credentials { username = authToken }
+        }
         it.maven { url = URI("https://dl.google.com/dl/android/maven2/") }
         it.maven { url = URI("https://maven.youzanyun.com/repository/maven-releases") }
         it.maven { url = URI("https://maven.google.com") }

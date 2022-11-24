@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.gang.app.R
 import com.gang.library.common.Permission.getScanCamere
-import com.gang.library.common.ext.permissions.BasePermissionActivity
+import com.gang.library.common.fit.permissions.BasePermissionActivity
 import com.gang.library.common.user.Config
 import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
