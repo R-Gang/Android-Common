@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.gang.app.R
+import com.gang.library.base.BaseActivity
 import com.gang.library.common.Permission.getScanCamere
-import com.gang.library.common.fit.permissions.BasePermissionActivity
 import com.gang.library.common.user.Config
 import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
@@ -24,7 +24,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils
  * 3.获取四位验证码
  * 4.不规则圆角（平滑圆角）
  */
-class PickerActivity : BasePermissionActivity() {
+class PickerActivity : BaseActivity() {
 
     override val layoutId: Int
         get() = R.layout.activity_picker
@@ -54,6 +54,7 @@ class PickerActivity : BasePermissionActivity() {
         findViewById<BaseSearchBar>(R.id.myBoolbar)?.apply {
             goneLine()
             setLLEmtity(statusBarHeight.toFloat())
+            backLFinish(this@PickerActivity)
         }
 
     }
@@ -67,7 +68,7 @@ class PickerActivity : BasePermissionActivity() {
 
         findViewId<Button>(R.id.btn_scan).vClick {
             // 简单模式,加载默认二维码扫描界面
-            getScanCamere<CaptureActivity>(this)
+            getScanCamere<CaptureActivity>(mContext = this)
         }
     }
 

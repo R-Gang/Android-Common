@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gang.app.R
 import com.gang.library.base.BaseFragment
+import com.gang.library.common.Permission.requestPermission
 import com.gang.library.common.Permission.toGetRead_Write
 import com.gang.library.ui.activity.WebViewActivity
 import com.gang.recycler.kotlin.viewpager.VPFragmentAdapter
 import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.vClick
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.tabs.TabLayout
 
 /**
@@ -58,10 +58,15 @@ class MyFragment : BaseFragment() {
             WebViewActivity.actionStart(this.requireActivity(), gugongShop, gugongTitle)
         }
         findViewId<ImageView>(R.id.tvTitle).vClick {
-            mActivity.toGetRead_Write("http://dtimemini.1bu2bu.com/doc",
+            mActivity.toGetRead_Write(
+                "http://dtimemini.1bu2bu.com/doc",
                 //            FileUtils.getAssetFile("pullWeiXin.html"),
                 gugongTitle
             )
+
+            requestPermission(
+                mContext = mActivity,
+                permissions = arrayOf())
         }
     }
 

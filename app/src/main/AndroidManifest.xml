@@ -14,10 +14,19 @@
     <!--强制使用  小于minSdkVersion值是设置
     <uses-sdk tools:overrideLibrary="com.gang.library" />-->
 
+    <!--
+    关于android:extractNativeLibs默认值设定方面，若开发人员未对android:extractNativeLibs进行特殊配置：
+    minSdkVersion < 23 或 Android Gradle plugin < 3.6.0情况下，打包时默认
+    android:extractNativeLibs=true；
+    minSdkVersion >= 23 并且 Android Gradle plugin >= 3.6.0情况下，打包时默认
+    android:extractNativeLibs=false；
+    -->
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:extractNativeLibs="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/laopo"
         android:label="@string/app_name"

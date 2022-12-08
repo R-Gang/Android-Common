@@ -49,7 +49,7 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
             goneLine()
             setTitle(resources.getString(R.string.app_title),
                 R.color.black,
-                textSize = px2sp(54f),
+                textSize = 20f,
                 style = Typeface.BOLD)
             setLLEmtity(statusBarHeight)
         }

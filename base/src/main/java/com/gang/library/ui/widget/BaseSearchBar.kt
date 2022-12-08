@@ -1,5 +1,6 @@
 package com.gang.library.ui.widget
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -11,6 +12,7 @@ import com.gang.library.R
 import com.gang.tools.kotlin.dimension.dip2px
 import com.gang.tools.kotlin.utils.gone
 import com.gang.tools.kotlin.utils.show
+import com.gang.tools.kotlin.utils.vClick
 import org.jetbrains.annotations.NotNull
 
 class BaseSearchBar @JvmOverloads constructor(
@@ -75,6 +77,10 @@ class BaseSearchBar @JvmOverloads constructor(
         llParams.height = height.toInt()
         getllEmtity().layoutParams = llParams
         return this
+    }
+
+    fun backLFinish(activity: Activity) {
+        leftView?.vClick { activity.finish() }
     }
 
     fun setTooBarHeight(height: Float): BaseSearchBar {

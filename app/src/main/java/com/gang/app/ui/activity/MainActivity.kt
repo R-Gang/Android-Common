@@ -14,9 +14,9 @@ import com.gang.app.R
 import com.gang.app.common.user.ToUIEvent
 import com.gang.app.ui.fragment.HomeFragment
 import com.gang.app.ui.fragment.MyFragment
+import com.gang.library.base.BaseActivity
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
-import com.gang.library.common.fit.permissions.BasePermissionActivity
 import com.gang.tools.kotlin.interfaces.Setter
 import com.gang.tools.kotlin.utils.NotifiUtil.Companion.OpenNotificationSetting
 import com.gang.tools.kotlin.utils.applyV
@@ -29,7 +29,7 @@ import com.orhanobut.logger.Logger
  * 3.判断是否需要开启通知栏功能
  * 4.沉浸式状态栏
  */
-class MainActivity : BasePermissionActivity(), View.OnClickListener {
+class MainActivity : BaseActivity(), View.OnClickListener {
 
     private var radioButtons: MutableList<TextView> = ArrayList()
 

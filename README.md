@@ -178,7 +178,7 @@
 
     // Android 炫酷的多重水波纹
     implementation 'com.scwang.wave:MultiWaveHeader:1.0.0'
-    //androidx
+    // androidx
     implementation 'com.scwang.wave:MultiWaveHeader:1.0.0-andx'
 
 
@@ -248,6 +248,8 @@
     implementation 'com.github.dfqin:grantor:2.5'
     // rxpermissions2(配合rxjava)
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    // PermissionX
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 
     // 一种粗暴快速的 Android 全屏幕适配方案
     implementation 'com.bulong.rudeness:rudeness:latest.release@aar'
