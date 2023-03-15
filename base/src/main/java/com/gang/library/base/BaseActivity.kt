@@ -17,6 +17,7 @@ import com.gang.library.common.fit.notch.CutoutUtil
 import com.gang.library.common.fit.notch.callback.CutoutAdapt
 import com.gang.library.common.fit.notch.callback.NotchCallback
 import com.gang.library.common.user.Config
+import com.gang.library.common.user.ToUIEvent
 import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -92,6 +93,14 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun dark() {
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    }
+
+    // 软键盘弹出内容整体上移
+    open fun soft() {
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN or
+                    WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
     }
 
     //应用运行时，保持屏幕高亮，不锁屏
@@ -239,7 +248,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    public override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
         if (Config.eventBusEnabled) {
             if (EventBus.isRegistered(this)) {
@@ -268,7 +277,7 @@ abstract class BaseActivity : AppCompatActivity() {
     //Eventbus
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     open fun onEvent(any: Any) {
-
+        if (any is ToUIEvent) any else return
     }
 
 }

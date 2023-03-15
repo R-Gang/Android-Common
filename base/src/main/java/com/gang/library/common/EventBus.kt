@@ -13,10 +13,6 @@ import java.util.*
  * @Description:    EventBus
  * @Author:         haoruigang
  * @CreateDate:     2020/8/25 19:00
- * @UpdateUser:     更新者：
- * @UpdateDate:     2020/8/25 19:00
- * @UpdateRemark:   更新说明：
- * @Version:        1.0
  */
 object EventBus {
 

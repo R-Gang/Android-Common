@@ -37,7 +37,7 @@ fun Context.getColorStateList(
     @ColorInt checkedColor: Int? = null,
     @ColorInt disableColor: Int? = null,
 ): ColorStateList {
-    return getColorStateList(
+    return com.gang.library.common.ext.statelist.getColorStateList(
         normalColor = normalColor ?: getColor(normalColorRes),
         pressColor = pressColor ?: pressColorRes?.let { getColor(it) },
         selectedColor = selectedColor ?: selectedColorRes?.let { getColor(it) },
@@ -64,7 +64,7 @@ fun View.getColorStateList(
     @ColorInt checkedColor: Int? = null,
     @ColorInt disableColor: Int? = null,
 ): ColorStateList {
-    return getColorStateList(
+    return com.gang.library.common.ext.statelist.getColorStateList(
         normalColor = normalColor ?: getColor(normalColorRes),
         pressColor = pressColor ?: pressColorRes?.let { getColor(it) },
         selectedColor = selectedColor ?: selectedColorRes?.let { getColor(it) },
@@ -91,7 +91,7 @@ fun Context.getDrawableStateList(
     checked: Drawable? = null,
     disable: Drawable? = null,
 ): StateListDrawable {
-    return getDrawableStateList(
+    return com.gang.library.common.ext.statelist.getDrawableStateList(
         normal = normal ?: getCompatDrawable(normalRes),
         pressed = pressed ?: getCompatDrawable(pressedRes),
         selected = selected ?: getCompatDrawable(selectedRes),
@@ -118,7 +118,7 @@ fun View.getDrawableStateList(
     checked: Drawable? = null,
     disable: Drawable? = null,
 ): StateListDrawable {
-    return getDrawableStateList(
+    return com.gang.library.common.ext.statelist.getDrawableStateList(
         normal = normal ?: getDrawable(normalRes),
         pressed = pressed ?: getDrawable(pressedRes),
         selected = selected ?: getDrawable(selectedRes),

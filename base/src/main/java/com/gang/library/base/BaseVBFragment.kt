@@ -16,7 +16,6 @@ import com.gang.library.common.ext.viewext.initViewBinding
  */
 abstract class BaseVBFragment<VB : ViewBinding> : BaseFragment() {
     private var _binding: VB? = null
-    private var isInitData = false // 是否初始化数据
 
     override val layoutId: Int = 0
 
@@ -31,15 +30,6 @@ abstract class BaseVBFragment<VB : ViewBinding> : BaseFragment() {
     ): View? {
         _binding = initVB(container, false)
         return _binding?.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // 只有在当前Fragment显示可交互时，做数据初始化操作。
-        if (!isInitData) {
-            isInitData = true
-            initData()
-        }
     }
 
     override fun onDestroyView() {

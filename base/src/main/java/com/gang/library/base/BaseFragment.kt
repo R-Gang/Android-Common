@@ -14,6 +14,7 @@ import com.gang.library.common.fit.notch.CutoutUtil
 import com.gang.library.common.fit.notch.callback.CutoutAdapt
 import com.gang.library.common.fit.notch.callback.NotchCallback
 import com.gang.library.common.user.Config
+import com.gang.library.common.user.ToUIEvent
 import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -153,5 +154,6 @@ abstract class BaseFragment : Fragment() {
     //Eventbus
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     open fun onEvent(any: Any) {
+        if (any is ToUIEvent) any else return
     }
 }

@@ -31,6 +31,14 @@ class AppManager private constructor() {
     }
 
     /**
+     *  获取上一个打开的Activity（堆栈中倒数第二个压入的）
+     *  @param index 默认是上一个Activity
+     */
+    fun previousActivity(index: Int = activityStack?.size as Int - 2): Activity? {
+        return activityStack?.elementAt(index)
+    }
+
+    /**
      * 获取当前Activity（堆栈中最后一个压入的）
      */
     fun currentActivity(): Activity? {

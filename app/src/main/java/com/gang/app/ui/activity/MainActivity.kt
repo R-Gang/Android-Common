@@ -5,6 +5,7 @@ import android.app.Activity
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
@@ -17,11 +18,12 @@ import com.gang.app.ui.fragment.MyFragment
 import com.gang.library.base.BaseActivity
 import com.gang.library.common.AppManager
 import com.gang.library.common.EventBus
+import com.gang.library.common.store.SpExt
 import com.gang.tools.kotlin.interfaces.Setter
+import com.gang.tools.kotlin.utils.*
 import com.gang.tools.kotlin.utils.NotifiUtil.Companion.OpenNotificationSetting
-import com.gang.tools.kotlin.utils.applyV
-import com.gang.tools.kotlin.utils.showToast
 import com.orhanobut.logger.Logger
+import kotlin.system.exitProcess
 
 /**
  * 1.刘海屏适配示例
@@ -157,6 +159,28 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
             hideNavigationSystemUI()
+        }
+    }
+
+    //系统方法
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit()
+            return false
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun exit() {
+        if ((currentMilliSecond - vClickTime) > 2000) {
+            toastCustom("再按一次返回键退出" + getString(R.string.app_name))
+            vClickTime = currentMilliSecond
+        } else {
+            SpExt.putSpValue("ExitTwice", true) // 两次点击
+            Handler().postDelayed({
+                finish()
+                exitProcess(0)
+            }, 100)
         }
     }
 

@@ -13,8 +13,8 @@ import com.gang.library.common.ext.viewext.initViewModel
  */
 abstract class BaseVMActivity<VM : BaseViewModel, VB : ViewBinding> : BaseActivity() {
 
-    protected var mBinding: VB? = null
-    protected var mViewModel: VM? = null
+    private var mBinding: VB? = null
+    private var mViewModel: VM? = null
 
     override val layoutId: Int = 0
 

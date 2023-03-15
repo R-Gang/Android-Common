@@ -36,16 +36,22 @@ fun View.setSelector(
     var strokeColor: ColorStateList? = null
     if (normalStrokeColor != null && pressStrokeColor != null) {
         strokeColor =
-            getColorStateList(normalColor = getColor(normalStrokeColor),
-                pressColor = getColor(pressStrokeColor))
+            getColorStateList(
+                normalColor = getColor(normalStrokeColor),
+                pressColor = getColor(pressStrokeColor)
+            )
     } else if (normalStrokeColor != null) {
         strokeColor =
-            getColorStateList(normalColor = getColor(normalStrokeColor),
-                pressColor = getColor(pressColor))
+            getColorStateList(
+                normalColor = getColor(normalStrokeColor),
+                pressColor = getColor(pressColor)
+            )
     } else if (pressStrokeColor != null) {
         strokeColor =
-            getColorStateList(normalColor = getColor(normalColor),
-                pressColor = getColor(pressStrokeColor))
+            getColorStateList(
+                normalColor = getColor(normalColor),
+                pressColor = getColor(pressStrokeColor)
+            )
     }
     val gd = GradientDrawable()
 

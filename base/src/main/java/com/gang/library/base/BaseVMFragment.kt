@@ -23,9 +23,8 @@ abstract class BaseVMFragment<VM : BaseViewModel, VB : ViewBinding> : BaseFragme
     private var _viewModel: VM? = null
     private var isNotifyRefresh = false // 是否通知fragment刷新
     private var refreshData: Any? = null // 刷新时数据，可以是任何类型数据（含null）
-    private var isInitData = false // 是否初始化数据
 
-    protected var isReady = false // fragment是否就绪
+    private var isReady = false // fragment是否就绪
 
     override val layoutId: Int = 0
 
@@ -56,23 +55,9 @@ abstract class BaseVMFragment<VM : BaseViewModel, VB : ViewBinding> : BaseFragme
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-        // 只有在当前Fragment显示可交互时，做数据初始化操作。
-        if (!isInitData) {
-            isInitData = true
-            initData()
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        isInitData = false
     }
 
     override fun onHiddenChanged(hidden: Boolean) {

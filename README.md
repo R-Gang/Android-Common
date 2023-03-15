@@ -272,3 +272,6 @@
 
     // LitePal for Android SQLite 数据库
     implementation 'org.litepal.guolindev:core:3.2.3'
+
+    //适用于Java和Android的快速、低内存占用的汉字转拼音库。
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
