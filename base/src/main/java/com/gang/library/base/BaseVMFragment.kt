@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager.widget.ViewPager
-import com.gang.tools.kotlin.utils.LogUtils
 import com.gang.library.common.ext.viewext.initViewBinding
 import com.gang.library.common.ext.viewext.initViewModel
+import com.gang.tools.kotlin.utils.LogUtils
 
 /**
  * 基于 [BaseViewModel] 和 [ViewBinding] 管理的 Fragment 基类
@@ -19,20 +19,22 @@ import com.gang.library.common.ext.viewext.initViewModel
  * @author o.s
  */
 abstract class BaseVMFragment<VM : BaseViewModel, VB : ViewBinding> : BaseFragment() {
-    private var _binding: VB? = null
+
     private var _viewModel: VM? = null
-    private var isNotifyRefresh = false // 是否通知fragment刷新
-    private var refreshData: Any? = null // 刷新时数据，可以是任何类型数据（含null）
+    private var _binding: VB? = null
 
-    private var isReady = false // fragment是否就绪
+    var isNotifyRefresh = false // 是否通知fragment刷新
+    var refreshData: Any? = null // 刷新时数据，可以是任何类型数据（含null）
 
-    override val layoutId: Int = 0
+    var isReady = false // fragment是否就绪
+
+    protected val mViewModel: VM?
+        get() = _viewModel
 
     protected val mBinding: VB?
         get() = _binding
 
-    protected val mViewModel: VM?
-        get() = _viewModel
+    override val layoutId: Int = 0
 
 
     override fun onCreateView(

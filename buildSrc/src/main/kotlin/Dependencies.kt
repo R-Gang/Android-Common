@@ -62,7 +62,7 @@ object Dependencies {
     const val toolsUtils = "com.github.R-Gang:Tools-Utils:v1.0.1-beta.3" // 实用工具类
     const val RecyclerCommon = "com.github.R-Gang:Recycler-Common:v0.1.0-beta.0" // 视图列表扩展
     const val AndroidCommon =
-        "com.github.R-Gang:Android-Common:v0.1.7-beta.1@aar" // 常用类(以上为基类关联依赖)
+        "com.github.R-Gang:Android-Common:v0.1.7-beta.2@aar" // 常用类(以上为基类关联依赖)
 
     const val recyclerview = "androidx.recyclerview:recyclerview:1.2.1@aar" // recyclerview
 

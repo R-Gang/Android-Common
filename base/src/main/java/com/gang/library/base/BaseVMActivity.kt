@@ -13,14 +13,20 @@ import com.gang.library.common.ext.viewext.initViewModel
  */
 abstract class BaseVMActivity<VM : BaseViewModel, VB : ViewBinding> : BaseActivity() {
 
-    private var mBinding: VB? = null
-    private var mViewModel: VM? = null
+    private var _viewModel: VM? = null
+    private var _binding: VB? = null
+
+    protected val mViewModel: VM?
+        get() = _viewModel
+
+    protected val mBinding: VB?
+        get() = _binding
 
     override val layoutId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mBinding = initVB()
-        mViewModel = initVM()
+        _binding = initVB()
+        _viewModel = initVM()
         super.onCreate(savedInstanceState)
     }
 

@@ -12,12 +12,15 @@ import com.gang.library.common.ext.viewext.initViewBinding
  */
 abstract class BaseVBActivity<VB : ViewBinding> : BaseActivity() {
 
-    protected var mBinding: VB? = null
+    private var _binding: VB? = null
+
+    protected val mBinding: VB?
+        get() = _binding
 
     override val layoutId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mBinding = initVB()
+        _binding = initVB()
         super.onCreate(savedInstanceState)
     }
 

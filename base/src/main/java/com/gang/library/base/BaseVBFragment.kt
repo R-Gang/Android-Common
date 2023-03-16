@@ -15,13 +15,13 @@ import com.gang.library.common.ext.viewext.initViewBinding
  * @author o.s
  */
 abstract class BaseVBFragment<VB : ViewBinding> : BaseFragment() {
-    private var _binding: VB? = null
 
-    override val layoutId: Int = 0
+    private var _binding: VB? = null
 
     protected val mBinding: VB?
         get() = _binding
 
+    override val layoutId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
