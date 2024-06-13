@@ -200,9 +200,9 @@
     // Gson
     implementation 'com.google.code.gson:gson:2.8.9'
     // retrofit 引入示例:
-    implementation rootProject.ext.dependencies["converter-gson"]
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     // Rxjava
-    implementation "io.reactivex.rxjava2:rxjava:2.2.6"
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     // 基于RxJava打造的下载工具,支持多线程下载和断点续传,使用Kotlin编写
     implementation 'zlc.season:rxdownload3:1.2.7'
