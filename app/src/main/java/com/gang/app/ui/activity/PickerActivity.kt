@@ -19,10 +19,9 @@ import com.uuzuche.lib_zxing.activity.CaptureActivity
 import com.uuzuche.lib_zxing.activity.CodeUtils
 
 /**
- * 1.地址选择器底部弹框
- * 2.页面选择器
- * 3.获取四位验证码
- * 4.不规则圆角（平滑圆角）
+ * 1.获取四位验证码
+ * 2.不规则圆角（平滑圆角）
+ * 3.二维码扫描
  */
 class PickerActivity : BaseActivity() {
 

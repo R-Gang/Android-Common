@@ -18,7 +18,6 @@ import com.gang.library.ui.widget.BaseTitleBar
 import com.gang.library.ui.widget.ColorWheel
 import com.gang.recycler.kotlin.interfaces.ViewOnItemClick
 import com.gang.recycler.kotlin.manager.LayoutManager
-import com.gang.tools.kotlin.dimension.px2sp
 import com.gang.tools.kotlin.dimension.statusBarHeight
 import com.gang.tools.kotlin.utils.toActivityAnimation
 import com.orhanobut.logger.Logger
@@ -47,10 +46,12 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         view?.findViewById<BaseTitleBar>(R.id.myBoolbar)?.apply {
             goneLeftView()
             goneLine()
-            setTitle(resources.getString(R.string.app_title),
+            setTitle(
+                resources.getString(R.string.app_title),
                 R.color.black,
                 textSize = 20f,
-                style = Typeface.BOLD)
+                style = Typeface.BOLD
+            )
             setLLEmtity(statusBarHeight)
         }
 
@@ -70,13 +71,12 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
         recyclerView = findViewId<RecyclerView>(R.id.recyclerView)
         LayoutManager.instance?.initRecyclerGrid(recyclerView!!, 4)
         recyclerView?.adapter = HomeMenuAdapter(
-            homeMenu,
-            mActivity, this,
-            R.layout.item_home_menu
+            homeMenu, mActivity, this, R.layout.item_home_menu
         )
 
         //        监听事件
-        findViewId<ColorWheel>(R.id.color_wheel).setOnColorChangedListener(object : ColorWheel.OnColorChangedListener {
+        findViewId<ColorWheel>(R.id.color_wheel).setOnColorChangedListener(object :
+            ColorWheel.OnColorChangedListener {
             override fun onColorChange(a: Int, r: Int, g: Int, b: Int) {
 //                binding.colorBrightView.setProgressColor(Color.argb(a, r, g, b))
                 Logger.d(Color.argb(a, r, g, b))
@@ -99,21 +99,24 @@ class HomeFragment : BaseFragment(), ViewOnItemClick {
             0 -> {
                 startActivity(Intent(mActivity, HttpApiActivity::class.java))
             }
+
             1 -> {
                 startActivity(Intent(mActivity, PickerActivity::class.java))
             }
+
             2 -> {
                 // 带动画跳转
-                val ivIcon =
-                    android.util.Pair.create(view?.findViewById<ImageView>(R.id.iv_icon) as View,
-                        "ivIcon")
-                val tvName =
-                    android.util.Pair.create(view.findViewById<ImageView>(R.id.tv_name) as View,
-                        "tvName")
-                activity?.toActivityAnimation(Intent(mActivity, SpannableActivity::class.java),
-                    ivIcon,
-                    tvName)
+                val ivIcon = android.util.Pair.create(
+                    view?.findViewById<ImageView>(R.id.iv_icon) as View, "ivIcon"
+                )
+                val tvName = android.util.Pair.create(
+                    view.findViewById<ImageView>(R.id.tv_name) as View, "tvName"
+                )
+                activity?.toActivityAnimation(
+                    Intent(mActivity, SpannableActivity::class.java), ivIcon, tvName
+                )
             }
+
             3 -> {
             }
         }

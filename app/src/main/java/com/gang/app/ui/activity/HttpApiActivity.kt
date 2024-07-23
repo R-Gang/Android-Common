@@ -22,8 +22,7 @@ import java.util.concurrent.FutureTask
 
 /**
  * 1.Android 仿全面屏侧滑返回功能
- * 2.阿里OSS示例
- * 3.线程池使用示例
+ * 2.线程池使用示例
  */
 class HttpApiActivity : BaseActivity() {
 

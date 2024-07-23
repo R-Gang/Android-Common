@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("cn.bingoogolapple.photopicker.android_common", appContext.packageName)
+        assertEquals("com.gang.app", appContext.packageName)
     }
 }

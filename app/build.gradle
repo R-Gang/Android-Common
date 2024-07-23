@@ -121,7 +121,7 @@ dependencies {
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
     // 一行代码快速实现Android动态权限申请
-    implementation'com.github.dfqin:grantor:2.5'
+    implementation 'com.github.dfqin:grantor:2.5'
 
     // x5 tbs
     implementation 'com.tencent.tbs:tbssdk:44085'
