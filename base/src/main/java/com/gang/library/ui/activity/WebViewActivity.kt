@@ -41,8 +41,7 @@ open class WebViewActivity : BaseActivity() {
         setUrl(mUrl)
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    fun setUrl(url: String) { //声明WebSettings子类
+    fun setUrl(url: String): WebView? { //声明WebSettings子类
         val webSettings = wbXy?.settings
         webSettings?.javaScriptEnabled = true
         //设置自适应屏幕，两者合用
@@ -70,6 +69,7 @@ open class WebViewActivity : BaseActivity() {
             }
         }
         wbXy?.loadUrl(url)
+        return wbXy
     }
 
     /**

@@ -8,3 +8,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/._.DS_Store

@@ -63,10 +63,6 @@ class MyFragment : BaseFragment() {
                 //            FileUtils.getAssetFile("pullWeiXin.html"),
                 gugongTitle
             )
-
-            requestPermission(
-                mContext = mActivity,
-                permissions = arrayOf())
         }
     }
 

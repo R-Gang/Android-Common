@@ -17,7 +17,6 @@ import com.gang.app.R
 import com.gang.tools.kotlin.utils.ClickableSpans
 import com.gang.tools.kotlin.utils.setSpannable
 import com.gang.tools.kotlin.utils.showToast
-import org.w3c.dom.Text
 
 /**
  * 文本一系列处理
@@ -30,9 +29,9 @@ class SpannableActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spannable)
 
-        userAgreement = findViewById<TextView>(R.id.userAgreement)
+        userAgreement = findViewById(R.id.userAgreement)
         userAgreement?.highlightColor = Color.TRANSPARENT; //设置点击后的颜色为透明，否则会一直出现高亮
-        setSpannable(textView = userAgreement!!,
+        setSpannable(textView = userAgreement as TextView,
             range = arrayOf(Range<Int>(2, 18)),
             click = object : ClickableSpans {
                 override fun clickable(view: View, key: String) {

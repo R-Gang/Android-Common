@@ -14,7 +14,7 @@ android {
     /**
      * 资源同名问题处理
      * 每个子模块给资源名添加前缀，具体做法是在每个子模块的build.gradle文件的android块内添加一行代码：resourcePrefix “资源名前缀”：
-     */
+     * */
     compileSdk Android.compileSdkVersion
     ndkVersion "22.1.7171670"
 
@@ -95,7 +95,7 @@ dependencies {
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
     // 一行代码快速实现Android动态权限申请
-    implementation'com.github.dfqin:grantor:2.5'
+    implementation Dependencies.permission
 
     // x5 tbs
     implementation 'com.tencent.tbs:tbssdk:44085'
@@ -115,7 +115,7 @@ tasks.withType(JavaCompile) {
  * 点击 studio 右侧 Gradle 中的 lib-module 的 publishReleasePublicationToMavenLocal
  * 或执行命令 ./gradlew publishReleasePublicationToMavenLocal，
  * 执行成功就可以准备发布了。
- */
+ * */
 // 打包源码
 task androidSourcesJar(type: Jar) {
     if (project.hasProperty("kotlin")) {

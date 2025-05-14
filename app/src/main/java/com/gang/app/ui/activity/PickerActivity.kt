@@ -6,8 +6,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.gang.app.R
+import com.gang.app.databinding.FragmentItemListBinding
 import com.gang.library.base.BaseActivity
 import com.gang.library.common.Permission.getScanCamere
+import com.gang.library.common.dialog.BaseBottomDialog
+import com.gang.library.common.dialog.ShowBottomDialog
 import com.gang.library.common.user.Config
 import com.gang.library.ui.widget.BaseSearchBar
 import com.gang.library.ui.widget.numbercode.PhoneCodeFill
@@ -59,7 +62,7 @@ class PickerActivity : BaseActivity() {
     }
 
     override fun initData() {
-
+        scenicDialog()
     }
 
     override fun onClick() {
@@ -87,6 +90,28 @@ class PickerActivity : BaseActivity() {
                     Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+    }
+
+    private var mScenicShowBottom: BaseBottomDialog<FragmentItemListBinding>? = null // 景点介绍弹窗
+
+    // 景点介绍 弹窗
+    fun scenicDialog() {
+        mScenicShowBottom = ShowBottomDialog(
+            fragmentManager = supportFragmentManager,
+            layoutRes = R.layout.fragment_item_list,
+            isCancelOutside = false,
+            actionListener = fun(v: FragmentItemListBinding?) {
+
+                v?.apply {
+
+                }
+
+                // 景点介绍逻辑处理
+            },
+        )
+        if (mScenicShowBottom?.isShowing() == false) {  // 防止弹出多个弹窗
+            mScenicShowBottom?.show()
         }
     }
 

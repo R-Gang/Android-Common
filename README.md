@@ -83,6 +83,8 @@
     // AppBar 状态栏布局
     implementation 'com.github.todou:appbarspring:1.0.8'
 
+    // 类似高德百度地图抽屉拖拽效果(三段式拖拽抽屉)
+    implementation 'com.yinglan.scrolllayout:scrolllayout:1.0.2'
     
     // 动画大全：nineoldandroids
     implementation 'com.nineoldandroids:library:2.4.0'

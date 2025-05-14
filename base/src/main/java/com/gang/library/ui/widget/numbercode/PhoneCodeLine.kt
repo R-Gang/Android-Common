@@ -13,7 +13,6 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gang.library.R
-import com.gang.library.databinding.PhoneCodeBinding
 import com.gang.library.databinding.PhoneCodeLineBinding
 import com.gang.tools.kotlin.utils.showKeyBoard
 

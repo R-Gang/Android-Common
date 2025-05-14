@@ -9,33 +9,33 @@ import android.view.animation.TranslateAnimation
 import androidx.core.widget.NestedScrollView
 
 /**
- * 有弹性的ScrollView
- * 实现下拉弹回和上拉弹回
- *
- * @author zhangjg
- * @date Feb 13, 2014 6:11:33 PM
+ * @CreateDate:     2014/2/13 17:07
+ * @Author:         haoruigang
+ * @ClassName:      ReboundScrollView
+ * @Description:    有弹性的ScrollView  |  实现下拉弹回和上拉弹回
  */
 class ReboundScrollView : NestedScrollView {
     //ScrollView的子View， 也是ScrollView的唯一一个子View
     private var contentView: View? = null
+
     //手指按下时的Y值, 用于在移动时计算移动距离
-//如果按下时不能上拉和下拉， 会在手指移动时更新为当前手指的Y值
+    //如果按下时不能上拉和下拉， 会在手指移动时更新为当前手指的Y值
     private var startY = 0f
+
     //用于记录正常的布局位置
     private val originalRect = Rect()
+
     //手指按下时记录是否可以继续下拉
     private var canPullDown = false
+
     //手指按下时记录是否可以继续上拉
     private var canPullUp = false
+
     //在手指滑动的过程中记录是否移动了布局
     private var isMoved = false
 
-    constructor(context: Context?) : super(context!!) {}
-    constructor(context: Context?, attrs: AttributeSet?) : super(
-        context!!,
-        attrs
-    ) {
-    }
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -53,9 +53,10 @@ class ReboundScrollView : NestedScrollView {
     ) {
         super.onLayout(changed, l, t, r, b)
         if (contentView == null) return
-        //ScrollView中的唯一子控件的位置信息, 这个位置信息在整个控件的生命周期中保持不变
-        originalRect[contentView!!.left, contentView!!.top, contentView!!
-            .right] = contentView!!.bottom
+        contentView?.apply {
+            //ScrollView中的唯一子控件的位置信息, 这个位置信息在整个控件的生命周期中保持不变
+            originalRect[left, top, right] = bottom
+        }
     }
 
     /**
@@ -65,8 +66,7 @@ class ReboundScrollView : NestedScrollView {
         if (contentView == null) {
             return super.dispatchTouchEvent(ev)
         }
-        val action = ev.action
-        when (action) {
+        when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
                 //判断是否可以上拉和下拉
                 canPullDown = isCanPullDown()
@@ -77,22 +77,24 @@ class ReboundScrollView : NestedScrollView {
             MotionEvent.ACTION_UP -> {
                 //如果有移动布局，则执行
                 if (isMoved) {
-                    // 开启动画
-                    val anim = TranslateAnimation(
-                        0F, 0F, contentView!!.top.toFloat(),
-                        originalRect.top.toFloat()
-                    )
-                    anim.duration = ANIM_TIME.toLong()
-                    contentView!!.startAnimation(anim)
-                    // 设置回到正常的布局位置
-                    contentView!!.layout(
-                        originalRect.left, originalRect.top,
-                        originalRect.right, originalRect.bottom
-                    )
-                    //将标志位设回false
-                    canPullDown = false
-                    canPullUp = false
-                    isMoved = false
+                    contentView?.apply {
+                        // 开启动画
+                        val anim = TranslateAnimation(
+                            0F, 0F, top.toFloat(),
+                            originalRect.top.toFloat()
+                        )
+                        anim.duration = ANIM_TIME.toLong()
+                        startAnimation(anim)
+                        // 设置回到正常的布局位置
+                        layout(
+                            originalRect.left, originalRect.top,
+                            originalRect.right, originalRect.bottom
+                        )
+                        //将标志位设回false
+                        canPullDown = false
+                        canPullUp = false
+                        isMoved = false
+                    }
                 }
             }
             MotionEvent.ACTION_MOVE -> {
@@ -112,7 +114,7 @@ class ReboundScrollView : NestedScrollView {
                     if (shouldMove) { //计算偏移量
                         val offset = (deltaY * MOVE_FACTOR).toInt()
                         //随着手指的移动而移动布局
-                        contentView!!.layout(
+                        contentView?.layout(
                             originalRect.left, originalRect.top + offset,
                             originalRect.right, originalRect.bottom + offset
                         )
@@ -129,24 +131,25 @@ class ReboundScrollView : NestedScrollView {
     /**
      * 判断是否滚动到顶部
      */
-    private fun isCanPullDown(): Boolean {
-        return scrollY == 0 ||
-                contentView!!.height < height + scrollY
+    fun isCanPullDown(): Boolean {
+        return scrollY == 0 || (contentView?.height as Int) < height + scrollY
     }
 
     /**
      * 判断是否滚动到底部
      */
-    private fun isCanPullUp(): Boolean {
-        return contentView!!.height <= height + scrollY
+    fun isCanPullUp(): Boolean {
+        return (contentView?.height as Int) <= height + scrollY
     }
 
     companion object {
-        private const val TAG = "ElasticScrollView"
+        val TAG = "ElasticScrollView"
+
         //移动因子, 是一个百分比, 比如手指移动了100px, 那么View就只移动50px
-//目的是达到一个延迟的效果
-        private const val MOVE_FACTOR = 0.5f
+        //目的是达到一个延迟的效果
+        val MOVE_FACTOR = 0.5f
+
         //松开手指后, 界面回到正常位置需要的动画时间
-        private const val ANIM_TIME = 300
+        val ANIM_TIME = 300
     }
 }
