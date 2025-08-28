@@ -77,6 +77,11 @@
     // 导航栏
     implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
 
+    // Android 悬浮窗，绝对是目前相关悬浮窗开源库最完美的适配方案
+    implementation 'com.alonsol:floatserver:1.0.0'
+    // EasyFloat：浮窗从未如此简单
+    implementation 'com.github.princekin-f:EasyFloat:2.0.4'
+
 
     // AppBar 简单的视图行为
     implementation 'com.zoonref:simple-view-behavior:1.0'
